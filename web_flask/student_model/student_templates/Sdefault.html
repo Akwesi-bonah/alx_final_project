@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Hostel Management System</title>
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+  <link href="{{ url_for('static', filename='assets/img/hostel.png') }}" rel="icon">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+    integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+
+
+</head>
+
+<body>
+
+  <!-- Navigation bar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" href="#">Academy Haven</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+<div class="collapse navbar-collapse" id="navbarNav">
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#aboutModal">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-toggle="modal" data-target="#contactModal">Team</a>
+        </li>
+      </ul>
+    </div>    </div>
+  </nav>
+
+  <div class="modal fade" id="aboutModal">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content -->
+      <!-- ... -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">About</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p>This application is a test version of a Hostel Management System designed specifically for students.
+            It aims to provide a user-friendly interface for students to manage various aspects of hostel life,
+            including room booking, payment of hostel fees  and more.</p>
+          <p>Feel free to explore the functionalities and features available in this test version.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contact Modal -->
+  <div class="modal fade" id="contactModal">
+    <div class="modal-dialog modal-lg">
+      <!-- Modal content -->
+      <!-- ... -->
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Team</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Team Members</h5>
+              <div class="row">
+                <div class="col-md-6">
+                  <p><strong>Name:</strong> George Arhin-Bonnah</p>
+                   <p class="">Undergraduate Student of University of Education, Winneba</p>
+                  <p>
+                   <a href="https://www.linkedin.com/in/george-arhin-bonnah-5330b925a" target="_blank">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                        <a href="https://github.com/akwesi-bonah" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                  </p>
+
+                </div>
+                <div class="col-md-6">
+                  <p><strong>Name:</strong>Godwin Dogbey</p>
+
+                    <p>Content Producer at Despite Media Group | Digital Marketing | Talent Manager | Events & PR</p>
+                  <p>
+                    <a href="https://www.linkedin.com/in/godwin-dogbey-52462b122" target="_blank">
+                            <i class="fab fa-linkedin"></i> LinkedIn
+                        </a>
+                        <a href="https://github.com/GodwinDogbey" target="_blank">
+                            <i class="fab fa-github"></i> GitHub
+                        </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="container mt-4">
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="login-card">
+          <h2 class="text-center mb-4">Academy Haven Hostel</h2>
+           <form id="login" method="POST" action="{{ url_for('student_views.default')}}">
+            {% if error_message %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+              <strong>{{ error_message }}</strong> You should check in on some of those fields below.
+              <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endif %}
+
+
+            {{ login.hidden_tag() }}
+            <div class="form-group">
+
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                </div>
+                {{ login.email(class="form-control form-control input_user", id="lEmail", placeholder='Email address')
+                }}
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="input-group">
+                <div class="input-group-prepend">
+                  <span class="input-group-text"><i class="fas fa-lock"></i></span>
+                </div>
+                {{ form.password(class="form-control input_pass", id="lPassword", placeholder='Password') }}
+              </div>
+            </div>
+            <div class="form-group">
+              {{ login.submit(class="btn btn-primary btn-block") }}
+            </div>
+            <div class="text-center">
+              <a href="#">Forgot Password?</a>
+            </div>
+          </form>
+          <div class="text-center mt-3">
+            Don't have an account? <a href="#" data-toggle="modal" data-target="#registerModal">Register Here</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Register -->
+  <div class="modal fade" id="registerModal">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <!-- Modal Header -->
+        <div class="modal-header">
+          <h4 class="modal-title">Register</h4>
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+        </div>
+
+        <!-- Modal Body -->
+        <div class="modal-body">
+          <form method="POST" enctype="multipart/form-data" id="registerForm">
+            {{ form.hidden_tag() }}
+            <!-- Personal Information Accordion -->
+            <div class="accordion" id="personalInfoAccordion">
+
+              <div class="row g-3">
+                <div class="col-md-4">
+                  {{ form.first_name.label(class="form-label") }}
+                  {{ form.first_name(class="form-control", id="first_name") }}
+                  {% if form.first_name.errors %}
+                  <div class="invalid-feedback">
+                    {% for error in form.first_name.errors %}
+                    <span>{{ error }}</span><br>
+                    {% endfor %}
+                  </div>
+                  {% endif %}
+                </div>
+
+
+                <div class="col-md-4">
+                  {{ form.last_name.label(class="form-label") }}
+                  {{ form.last_name(class="form-control", id="last_name") }}
+                </div>
+                {% if form.last_name.errors %}
+                <div class="invalid-feedback">
+                  {% for error in form.last_name.errors %}
+                  <span>{{ error }}</span><br>
+                  {% endfor %}
+                </div>
+                {% endif %}
+                <div class="col-md-4">
+                  {{ form.other_name.label(class="form-label") }}
+                  {{ form.other_name(class="form-control", id="other_name") }}
+                </div>
+                <div class="col-md-4">
+                  {{ form.email.label(class="form-label") }}
+                  {{ form.email(class="form-control", id="email") }}
+                </div>
+                {% if form.email.errors %}
+                <div class="invalid-feedback">
+                  {% for error in form.email.errors %}
+                  <span>{{ error }}</span><br>
+                  {% endfor %}
+                </div>
+                {% endif %}
+
+
+
+                <div class="col-md-4">
+                  {{ form.phone.label(class="form-label") }}
+                  {{ form.phone(class="form-control", id="phone") }}
+                </div>
+                {% if form.phone.errors %}
+                <div class="invalid-feedback">
+                  {% for error in form.phone.errors %}
+                  <span>{{ error }}</span><br>
+                  {% endfor %}
+                </div>
+                {% endif %}
+                <div class="col-md-4">
+                  {{ form.date_of_birth.label(class="form-label") }}
+                  {{ form.date_of_birth(class="form-control", id="date_of_birth") }}
+                </div>
+                {% if form.date_of_birth.errors %}
+                <div class="invalid-feedback">
+                  {% for error in form.date_of_birth.errors %}
+                  <span>{{ error }}</span><br>
+                  {% endfor %}
+                </div>
+                {% endif %}
+                <div class="col-md-4">
+                  {{ form.address.label(class="form-label") }}
+                  {{ form.address(class="form-control", id="address") }}
+                </div>
+                {% if form.address.errors %}
+                <div class="invalid-feedback">
+                  {% for error in form.address.errors %}
+                  <span>{{ error }}</span><br>
+                  {% endfor %}
+                </div>
+                {% endif %}
+                <div class="col-md-4">
+                  {{ form.gender.label(class="form-label") }}
+                  {{ form.gender(class="form-control", id="gender") }}
+                </div>
+                {% if form.gender.errors %}
+                <div class="invalid-feedback">
+                  {% for error in form.gender.errors %}
+                  <span>{{ error }}</span><br>
+                  {% endfor %}
+                </div>
+                {% endif %}
+                <div class="col-md-4">
+                  {{ form.disability.label(class="form-label") }}
+                  {{ form.disability(class="form-control", id="disability") }}
+                </div>
+                {% if form.disability.errors %}
+                <div class="invalid-feedback">
+                  {% for error in form.disability.errors %}
+                  <span>{{ error }}</span><br>
+                  {% endfor %}
+                </div>
+                {% endif %}
+                <div class="col-md-4">
+                  {{ form.password.label(class="form-label") }}
+                  {{ form.password(class="form-control", id="password") }}
+                </div>
+                {% if form.password.errors %}
+                <div class="invalid-feedback">
+                  {% for error in form.password.errors %}
+                  <span>{{ error }}</span><br>
+                  {% endfor %}
+                </div>
+                {% endif %}
+
+
+                <!-- ... -->
+
+                <br>
+                <!-- Other guardian info fields -->
+                <div class="col-md-4">
+                  {{ form.guardian_name.label(class="form-label") }}
+                  {{ form.guardian_name(class="form-control", id="guardian_name") }}
+                </div>
+                <div class="col-md-4">
+                  {{ form.guardian_phone.label(class="form-label") }}
+                  {{ form.guardian_phone(class="form-control", id="guardian_phone") }}
+                </div>
+
+
+                <!-- Other guardian info fields -->
+                <div class="col-md-4">
+                  {{ form.student_number.label(class="form-label") }}
+                  {{ form.student_number(class="form-control", id="student_number") }}
+                </div>
+                <div class="col-md-4">
+                  {{ form.program.label(class="form-label") }}
+                  {{ form.program(class="form-control", id="program") }}
+                </div>
+                <div class="col-md-4">
+                  {{ form.level.label(class="form-label") }}
+                  {{ form.level(class="form-control", id="level") }}
+                </div>
+
+
+                <!-- Submit button -->
+
+              </div>
+            </div>
+
+            <div class="mt-3">
+              {{ form.submit(id="registerStudent", class="btn btn-primary") }}
+            </div>
+
+          </form>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script  type="module" src="{{ url_for('static', filename='js/login.js') }}"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+Swagger : '2.0'
+info:
+  description: cancel a  reservation
+  version: '1.0.0'
+  title: Cancel Reservation
+path :
+  /cancel:
+    post:
+      tags:
+        - Reservation
+      summary: cancel a reservation
+      description: Endpoint to cancel a reservation
+      operationId: cancelReservation
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: reservation_id
+          description: Unique identifier for the reservation
+          required: true
+          type: string
+        - in: formData
+          name: block_id
+          description: ID of the block
+          required: true
+          type: string
+        - in: formData
+          name: room_type_id
+          description: ID of the room type
+          required: true
+          type: string
+
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Reservation'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found

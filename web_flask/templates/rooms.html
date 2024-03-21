@@ -1,0 +1,217 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="pagetitle">
+  <h1>Rooms</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('staff_view.dashboard')}}">Home</a></li>
+      <li class="breadcrumb-item active">Rooms management</li>
+    </ol>
+  </nav>
+</div>
+<section class="content">
+  <div class="col-12">
+    <div class="card recent-sales overflow-auto">
+
+
+      <div class="card-body">
+        <h5 class="card-title"><span>Rooms List</span></h5>
+
+        <table class="table table-border datatable">
+          <thead>
+            <tr role="row">
+              <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 19px;" aria-sort="ascending" aria-label="#: activate to sort column descending">#</th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 121px;" aria-label="
+                                        Room Type
+                                    : activate to sort column ascending">
+                Room Type
+              </th>
+              <th aria-controls="DataTables_Table_0" aria-label="
+                                        Block
+                                    : activate to sort column ascending" class="sorting" colspan="1" rowspan="1"
+                  style="width: 85.3833px;" tabindex="0">
+                Block
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 80.8833px;" aria-label="
+                                        Room Name
+                                    : activate to sort column ascending">
+                Room Name
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 96.0167px;" aria-label="
+                                        Gender
+                                    : activate to sort column ascending">
+                Gender
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 39.9833px;" aria-label="
+                                        Floor
+                                    : activate to sort column ascending">
+                Floor
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 39.1167px;" aria-label="
+                                        Beds Avl.
+                                    : activate to sort column ascending">
+                Beds Avl.
+
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 55px;" aria-label="
+                                        Action
+                                    : activate to sort column ascending">
+                Action
+              </th>
+            </tr>
+          </thead>
+          {% for room in rooms %}
+          <tr>
+            <td></td>
+            <td>{{ room.room_type_name }}</td>
+            <td>{{ room.block_name }}</td>
+            <td>{{ room.name }}</td>
+            <td>{{ room.gender }}</td>
+            <td>{{ room.floor }}</td>
+            <td>{{ room.no_of_beds }}</td>
+            <td>
+              <a href="#"
+                 class="btn btn-sm btn-info  edit-room"
+                 data-room-id="{{ room.id }}">Edit</a>
+              <a href="#"
+                 class="btn btn-sm btn-danger  delete-room"
+                 data-room-id="{{ room.id }}">Delete</a>
+            </td>
+          </tr>
+          {% endfor %}
+
+        </table>
+      </div>
+      <div class="card-footer">
+        <button type="button"
+                id="createNewRoom"
+                class="btn btn-primary createNewRoom"
+                data-bs-toggle="modal"
+                data-bs-target="#roomCreateUpdate"
+              >
+          Create New
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- /.row -->
+</section>
+
+<div class="modal fade md-col2"
+     id="roomCreateUpdate"
+     tabindex="-1"
+     aria-labelledby="roomHead"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="roomHead">Add/Update Room</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <!-- Modal Body -->
+      <div class="modal-body ">
+        <div role="form">
+          {% if error %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{ error }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endif %}
+          <form action="" class="agnet-contact-form" id="RoomForm" method="post">
+            {{ form.hidden_tag() }}
+            <div class="card-body">
+              <div class="form-group">
+                <label>Room Number<b class="red">*</b></label>
+                <div>
+                  {{ form.room_name(class="form-control", id="roomNo",
+                  placeholder="Room Number") }}
+                  {% for error in form.room_name.errors %}
+                  <span class="field-validation-valid text-danger" data-valmsg-for="roomNo"
+                    data-valmsg-replace="true">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Room Type<b class="red">*</b></label>
+                <div>
+                  {{ form.room_type(class="form-control", id="roomType", placeholder="Room Type") }}
+                  {% for error in form.room_type.errors %}
+                  <span class="field-validation-valid text-danger" data-valmsg-for="roomType"
+                    data-valmsg-replace="true">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Block<b class="red">*</b></label>
+                <div>
+                  {{ form.block(class="form-control", id="blockId", placeholder="Block") }}
+                  {% for error in form.block.errors %}
+                  <span class="field-validation-valid text-danger" data-valmsg-for="blockId"
+                    data-valmsg-replace="true">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Gender<b class="red">*</b></label>
+                <div>
+                  {{ form.gender(class="form-control", id="gender") }}
+                  {% for error in form.gender.errors %}
+                  <span class="field-validation-valid text-danger" data-valmsg-for="gender"
+                    data-valmsg-replace="true">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Floor<b class="red">*</b></label>
+                <div>
+                  {{ form.floor(class="form-control", id="floor") }}
+                  {% for error in form.floor.errors %}
+                  <span class="field-validation-valid text-danger" data-valmsg-for="floor" data-valmsg-replace="true">{{
+                    error }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Number of Beds<b class="red">*</b></label>
+                <div>
+                  {{ form.no_of_beds(class="form-control", id="noOfBeds", placeholder="Number of Beds") }}
+                  {% for error in form.no_of_beds.errors %}
+                  <span class="field-validation-valid text-danger" data-valmsg-for="noOfBeds"
+                    data-valmsg-replace="true">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            <!-- /.card-body -->
+
+            <div class="card-footer">
+              {{ form.submit(class="btn btn-primary  float-left",
+              id="AddRoomData") }}
+              {{ form.submit(class="btn btn-primary  float-left",
+              id="updateRoomData") }}
+
+            </div>
+          </form>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

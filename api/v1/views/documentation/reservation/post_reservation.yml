@@ -1,0 +1,96 @@
+swagger: '2.0'
+info:
+  description: Create a new reservation
+  version: '1.0.0'
+  title: Create New Reservation
+
+paths:
+  /reserve:
+    post:
+      tags:
+        - Reservation
+      summary: Create a new reservation
+      description: Endpoint to create a new reservation
+      operationId: createReservation
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: reservation_id
+          description: Unique identifier for the reservation
+          required: true
+          type: string
+        - in: formData
+          name: block_id
+          description: ID of the block
+          required: true
+          type: string
+        - in: formData
+          name: room_type_id
+          description: ID of the room type
+          required: true
+          type: string
+        - in: formData
+          name: guest_name
+          description: Name of the guest
+          required: true
+          type: string
+        - in: formData
+          name: check_in_date
+          description: Check-in date
+          required: true
+          type: string
+          format: date
+        - in: formData
+          name: check_out_date
+          description: Check-out date
+          required: true
+          type: string
+          format: date
+        - in: formData
+          name: total_guests
+          description: Total number of guests
+          required: true
+          type: integer
+          format: int32
+
+      responses:
+        '200':
+          description: Successful response with created reservation
+          schema:
+            $ref: '#/definitions/Reservation'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+
+definitions:
+  Reservation:
+    type: object
+    properties:
+      reservation_id:
+        type: string
+        description: Unique identifier for the reservation
+      block_id:
+        type: string
+        description: ID of the block
+      room_type_id:
+        type: string
+        description: ID of the room type
+      guest_name:
+        type: string
+        description: Name of the guest
+      created_aat:
+        type: string
+        format: date
+        description: created date
+      no_of_reserve_bed:
+        type: integer
+        format: int32
+        description: Total number of guests

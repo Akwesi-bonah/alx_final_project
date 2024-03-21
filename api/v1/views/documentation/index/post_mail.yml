@@ -1,0 +1,58 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Send mail to students
+  description: API endpoints for sending mail to students
+/mail:
+    post:
+      tags:
+        - Mail
+      summary: Send mail to students
+      description: Sends mail to students based on specified criteria
+      operationId: sendMailToStudents
+      produces:
+        - application/json
+      consumes:
+        - application/json
+      parameters:
+        - name: student_data
+          in: body
+          description: Student data to determine recipients and message
+          required: true
+          schema:
+            $ref: '#/definitions/StudentMail'
+      responses:
+        '200':
+          description: Emails sent successfully
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+                description: Success message indicating emails were sent
+                example: Emails sent successfully
+        '400':
+          description: Error handling (e.g., missing data)
+          schema:
+            type: object
+            properties:
+              error:
+                type: string
+                description: Error message
+                example: Missing required data or data not in JSON format
+        'default':
+          description: Error handling
+
+definitions:
+  StudentMail:
+    type: object
+    properties:
+      level:
+        type: string
+        description: Student level ('All' or specific level)
+      not_paid:
+        type: string
+        description: Indicates if payment is pending ('Yes' or 'No')
+      message:
+        type: string
+        description: Message to be sent to students

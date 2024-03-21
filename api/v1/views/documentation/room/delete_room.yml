@@ -1,0 +1,42 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Delete Room
+  description: API to delete a room by ID
+paths:
+  /room/{id}:
+    delete:
+      tags:
+        - Room
+      summary: Delete Room
+      description: Delete a specific room by its ID
+      operationId: deleteRoomById
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of the room to delete
+          required: true
+          type: string
+      responses:
+        '204':
+          description: Room deleted successfully
+        '404':
+          description: Room not found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+
+definitions:
+  NotFoundError:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Error message for 'Not Found'
+        example: Room not found
+      code:
+        type: integer
+        format: int64
+        description: Error code
+        example: 404

@@ -1,0 +1,279 @@
+{% extends 'base.html' %} {% block content %}
+<div class="pagetitle">
+  <h1>Staff Management</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{{ url_for('staff_view.dashboard')}}">Home</a>
+      </li>
+      <li class="breadcrumb-item active">Staff list</li>
+    </ol>
+  </nav>
+</div>
+
+<section class="content">
+  <div class="col-12">
+    <div class="card recent-sales overflow-auto">
+      <div class="card-body">
+        <h5 class="card-title"><span>Staff List</span></h5>
+
+        <table class="table table-border datatable">
+          <thead>
+            <tr role="row">
+              <th
+                class="sorting_asc"
+                tabindex="0"
+                aria-controls="DataTables_Table_0"
+                rowspan="1"
+                colspan="1"
+                style="width: 30.5833px"
+                aria-sort="ascending"
+                aria-label="#: activate to sort column descending"
+              >
+                #
+              </th>
+              <th
+                class="sorting"
+                tabindex="0"
+                aria-controls="DataTables_Table_0"
+                rowspan="1"
+                colspan="1"
+                style="width: 284.2px"
+                aria-label="
+                                       Campus
+                                    : activate to sort column ascending"
+              >
+                Name
+              </th>
+              <th
+                class="sorting"
+                tabindex="0"
+                aria-controls="DataTables_Table_0"
+                rowspan="1"
+                colspan="1"
+                style="width: 369.1px"
+                aria-label="
+                                        Name
+                                    : activate to sort column ascending"
+              >
+                Email
+              </th>
+              <th
+                class="sorting"
+                tabindex="0"
+                aria-controls="DataTables_Table_0"
+                rowspan="1"
+                colspan="1"
+                style="width: 199.217px"
+                aria-label="
+                                        Description
+                                    : activate to sort column ascending"
+              >
+                Phone
+              </th>
+              <th
+                class="sorting"
+                tabindex="0"
+                aria-controls="DataTables_Table_0"
+                rowspan="1"
+                colspan="1"
+                style="width: 96.3px"
+                aria-label="
+                                        Action
+                                    : activate to sort column ascending"
+              >
+                Role
+              </th>
+              <th
+                class="sorting"
+                tabindex="0"
+                aria-controls="DataTables_Table_0"
+                rowspan="1"
+                colspan="1"
+                style="width: 96.3px"
+                aria-label="
+                                        Action
+                                    : activate to sort column ascending"
+              >
+                Status
+              </th>
+              <th
+                class="sorting"
+                tabindex="0"
+                aria-controls="DataTables_Table_0"
+                rowspan="1"
+                colspan="1"
+                style="width: 96.3px"
+                aria-label="
+                                        Action
+                                    : activate to sort column ascending"
+              >
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for user in users %}
+            <tr>
+              <td></td>
+              <td>{{ user.name }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.phone }}</td>
+              <td>{{ user.role }}</td>
+              <td>{{ user.status }}</td>
+              {% if role is not none and role not in ['JCR', 'Porter'] %}
+              <td>
+                <a
+                  href="#"
+                  class="btn btn-sm btn-info showloader edit-user"
+                  data-user-id="{{ user.id }}"
+                  >Edit</a
+                >
+                <a
+                  href="#"
+                  class="btn btn-sm btn-danger showloader delete-user"
+                  data-user-id="{{ user.id }}"
+                  >Delete</a
+                >
+              </td>
+              {% else %}
+              <td>
+                <a href="#" class="btn btn-sm btn-danger">Not Allowed</a>
+              </td>
+              {% endif %}
+            </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+      <div class="card-footer">
+        {% if role is not none and role not in ['JCR', 'Porter'] %}
+        <button
+          type="button"
+          class="btn btn-primary createStaff"
+          data-bs-toggle="modal"
+          data-bs-target="#staffCreateUpdate"
+        >
+          Create New
+        </button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+<div
+  class="modal fade md-col2"
+  id="staffCreateUpdate"
+  tabindex="-1"
+  aria-labelledby="staffUpdateCreate"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="staffUpdateCreate">Add/Update Staff</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <!-- Modal Body -->
+      <div class="modal-body">
+        <form action="" class="agnet-contact-form" id="staffFrom" method="post">
+          {{ form.hidden_tag() }}
+          <div class="card-body">
+            <div class="form-group">
+              <label>Campus<b class="red">*</b></label>
+              <div>{{ form.campus(class="form-control", id="campus") }}</div>
+            </div>
+
+            <div class="form-group">
+              <label> Name <b class="red">*</b></label>
+              <div>
+                {{ form.staffName(class="form-control text-box single-line",
+                id="staffName", placeholder="Enter Name") }} {% for error in
+                form.staffName.errors %}
+                <span
+                  class="field-validation-valid text-danger"
+                  data-valmsg-for="staffName"
+                  data-valmsg-replace="true"
+                  >{{ error }}</span
+                >
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label> Email <b class="red">*</b></label>
+              <div>
+                {{ form.staffEmail(class="form-control text-box single-line",
+                id="staffEmail", placeholder="Enter Email") }} {% for error in
+                form.staffEmail.errors %}
+                <span
+                  class="field-validation-valid text-danger"
+                  data-valmsg-for="staffEmail"
+                  data-valmsg-replace="true"
+                  >{{ error }}</span
+                >
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label> Phone <b class="red">*</b></label>
+              <div>
+                {{ form.staffPhone(class="form-control text-box single-line",
+                id="staffPhone", placeholder="Enter Phone") }} {% for error in
+                form.staffPhone.errors %}
+                <span
+                  class="field-validation-valid text-danger"
+                  data-valmsg-for="staffPhone"
+                  data-valmsg-replace="true"
+                  >{{ error }}</span
+                >
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label> Password <b class="red">*</b></label>
+              <div>
+                {{ form.userPwd(class="form-control text-box single-line",
+                id="staffPassword", placeholder="Enter Password") }}
+                <span
+                  class="field-validation-valid text-danger"
+                  data-valmsg-for="staffPwd"
+                  data-valmsg-replace="true"
+                ></span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Role<b class="red">*</b></label>
+              <div>{{ form.role(class="form-control", id="staffRole") }}</div>
+            </div>
+
+            <div class="form-group">
+              <label>Status</label>
+              <div>{{ form.status(class="form-control", id="status") }}</div>
+            </div>
+          </div>
+
+          <div class="card-footer">
+            {{ form.submit(class="btn btn-primary  float-left",
+            id="Addstaff") }}
+            {{ form.submit(class="btn btn-primary  float-left", 
+            id="updateStaff") }}
+
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

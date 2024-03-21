@@ -1,0 +1,215 @@
+{% block content %}
+<section class="section dashboard">
+  <div class="row">
+    <!-- Total Rooms -->
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="card info-card sales-card">
+        <div class="card-body">
+          <h5 class="card-title">Total Rooms</h5>
+          <div class="d-flex align-items-center">
+            <div class="card-icon d-flex align-items-center justify-content-center">
+              <i class="fas fa-bed"></i>
+            </div>
+            <div class="ps-3">
+              <h6>{{ total_rooms }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Total Beds -->
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="card info-card sales-card">
+        <div class="card-body">
+          <h5 class="card-title">Total Beds</h5>
+          <div class="d-flex align-items-center">
+            <div class="card-icon d-flex align-items-center justify-content-center">
+              <i class="fas fa-bed"></i>
+            </div>
+            <div class="ps-3">
+              <h6>{{ total_beds }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Male Beds -->
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="card info-card sales-card">
+        <div class="card-body">
+          <h5 class="card-title">Total Male Beds</h5>
+          <div class="d-flex align-items-center">
+            <div class="card-icon d-flex align-items-center justify-content-center">
+              <i class="fas fa-male"></i>
+            </div>
+            <div class="ps-3">
+              <h6>{{male_beds}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Total Female Beds -->
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="card info-card sales-card">
+        <div class="card-body">
+          <h5 class="card-title">Total Female Beds</h5>
+          <div class="d-flex align-items-center">
+            <div class="card-icon d-flex align-items-center justify-content-center">
+              <i class="fas fa-female"></i>
+            </div>
+            <div class="ps-3">
+              <h6>{{ female_beds}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Res. Male Beds -->
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="card info-card sales-card">
+        <div class="card-body">
+          <h5 class="card-title">Res. Male Beds</h5>
+          <div class="d-flex align-items-center">
+            <div class="card-icon d-flex align-items-center justify-content-center">
+              <i class="fas fa-male"></i>
+            </div>
+            <div class="ps-3">
+              <h6>{{ male_rev}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Total Res. Female Beds -->
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="card info-card sales-card">
+        <div class="card-body">
+          <h5 class="card-title">Res. Female Beds</h5>
+          <div class="d-flex align-items-center">
+            <div class="card-icon d-flex align-items-center justify-content-center">
+              <i class="fas fa-female"></i>
+            </div>
+            <div class="ps-3">
+              <h6>{{ female_rev }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Total allotment -->
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="card info-card sales-card">
+        <div class="card-body">
+          <h5 class="card-title">Total Allotment Revenue</h5>
+          <div class="d-flex align-items-center">
+            <div class="card-icon d-flex align-items-center justify-content-center">
+              <i class="fas fa-bed"></i>
+            </div>
+            <div class="ps-3">
+              <h6>{{ allotment_revenue}}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Total Expected Revenue -->
+    {% for room_type, data in room_type_revenues.items() %}
+    <div class="col-12 col-sm-6 col-md-3">
+      <div class="card info-card sales-card">
+        <div class="card-body">
+          <h5 class="card-title">Total Expected Revenue</h5>
+          <div class="d-flex align-items-center">
+            <div class="ps-3">
+              <h6>&#8373; {{data.revenue }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endfor %}
+<section class="content dashboard">
+  <div class="col-12">
+    <div class="card recent-sales overflow-auto">
+      <div class="card-body">
+        <h5 class="card-title">Recent <span>Allotment List</span></h5>
+        <table class="table table-border datatable ">
+          <thead>
+            <tr role="row">
+              <th data-sortable="true" style="width: 10.740203193033382%;">Student Number</th>
+              <th>Student Name</th>
+              <th>Block Name</th>
+              <th>Room Type</th>
+              <th>Room Number</th>
+              <th>Price</th>
+              <th>Paid Amount</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if latest_booking_list %}
+            {% for booking in latest_booking_list %}
+            <tr class="">
+              <td>{{ booking.student_number }}</td>
+              <td>{{ booking.student_name }}</td>
+              <td>{{ booking.block_name }}</td>
+              <td>{{ booking.room_type }}</td>
+              <td>{{ booking.room_no }}</td>
+              <td>{{ booking.price }}</td>
+              <td>{{ booking.paid }}</td>
+              <td>
+                {% if booking.status == 'paid' %}
+                  <span class="badge bg-success">{{ booking.status }}</span>
+                {% elif booking.status == 'cancelled' %}
+                  <span class="badge bg-danger">{{ booking.status }}</span>
+                {% else %}
+                  <span class="badge bg-warning">{{ booking.status }}</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+   <div class="col-12">
+    <div class="card recent-sales overflow-auto">
+      <div class="card-body">
+        <h5 class="card-title">Recent <span>Payment List</span></h5>
+        <table class="table table-border datatable ">
+          <thead>
+            <tr role="row">
+
+              <th>Reference ID</th>
+              <th>Student Number</th>
+              <th>Student Name</th>
+              <th>amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if latest_payments_list %}
+            {% for payment in latest_payments_list %}
+            <tr class="">
+              <td>{{ payment.reference_id }}</td>
+              <td>{{ payment.student_number }}</td>
+              <td>{{ payment.student_name }}</td>
+              <td>{{ payment.amount }}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+{% endblock %}

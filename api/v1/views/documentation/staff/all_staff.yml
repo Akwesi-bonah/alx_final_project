@@ -1,0 +1,67 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Get all staff
+  description: API to retrieve all staff information
+paths:
+  /staff:
+    get:
+      tags:
+        - Staff
+      summary: Get all staff
+      description: Retrieve all available staff
+      operationId: getAllStaff
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful response with a list of staff
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Staff'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+
+definitions:
+  Staff:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique identifier for the staff
+      name:
+        type: string
+        description: Name of the staff
+      phone:
+        type: string
+        description: Phone number of the staff
+      email:
+        type: string
+        description: Email of the staff
+      status:
+        type: string
+        description: Status of the staff (e.g., 'active', 'inactive')
+      created_at:
+        type: string
+        format: date-time
+        description: Date and time of staff creation
+      updated_at:
+        type: string
+        format: date-time
+        description: Date and time of last staff update
+
+  NotFoundError:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Error message for 'Not Found'
+        example: Staff not found
+      code:
+        type: integer
+        format: int64
+        description: Error code
+        example: 404

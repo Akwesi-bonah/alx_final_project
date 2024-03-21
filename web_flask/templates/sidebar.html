@@ -1,0 +1,138 @@
+{% block content %}
+<aside id="sidebar" class="sidebar sidebar-offcanvas active">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <!-- Dashboard Nav -->
+    <li class="nav-item">
+      <a class="nav-link" href="{{url_for('staff_view.dashboard')}}">
+        <i class="fas fa-th"></i>
+        <span>Dashboard</span>
+      </a>
+    </li>
+    <!-- End Dashboard Nav -->
+
+    <!-- Settings -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#settings-nav" data-bs-toggle="collapse" href="#">
+        <i class="fas fa-cog"></i><span>Settings</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="settings-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{{ url_for('staff_view.users')}}">
+            <i class="bi bi-circle"></i><span>Manage Staff</span>
+          </a>
+          <ul id="add-nav" class="nav-content collapse" data-bs-parent="#setting-nav"></ul>
+        </li>
+        <li>
+          <a href="{{ url_for('staff_view.BlockManage')}}">
+            <i class="bi bi-circle"></i><span>Manage Block</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('staff_view.rooms')}}">
+            <i class="bi bi-circle"></i><span>Manage Rooms</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('staff_view.room_type')}}">
+            <i class="bi bi-circle"></i><span>Room Types</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('staff_view.configure')}}">
+            <i class="bi bi-circle"></i><span>Configure</span>
+          </a>
+        </li>
+
+      </ul>
+    </li>
+    <!-- End Setting -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ url_for('staff_view.allotment')}}">
+        <i class="fas fa-th"></i>
+        <span>Allotment</span>
+      </a>
+    </li>
+    <!-- End Allotment Nav -->
+
+    <!-- Reservation Nav -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#forms-nav" data-bs-toggle="collapse" href="#">
+        <i class="fas fa-book"></i><span>Reservation</span><i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="forms-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{{ url_for('staff_view.reserve')}}">
+            <i class="bi bi-circle"></i><span>Reserve Bed</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('staff_view.assign_bed')}}">
+            <i class="bi bi-circle"></i><span>Assign Bed</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- End Reservation Nav -->
+
+
+
+
+    <!-- Messages Nav -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+        <i class="fas fa-comment"></i><span>Messaging</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="icons-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{{ url_for('staff_view.messaging')}}">
+            <i class="bi bi-circle"></i><span>Compose Massage</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- End Messages Nav -->
+    <!-- Students management Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" data-bs-target="#student-nav" data-bs-toggle="collapse" href="#">
+        <i class="fas fa-user-graduate"></i><span>Students Management</span>
+        <i class="bi bi-chevron-down ms-auto"></i>
+      </a>
+      <ul id="student-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+        <li>
+          <a href="{{ url_for('staff_view.add_students')}} ">
+            <i class="bi bi-circle"></i><span>Add Students</span>
+          </a>
+        </li>
+        <li>
+          <a href="{{ url_for('staff_view.student_list') }}">
+            <i class="bi bi-circle"></i><span>Students List</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- End Student Nav -->
+
+
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ url_for('staff_view.profile_info') }}">
+        <i class="fas fa-user"></i>
+        <span>Profile</span>
+      </a>
+    </li>
+    <!-- End Profile Page Nav -->
+
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="{{ url_for('staff_view.logout')}}">
+        <i class="fas fa-arrow-alt-circle-right"></i><span>Log Out</span>
+
+      </a>
+    </li>
+    <!-- End Login Page Nav -->
+  </ul>
+</aside>
+<!-- End Sidebar-->
+{% endblock %}

@@ -1,0 +1,81 @@
+swagger: '2.0'
+info:
+  description: Configure a new booking API
+  version: '1.0.0'
+  title: Configure a new booking
+
+paths:
+  /configure:
+    post:
+      tags:
+        - Configure
+      summary: Create a new booking configuration
+      description: Configure a new booking with provided details
+      operationId: postConfigure
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - in: formData
+          name: created_at
+          description: Date and time of creation
+          required: true
+          type: string
+          format: date-time
+        - in: formData
+          name: updated_at
+          description: Date and time of last update
+          required: true
+          type: string
+          format: date-time
+        - in: formData
+          name: created_by
+          description: Creator of the booking configuration
+          required: true
+          type: string
+        - in: formData
+          name: expiry_date
+          description: Expiry date of the booking configuration
+          required: true
+          type: string
+          format: date
+        - in: formData
+          name: id
+          description: Unique identifier for the booking configuration
+          required: true
+          type: string
+
+      responses:
+        '200':
+          description: OK
+          schema:
+            $ref: '#/definitions/Configure'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+
+definitions:
+  Configure:
+    type: object
+    properties:
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
+      created_by:
+        type: string
+      expiry_date:
+        type: string
+        format: date
+      id:
+        type: string

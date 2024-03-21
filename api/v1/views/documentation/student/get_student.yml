@@ -1,0 +1,100 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Get a Student
+  description: API to retrieve student information by ID
+paths:
+  /students/{id}:
+    get:
+      tags:
+        - Students
+      summary: Get a student by ID
+      description: Retrieve a student by ID
+      operationId: getStudentById
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of the student to retrieve
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response with a student
+          schema:
+            $ref: '#/definitions/Student'
+        '404':
+          description: Student not found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+
+definitions:
+  Student:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique identifier for the Student
+      first_name:
+        type: string
+        description: First name of the Student
+      last_name:
+        type: string
+        description: Last name of the Student
+      other_name:
+        type: string
+        description: Other name of the Student
+      date_of_birth:
+        type: string
+        format: date
+        description: Date of birth of the Student
+      level:
+        type: string
+        description: Student level
+
+      gender:
+        type: string
+        description: Gender of the Student
+      student_number:
+        type: string
+        description: Student number
+      email:
+        type: string
+        description: Email of the Student
+      phone:
+        type: string
+        description: Phone number of the Student
+      address:
+        type: string
+        description: Address of the Student
+      guardian_name:
+        type: string
+        description: Guardian name of the Student
+      guardian_phone:
+        type: string
+        description: Guardian phone number of the Student
+      disability:
+        type: string
+        description: Disability of the Student
+      created_at:
+        type: string
+        format: date-time
+        description: Date and time of Student creation
+      updated_at:
+        type: string
+        format: date-time
+        description: Date and time of last Student update
+
+  NotFoundError:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Error message for 'Not Found'
+        example: Student not found
+      code:
+        type: integer
+        format: int64
+        description: Error code
+        example: 404

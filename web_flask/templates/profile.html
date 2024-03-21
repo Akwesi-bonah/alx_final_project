@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="pagetitle">
+  <h1>Profile</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('staff_view.dashboard') }}">Home</a></li>
+      <li class="breadcrumb-item active">Profile</li>
+    </ol>
+  </nav>
+</div><!-- End Page Title -->
+<section class="section profile">
+  <div class="row">
+    <div class="col-xl-4">
+
+      <div class="card">
+        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
+
+          <h2>Name: {{own.name }}</h2>
+          <h3>Role : {{ own.role }}</h3>
+
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-xl-8">
+
+      <div class="card">
+        <div class="card-body pt-3">
+          <!-- Bordered Tabs -->
+          <ul class="nav nav-tabs nav-tabs-bordered">
+
+            <li class="nav-item">
+              <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+            </li>
+
+            <li class="nav-item">
+              <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+            </li>
+
+
+
+
+          </ul>
+          <div class="tab-content pt-2">
+
+            <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+              <h5 class="card-title">Profile Details</h5>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label ">Full Name</div>
+                <div class="col-lg-9 col-md-8">{{ own.name }}</div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Role</div>
+                <div class="col-lg-9 col-md-8">{{ own.role }}</div>
+              </div>
+
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Phone</div>
+                <div class="col-lg-9 col-md-8">{{ own.phone }}</div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-3 col-md-4 label">Email</div>
+                <div class="col-lg-9 col-md-8">{{ own.email }}</div>
+              </div>
+
+            </div>
+
+            <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+              <!-- Profile Edit Form -->
+              <form action="" class="agnet-contact-form" id="staffFrom" method="post">
+                {{ form.hidden_tag() }}
+                <div class="card-body">
+                  <div class="form-group">
+                    <label>Campus<b class="red">*</b></label>
+                    <div>{{ form.campus(class="form-control", id="campus") }}</div>
+                  </div>
+
+                  <div class="form-group">
+                    <label> Name <b class="red">*</b></label>
+                    <div>
+                      {{ form.staffName(class="form-control text-box single-line",
+                      id="staffName", placeholder="Enter Name") }} {% for error in
+                      form.staffName.errors %}
+                      <span class="field-validation-valid text-danger" data-valmsg-for="staffName"
+                        data-valmsg-replace="true">{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label> Email <b class="red">*</b></label>
+                    <div>
+                      {{ form.staffEmail(class="form-control text-box single-line",
+                      id="staffEmail", placeholder="Enter Email") }} {% for error in
+                      form.staffEmail.errors %}
+                      <span class="field-validation-valid text-danger" data-valmsg-for="staffEmail"
+                        data-valmsg-replace="true">{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label> Phone <b class="red">*</b></label>
+                    <div>
+                      {{ form.staffPhone(class="form-control text-box single-line",
+                      id="staffPhone", placeholder="Enter Phone") }} {% for error in
+                      form.staffPhone.errors %}
+                      <span class="field-validation-valid text-danger" data-valmsg-for="staffPhone"
+                        data-valmsg-replace="true">{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label> Password <b class="red">*</b></label>
+                    <div>
+                      {{ form.userPwd(class="form-control text-box single-line",
+                      id="userPwd", placeholder="New Password") }} {% for error in
+                      form.userPwd.errors %}
+                      <span class="field-validation-valid text-danger" data-valmsg-for="staffPhone"
+                        data-valmsg-replace="true">{{ error }}</span>
+                      {% endfor %}
+                    </div>
+                  </div>
+
+
+
+
+                </div>
+                <!-- /.card-body -->
+
+                <div class="card-footer" data-staff-id="{{own.id}}">
+                  {{ form.submit(class="btn btn-primary showloader float-left",
+                  id="uStaff") }}
+                </div>
+              </form>
+
+            </div>
+
+
+
+
+          </div><!-- End Bordered Tabs -->
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+{% endblock %}

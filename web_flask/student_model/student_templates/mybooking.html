@@ -1,0 +1,114 @@
+{% extends 'Sbase.html' %}
+
+{% block content %}
+<section class="content">
+    <div class="col-12">
+        <div class="card overflow-auto">
+            <div class="card-body">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h4 class="card-title">My Allotment</h4>
+                    <div class="heading-elements">
+                        <a class="btn btn-sm btn-primary box-shadow-2 round btn-min-width pull-right"
+                            href="{{ url_for('student_views.dashboard') }}">Quick Book</a>
+                    </div>
+                </div>
+                <div class="alert alert-danger mt-2" role="alert">
+                    <strong>Notice:</strong> I <b>{{ name }}</b> am aware that I must pay my hostel fees in full to
+                    secure a bed.
+                </div>
+
+                <table class="table table-border datatable">
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Action</th>
+                            <th>Stud ID</th>
+                            <th>Stud Name</th>
+                            <th>Block</th>
+                            <th>Room Type</th>
+                            <th>Room</th>
+                            <th>Bill</th>
+                            <th>Paid</th>
+                            <th>Balance</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for booking in bookings %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>
+                                {% if booking.status == 'pending' %}
+                                <button class="btn btn-primary" data-book-id="{{ booking.id }}"
+                                    id="quickPayBtn">Quick Pay</button>
+                                <button class="btn btn-danger ml-2" data-book-id="{{ booking.id }}"
+                                    id="cancelBook">Cancel</button>
+                                {% else %}
+                                <button class="btn btn-primary">View Details <i class="fas fa-eye"></i></button>
+                                {% endif %}
+                            </td>
+                            <!-- Display other booking details -->
+                            <td>{{ booking.student_number }}</td>
+                            <td>
+                                <a class="nav-link showloader">{{ booking.full_name }}</a>
+                            </td>
+                            <td>{{ booking.block_name }}</td>
+                            <td>{{ booking.room_type_name }}</td>
+                            <td>{{ booking.room_name }}</td>
+                            <td>{{ booking.price }}</td>
+                            <td>{{ booking.paid }}</td>
+                            <td>{{ booking.price - booking.paid }}</td>
+                          <td>
+    {% if booking.status == 'pending' %}
+        <span class="custom-badge pending">Pending</span>
+    {% elif booking.status == 'expired' %}
+        <span class="custom-badge expired">Expired</span>
+    {% elif booking.status == 'cancelled' %}
+        <span class="custom-badge cancelled">Cancelled</span>
+    {% else %}
+        <span class="custom-badge success">Success</span>
+    {% endif %}
+</td>
+
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <!-- /.col-12 -->
+</section>
+
+
+<style>
+/* Custom badge styles */
+.custom-badge {
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-size: 12px;
+    /* Add more styles as needed */
+}
+
+.custom-badge.pending {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.custom-badge.expired {
+    background-color: #17a2b8;
+    color: #fff;
+}
+
+.custom-badge.cancelled {
+    background-color: #dc3545;
+    color: #fff;
+}
+
+.custom-badge.success {
+    background-color: #28a745;
+    color: #fff;
+}
+</style>
+
+{% endblock %}

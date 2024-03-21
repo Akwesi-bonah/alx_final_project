@@ -1,0 +1,71 @@
+swagger: '2.0'
+info:
+  title: Block API - Create a Block
+  description: Endpoint to create a block
+  version: '1.0'
+paths:
+  /blocks:
+    post:
+      summary: Create a block
+      parameters:
+        - name: name
+          in: formData
+          description: Name of block to create
+          required: true
+          type: string
+        - name: description
+          in: formData
+          description: Description of block to create
+          required: true
+          type: string
+        - name: campus
+          in: formData
+          description: Campus of block to create
+          required: true
+          type: string
+      responses:
+        '201':
+          description: Successful response with a block
+          schema:
+            $ref: '#/definitions/Block'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/BadRequest'
+definitions:
+  Block:
+    type: object
+    properties:
+      __class__:
+        type: string
+        example: Block
+      id:
+        type: string
+        example: 0000000000000000000a2c7c2b6b8a8d7e1b1b3b2b1b1b1b1b1b1b1b1b1b1
+      created_at:
+        type: string
+        example: 2020-04-20T20:21:00.000000Z
+      updated_at:
+        type: string
+        example: 2020-04-20T20:21:00.000000Z
+      name:
+        type: string
+        example: Block A
+      description:
+        type: string
+        example: Block A description
+      campus:
+        type: string
+        example: North Campus
+  BadRequest:
+    type: object
+    properties:
+      __class__:
+        type: string
+        example: Block
+      message:
+        type: string
+        example: Bad request
+      code:
+        type: integer
+        example: 400

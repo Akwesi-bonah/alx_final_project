@@ -1,0 +1,68 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding-top: 56px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+
+}
+
+.navbar {
+  background: linear-gradient(135deg, #343a40 0%, #000000 100%);
+  border-radius: 0 0 10px 10px;
+}
+
+.navbar-brand,
+.navbar-nav .nav-link {
+  color: #ffffff;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.navbar-toggler {
+  border-color: #ffffff;
+}
+
+.navbar-toggler-icon {
+  background-color: #ffffff;
+}
+
+.login-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.login-card h2 {
+  color: #333333;
+}
+
+.login-card form input[type="email"],
+.login-card form input[type="password"] {
+  border-radius: 5px;
+  margin-bottom: 15px;
+  padding: 10px;
+}
+
+.login-card form input[type="submit"] {
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #343a40;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+}
+
+.login-card form input[type="submit"]:hover {
+  background-color: #555b62;
+}
+
+.login-card a {
+  color: #343a40;
+}
+
+.login-card a:hover {
+  text-decoration: none;
+  color: #555b62;
+}

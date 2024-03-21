@@ -1,0 +1,94 @@
+swagger: '2.0'
+info:
+  description: API to Retrieve Rooms
+  version: '1.0.0'
+  title: Get Rooms API
+paths:
+  /get_room/{room_id}:
+    get:
+      summary: Retrieve a room by ID
+      parameters:
+        - name: room_id
+          in: path
+          description: ID of the room to retrieve
+          required: true
+          type: string
+          example: '0000000000000000000a2c7c'
+      responses:
+        '200':
+          description: Successful response with room details
+          schema:
+            $ref: '#/definitions/Room'
+        '404':
+          description: Room not found
+          schema:
+            $ref: '#/definitions/NotFound'
+definitions:
+  Room:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique ID of the room
+        example: '0000000000000000000a2c7c'
+      created_at:
+        type: string
+        description: Date and time of room creation
+        example: '2020-04-20T20:21:00.000Z'
+      updated_at:
+        type: string
+        description: Date and time of last room update
+        example: '2020-04-20T20:21:00.000Z'
+      block_id:
+        type: string
+        description: ID of the block associated with the room
+        example: '0000000000000000000a2c7c'
+      room_type_id:
+        type: string
+        description: ID of the room type
+        example: '0000000000000000000a2c7c'
+      room_name:
+        type: string
+        description: Name of the room
+        example: 'A105'
+      gender:
+        type: string
+        description: Gender associated with the room
+        enum: ['Male', 'Female', 'Other']
+        example: 'Male'
+      floor:
+        type: string
+        description: Floor where the room is located
+        example: '1st floor'
+      no_of_beds:
+        type: integer
+        description: Total number of beds in the room
+        example: 2
+      booked_beds:
+        type: integer
+        description: Number of beds booked in the room
+        example: 1
+      reserved_beds:
+        type: integer
+        description: Number of beds reserved in the room
+        example: 1
+      status:
+        type: string
+        description: Current status of the room
+        enum: ['Active', 'Inactive']
+        example: 'Active'
+  NotFound:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Error message for the not found scenario
+        example: 'Room not found'
+      code:
+        type: integer
+        description: HTTP status code for 'Not Found'
+        example: 404
+      status:
+        type: string
+        description: Status description for 'Not Found'
+        example: 'NOT_FOUND'

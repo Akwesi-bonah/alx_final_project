@@ -1,0 +1,83 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Create Staff Information
+  description: API to create staff information
+paths:
+  /staff:
+    post:
+      tags:
+        - Staff
+      summary: Create Staff Information
+      description: Create a new staff member
+      operationId: createStaff
+      produces:
+        - application/json
+      parameters:
+        - name: newStaff
+          in: body
+          description: New Staff information to create
+          required: true
+          schema:
+            $ref: '#/definitions/NewStaff'
+      responses:
+        '201':
+          description: Successful response with the created Staff information
+          schema:
+            $ref: '#/definitions/Staff'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+
+definitions:
+  NewStaff:
+    type: object
+    properties:
+      name:
+        type: string
+        description: Name of the Staff (required)
+      phone:
+        type: string
+        description: Phone number of the Staff
+      email:
+        type: string
+        description: Email of the Staff
+      status:
+        type: string
+        description: Status of the Staff (e.g., 'active', 'inactive')
+
+  Staff:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: Unique identifier for the Staff
+      name:
+        type: string
+        description: Name of the Staff
+      phone:
+        type: string
+        description: Phone number of the Staff
+      email:
+        type: string
+        description: Email of the Staff
+      status:
+        type: string
+        description: Status of the Staff (e.g., 'active', 'inactive')
+      created_at:
+        type: string
+        format: date-time
+        description: Date and time of Staff creation
+      updated_at:
+        type: string
+        format: date-time
+        description: Date and time of last Staff update
+
+  BadRequestError:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Error message for a bad request

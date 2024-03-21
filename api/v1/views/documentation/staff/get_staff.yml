@@ -1,0 +1,72 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Get Staff Information by ID
+  description: API for retrieving staff information by ID
+paths:
+  /staff/{id}:
+    get:
+      tags:
+        - Staff
+      summary: Get Staff Information
+      description: Retrieve a specific Staff's information by its ID
+      operationId: getStaffById
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of the Staff to retrieve
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Successful response with the Staff information
+          schema:
+            $ref: '#/definitions/Staff'
+        '404':
+          description: Staff not found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+
+definitions:
+  Staff:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique identifier for the Staff
+      name:
+        type: string
+        description: Name of the Staff
+      phone:
+        type: string
+        description: Phone number of the Staff
+      email:
+        type: string
+        description: Email of the Staff
+      status:
+        type: string
+        description: Status of the Staff (e.g., 'active', 'inactive')
+      created_at:
+        type: string
+        format: date-time
+        description: Date and time of Staff creation
+      updated_at:
+        type: string
+        format: date-time
+        description: Date and time of last Staff update
+
+  NotFoundError:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Error message for 'Not Found'
+        example: Staff not found
+      code:
+        type: integer
+        format: int64
+        description: Error code
+        example: 404

@@ -1,0 +1,151 @@
+swagger: '2.0'
+info:
+  description: API to Create a Room
+  version: '1.0.0'
+  title: Create Room API
+paths:
+  /rooms:
+    post:
+      summary: Create a new room
+      parameters: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/definitions/NewRoom'
+      responses:
+        '201':
+          description: Room created successfully
+          schema:
+            $ref: '#/definitions/Room'
+          examples:
+            application/json:
+              id: '0000000000000000000a2c7c'
+              created_at: '2023-12-14T12:00:00.000Z'
+              updated_at: '2023-12-14T12:00:00.000Z'
+              block_id: '0000000000000000000a2c7c'
+              room_type_id: '0000000000000000000a2c7c'
+              room_name: 'A105'
+              gender: 'Male'
+              floor: '1st floor'
+              no_of_beds: 2
+              booked_beds: 0
+              reserved_beds: 0
+              status: 'Active'
+        '400':
+          description: Bad request, invalid input
+          schema:
+            $ref: '#/definitions/BadRequest'
+
+definitions:
+  NewRoom:
+    type: object
+    properties:
+      block_id:
+        type: string
+        description: ID of the block associated with the room
+        example: '0000000000000000000a2c7c'
+      room_type_id:
+        type: string
+        description: ID of the room type
+        example: '0000000000000000000a2c7c'
+      room_name:
+        type: string
+        description: Name of the room
+        example: 'A105'
+      gender:
+        type: string
+        description: Gender associated with the room
+        enum: ['Male', 'Female', 'Other']
+        example: 'Male'
+      floor:
+        type: string
+        description: Floor where the room is located
+        example: '1st floor'
+      no_of_beds:
+        type: integer
+        description: Total number of beds in the room
+        example: 2
+      booked_beds:
+        type: integer
+        description: Number of beds booked in the room
+        example: 0
+      reserved_beds:
+        type: integer
+        description: Number of beds reserved in the room
+        example: 0
+      status:
+        type: string
+        description: Current status of the room
+        enum: ['Active', 'Inactive']
+        example: 'Active'
+  Room:
+    type: object
+    properties:
+      id:
+        type: string
+        description: Unique ID of the room
+        example: '0000000000000000000a2c7c'
+      created_at:
+        type: string
+        description: Date and time of room creation
+        example: '2023-12-14T12:00:00.000Z'
+      updated_at:
+        type: string
+        description: Date and time of last room update
+        example: '2023-12-14T12:00:00.000Z'
+      block_id:
+        type: string
+        description: ID of the block associated with the room
+        example: '0000000000000000000a2c7c'
+      room_type_id:
+        type: string
+        description: ID of the room type
+        example: '0000000000000000000a2c7c'
+      room_name:
+        type: string
+        description: Name of the room
+        example: 'A105'
+      gender:
+        type: string
+        description: Gender associated with the room
+        enum: ['Male', 'Female', 'Other']
+        example: 'Male'
+      floor:
+        type: string
+        description: Floor where the room is located
+        example: '1st floor'
+      no_of_beds:
+        type: integer
+        description: Total number of beds in the room
+        example: 2
+      booked_beds:
+        type: integer
+        description: Number of beds booked in the room
+        example: 0
+      reserved_beds:
+        type: integer
+        description: Number of beds reserved in the room
+        example: 0
+      status:
+        type: string
+        description: Current status of the room
+        enum: ['Active', 'Inactive']
+        example: 'Active'
+
+  BadRequest:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Error message for bad request scenario
+        example: 'Invalid input data'
+      code:
+        type: integer
+        description: HTTP status code for 'Bad Request'
+        example: 400
+      status:
+        type: string
+        description: Status description for 'Bad Request'
+        example: 'BAD_REQUEST'

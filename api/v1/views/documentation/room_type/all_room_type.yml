@@ -1,0 +1,85 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Room Type
+  description: API for Room Types
+paths:
+  /room_type:
+    get:
+      tags:
+        - Room Type
+      summary: Get all room types
+      description: Retrieve all available room types
+      operationId: get_all_room_types
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful response with a list of room types
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/RoomType'
+        '404':
+          description: Not Found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+
+definitions:
+  RoomType:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: Unique identifier for the room type
+      name:
+        type: string
+        description: Name of the room type
+      description:
+        type: string
+        description: Description of the room type
+      created_at:
+        type: string
+        format: date-time
+        description: Date and time of room type creation
+      updated_at:
+        type: string
+        format: date-time
+        description: Date and time of last room type update
+      price:
+        type: integer
+        format: int64
+        description: Price of the room type
+      status:
+        type: string
+        description: Status of the room type (e.g., 'active', 'inactive')
+
+  NotFoundError:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Not Found
+        description: Error message indicating resource not found
+      status_code:
+        type: integer
+        example: 404
+        description: HTTP status code for 'Not Found'
+      error_code:
+        type: string
+        example: not_found
+        description: Unique error code for the 'Not Found' error
+      errors:
+        type: array
+        items:
+          type: object
+          properties:
+            field:
+              type: string
+              example: id
+              description: Field causing the 'Not Found' error
+            message:
+              type: string
+              example: Not Found
+              description: Specific error message for the field

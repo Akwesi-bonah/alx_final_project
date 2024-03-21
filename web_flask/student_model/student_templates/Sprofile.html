@@ -1,0 +1,338 @@
+{% extends 'Sbase.html' %}
+{% block content %}
+
+<section class="section profile">
+  <div class="col-xl-10">
+
+    <div class="card" style="width: 100%;">
+      <div class="card-body pt-3">
+        <!-- Bordered Tabs -->
+        <ul class="nav nav-tabs nav-tabs-bordered">
+
+          <li class="nav-item">
+            <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profile-overview">Overview</button>
+          </li>
+
+          <li class="nav-item">
+            <button class="nav-link" data-bs-toggle="tab" data-bs-target="#profile-edit">Edit Profile</button>
+          </li>
+
+
+
+
+
+        </ul>
+        <div class="tab-content pt-2">
+
+          <div class="tab-pane fade show active profile-overview" id="profile-overview">
+
+            <h5 class="card-title">Profile Details</h5>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label">Full Name</div>
+              <div class="col-lg-9 col-md-8">{{ user.first_name }} {{ user.other_name }} {{ user.last_name }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label">Date of Birth</div>
+              <div class="col-lg-9 col-md-8">{{ user.date_of_birth }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label">Gender</div>
+              <div class="col-lg-9 col-md-8">{{ user.gender }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label">Phone</div>
+              <div class="col-lg-9 col-md-8">{{ user.phone }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label">Address</div>
+              <div class="col-lg-9 col-md-8">{{ user.address }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label">Guardian Name</div>
+              <div class="col-lg-9 col-md-8">{{ user.guardian_name }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label">Guardian Phone</div>
+              <div class="col-lg-9 col-md-8">{{ user.guardian_phone }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label">Email</div>
+              <div class="col-lg-9 col-md-8">{{ user.email }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label">Student Number</div>
+              <div class="col-lg-9 col-md-8">{{ user.student_number }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label">Program</div>
+              <div class="col-lg-9 col-md-8">{{ user.program }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label">Level</div>
+              <div class="col-lg-9 col-md-8">{{ user.level }}</div>
+            </div>
+
+            <div class="row">
+              <div class="col-lg-3 col-md-4 label">Disability</div>
+              <div class="col-lg-9 col-md-8">{{ user.disability }}</div>
+            </div>
+
+
+          </div>
+
+          <div class="tab-pane fade profile-edit pt-3" id="profile-edit">
+
+            <!-- Profile Edit Form -->
+            <form method="" enctype="multipart/form-data" id="studentForm" action="#">
+              {{ form.hidden_tag() }}
+              <!-- Personal Information Accordion -->
+              <div class="accordion" id="personalInfoAccordion">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="personalInfoHeading">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#personalInfoCollapse" aria-expanded="true" aria-controls="personalInfoCollapse">
+                      Personal Information
+                    </button>
+                  </h2>
+                  <div id="personalInfoCollapse" class="accordion-collapse collapse show"
+                    aria-labelledby="personalInfoHeading" data-bs-parent="#personalInfoAccordion">
+                    <div class="accordion-body">
+                      <div class="row g-3">
+                        <!-- Other personal info fields -->
+                        <div class="col-md-4">
+                          {{ form.first_name.label(class="form-label") }}
+                          {{ form.first_name(class="form-control", id="first_name") }}
+                        </div>
+                        {% if form.first_name.errors %}
+                        <div class="invalid-feedback">
+                          {% for error in form.first_name.errors %}
+                          <span>{{ error }}</span><br>
+                          {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <div class="col-md-4">
+                          {{ form.last_name.label(class="form-label") }}
+                          {{ form.last_name(class="form-control", id="last_name") }}
+                        </div>
+                        {% if form.last_name.errors %}
+                        <div class="invalid-feedback">
+                          {% for error in form.last_name.errors %}
+                          <span>{{ error }}</span><br>
+                          {% endfor %}
+                        </div>
+                        {% endif %}
+                        <div class="col-md-4">
+                          {{ form.other_name.label(class="form-label") }}
+                          {{ form.other_name(class="form-control", id="other_name") }}
+                        </div>
+                        <div class="col-md-4">
+                          {{ form.email.label(class="form-label") }}
+                          {{ form.email(class="form-control", id="email") }}
+                        </div>
+                        {% if form.email.errors %}
+                        <div class="invalid-feedback">
+                          {% for error in form.email.errors %}
+                          <span>{{ error }}</span><br>
+                          {% endfor %}
+                        </div>
+                        {% endif %}
+
+
+
+                        <div class="col-md-4">
+                          {{ form.phone.label(class="form-label") }}
+                          {{ form.phone(class="form-control", id="phone") }}
+                        </div>
+                        {% if form.phone.errors %}
+                        <div class="invalid-feedback">
+                          {% for error in form.phone.errors %}
+                          <span>{{ error }}</span><br>
+                          {% endfor %}
+                        </div>
+                        {% endif %}
+                        <div class="col-md-4">
+                          {{ form.date_of_birth.label(class="form-label") }}
+                          {{ form.date_of_birth(class="form-control", id="date_of_birth") }}
+                        </div>
+                        {% if form.date_of_birth.errors %}
+                        <div class="invalid-feedback">
+                          {% for error in form.date_of_birth.errors %}
+                          <span>{{ error }}</span><br>
+                          {% endfor %}
+                        </div>
+                        {% endif %}
+
+                        <div class="col-md-4">
+                          {{ form.address.label(class="form-label") }}
+                          {{ form.address(class="form-control", id="address") }}
+                        </div>
+                        {% if form.address.errors %}
+                        <div class="invalid-feedback">
+                          {% for error in form.address.errors %}
+                          <span>{{ error }}</span><br>
+                          {% endfor %}
+                        </div>
+                        {% endif %}
+                        <div class="col-md-4">
+                          {{ form.gender.label(class="form-label") }}
+                          {{ form.gender(class="form-control", id="gender") }}
+                        </div>
+                        {% if form.gender.errors %}
+                        <div class="invalid-feedback">
+                          {% for error in form.gender.errors %}
+                          <span>{{ error }}</span><br>
+                          {% endfor %}
+                        </div>
+                        {% endif %}
+                        <div class="col-md-4">
+                          {{ form.disability.label(class="form-label") }}
+                          {{ form.disability(class="form-control", id="disability") }}
+                        </div>
+                        {% if form.disability.errors %}
+                        <div class="invalid-feedback">
+                          {% for error in form.disability.errors %}
+                          <span>{{ error }}</span><br>
+                          {% endfor %}
+                        </div>
+                        {% endif %}
+                        <div class="col-md-4">
+                          {{ form.password.label(class="form-label") }}
+                          {{ form.password(class="form-control", id="password") }}
+                        </div>
+                        {% if form.password.errors %}
+                        <div class="invalid-feedback">
+                          {% for error in form.password.errors %}
+                          <span>{{ error }}</span><br>
+                          {% endfor %}
+                        </div>
+                        {% endif %}
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <br>
+              <div class="accordion" id="guardianAccordion">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="guardianHeading">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#guardianCollapse" aria-expanded="false" aria-controls="guardianCollapse">
+                      Guardian Information
+                    </button>
+                  </h2>
+                  <div id="guardianCollapse" class="accordion-collapse collapse" aria-labelledby="guardianHeading"
+                    data-bs-parent="#guardianAccordion">
+                    <div class="accordion-body">
+                      <div class="row g-3">
+                        <!-- Other guardian info fields -->
+                        <div class="col-md-4">
+                          {{ form.guardian_name.label(class="form-label") }}
+                          {{ form.guardian_name(class="form-control", id="guardian_name") }}
+                        </div>
+                        <div class="col-md-4">
+                          {{ form.guardian_phone.label(class="form-label") }}
+                          {{ form.guardian_phone(class="form-control", id="guardian_phone") }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <br>
+              <!-- Guardian Information Accordion -->
+              <div class="accordion" id="SchoolAccordion">
+                <div class="accordion-item">
+                  <h2 class="accordion-header" id="schoolHeading">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                      data-bs-target="#schoolCollapse" aria-expanded="false" aria-controls="guardianCollapse">
+                      School Information
+                    </button>
+                  </h2>
+                  <div id="schoolCollapse" class="accordion-collapse collapse" aria-labelledby="schoolHeading"
+                    data-bs-parent="#SchoolAccordion">
+                    <div class="accordion-body">
+                      <div class="row g-3">
+                        <!-- Other guardian info fields -->
+                        <div class="col-md-4">
+                          {{ form.student_number.label(class="form-label") }}
+                          {{ form.student_number(class="form-control", id="student_number") }}
+                        </div>
+                        <div class="col-md-4">
+                          {{ form.program.label(class="form-label") }}
+                          {{ form.program(class="form-control", id="program") }}
+                        </div>
+                        <div class="col-md-4">
+                          {{ form.level.label(class="form-label") }}
+                          {{ form.level(class="form-control", id="level") }}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <!-- Profile Picture Upload -->
+              <!--          <div class="mt-3">-->
+
+              <!--            {{ form.profile_picture.label(class="form-label") }}-->
+              <!--            {{ form.profile_picture(class="form-control", id="profile_picture") }}-->
+              <!--            <br>-->
+              <!--            <img id="preview" src="#" alt="Preview" style="max-width: 200px; max-height: 200px; display: none;">-->
+              <!--            {% if form.profile_picture.errors %}-->
+              <!--            <div class="invalid-feedback">-->
+              <!--              {% for error in form.profile_picture.errors %}-->
+              <!--              <span>{{ error }}</span><br>-->
+              <!--              {% endfor %}-->
+              <!--            </div>-->
+              <!--            {% endif %}-->
+              <!--          </div>-->
+
+              <!--          <script>-->
+              <!--            document.getElementById('profile_picture').addEventListener('change', function (event) {-->
+              <!--              var input = event.target;-->
+              <!--              var preview = document.getElementById('preview');-->
+
+              <!--              if (input.files && input.files[0]) {-->
+              <!--                var reader = new FileReader();-->
+
+              <!--                reader.onload = function (e) {-->
+              <!--                  preview.style.display = 'block';-->
+              <!--                  preview.src = e.target.result;-->
+              <!--                }-->
+
+              <!--                reader.readAsDataURL(input.files[0]);-->
+              <!--              }-->
+              <!--            });-->
+              <!--          </script>-->
+
+              <div class="mt-3" data-student-id="{{ session['user_id'] }}">
+{{ form.submit(id="updateSelf", class="btn btn-primary", **{'data-student-id': session['user_id']}) }}
+              </div>
+            </form>
+
+          </div>
+
+
+
+        </div><!-- End Bordered Tabs -->
+
+      </div>
+    </div>
+
+  </div>
+  </div>
+</section>
+{% endblock %}

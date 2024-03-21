@@ -1,0 +1,69 @@
+swagger: '2.0'
+info:
+  description: 'This is the documentation for the payment information'
+  version: '1.0.0'
+  title: 'Payment information'
+
+paths:
+  /payment:
+    post:
+      tags:
+        - Payment
+      summary: Create payment information
+      description: Create payment information for a booking
+      operationId: createPaymentInfo
+      consumes:
+        - application/json
+      produces:
+        - application/json
+      parameters:
+        - name: payment_info
+          in: body
+          description: Payment information to be created
+          required: true
+          schema:
+            $ref: '#/definitions/PaymentInfo'
+      responses:
+        '201':
+          description: Payment information created successfully
+          schema:
+            $ref: '#/definitions/PaymentInfo'
+        '400':
+          description: Bad request, invalid input
+          schema:
+            $ref: '#/definitions/BadRequestError'
+
+definitions:
+  PaymentInfo:
+    type: object
+    properties:
+      booking_id:
+        type: string
+        description: Unique identifier for the booking
+      amount:
+        type: number
+        description: Payment amount
+      method:
+        type: string
+        description: Payment method (e.g., credit card, cash)
+      status:
+        type: string
+        description: Payment status (e.g., 'paid', 'pending')
+
+  BadRequestError:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Error message for bad request
+        errors:
+            type: array
+            items:
+                type: object
+                properties:
+                field:
+                    type: string
+                    description: Field that caused the error
+                message:
+                    type: string
+                    description: Error message for the field

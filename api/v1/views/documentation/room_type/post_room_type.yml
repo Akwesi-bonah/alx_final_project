@@ -1,0 +1,79 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Create Room Type API
+  description: API to create Room Type information
+paths:
+  /room_type:
+    post:
+      tags:
+        - Room Type
+      summary: Create Room Type
+      description: Create a new Room Type
+      operationId: createRoomType
+      produces:
+        - application/json
+      parameters:
+        - name: roomType
+          in: body
+          description: Room Type object with information to create
+          required: true
+          schema:
+            $ref: '#/definitions/RoomType'
+      responses:
+        '201':
+          description: Successful response with the created Room Type
+          schema:
+            $ref: '#/definitions/RoomType'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: '#/definitions/BadRequestError'
+        '409':
+          description: Conflict
+          schema:
+            $ref: '#/definitions/ConflictError'
+
+definitions:
+  RoomType:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int64
+        description: Unique identifier for the Room Type
+      name:
+        type: string
+        description: Name of the Room Type
+      description:
+        type: string
+        description: Description of the Room Type
+      created_at:
+        type: string
+        format: date-time
+        description: Date and time of Room Type creation
+      updated_at:
+        type: string
+        format: date-time
+        description: Date and time of last Room Type update
+      price:
+        type: integer
+        format: int64
+        description: Price of the Room Type
+      status:
+        type: string
+        description: Status of the Room Type
+
+  BadRequestError:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Error message for a bad request
+
+  ConflictError:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Error message for a conflict

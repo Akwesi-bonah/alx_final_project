@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Academy Haven Hostel Management System</title>
+  <link href="{{ url_for('static', filename='assets/img/hostel.png') }}" rel="icon">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link href="{{url_for ('static', filename='css/student.css')}}" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0-beta3/css/all.min.css">
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <!-- Load jQuery -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <!-- Other scripts dependent on jQuery -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+</head>
+
+<body>
+  <!--*******************
+        Preloader start
+    ********************-->
+  <div id="preloader">
+    <div class="sk-three-bounce">
+      <div class="sk-child sk-bounce1"></div>
+      <div class="sk-child sk-bounce2"></div>
+      <div class="sk-child sk-bounce3"></div>
+    </div>
+  </div>
+
+  <div id="main-wrapper">
+
+    <div class="nav-header">
+      <a href="" class="brand-logo">
+        <p> HMS</p>
+
+      </a>
+
+      <div class="nav-control">
+        <div class="hamburger">
+          <span class="line"></span><span class="line"></span><span class="line"></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="header">
+      <div class="header-content">
+        <nav class="navbar navbar-expand">
+          <div class="collapse navbar-collapse justify-content-between">
+            <div class="header-left">
+              <div class="search_bar dropdown">
+                <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
+                </span>
+
+              </div>
+            </div>
+
+            <ul class="navbar-nav header-right">
+
+              <li class="nav-item dropdown header-profile">
+                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
+                  <i class="fas fa-user"></i>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right">
+                  <a href="{{ url_for('student_views.student_profile')}}" class="dropdown-item">
+                    <i class="fas fa-user"></i>
+                    <span class="ml-2">Profile </span>
+                  </a>
+                  <a href="" class="dropdown-item">
+                    <i class="icon-key"></i>
+                    <span class="ml-2">Logout </span>
+                  </a>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </div>
+
+    <div class="quixnav navigation-main">
+      <div class="quixnav-scroll">
+        <ul class="metismenu" id="menu">
+
+          <li>
+            <a class="has-arrow" href="{{url_for('student_views.dashboard')}}" aria-expanded="false"><i
+                class="fas fa-book"></i><span class="nav-text">Bookings</span></a>
+
+          </li>
+
+          <li>
+            <a class="has-arrow" href="{{ url_for('student_views.my_bookings')}}" aria-expanded="false"><i
+                class="fas fa-book"></i><span class="nav-text">My Bookings</span></a>
+
+          </li>
+          <li>
+            <a class="has-arrow" href="{{ url_for('student_views.student_profile')}}" aria-expanded="false"><i
+                class="fas fa-user"></i><span class="nav-text">Profile</span></a>
+          </li>
+
+          <li>
+            <a class="has-arrow" href="{{ url_for('student_views.Slogout')}}" aria-expanded="false"><i
+                class="fas fa-key"></i><span class="nav-text">Logout</span></a>
+          </li>
+
+        </ul>
+      </div>
+    </div>
+
+    <main>
+
+      <div class="content-body">
+        <div class="container-fluid">
+          <div class="row page-titles mx-0">
+            {% block content %}
+            <section class="content">
+              <div class="col-12">
+                <div class="card recent-sales overflow-auto">
+
+
+                  <div class="card-body">
+                    <h5 class="card-title"><span>Available Rooms</span></h5>
+                    <div class="filter-section mb-3">
+                      <label for="blockFilter">Filter by Block:</label>
+                      <select id="blockFilter" class="form-select">
+                        <option value="">All Blocks</option>
+                        {% for block in blocks %}
+                        <option value="{{ block.id }}">{{ block.name }}</option>
+                        {% endfor %}
+                      </select>
+
+                      <label for="roomTypeFilter">Filter by Room Type:</label>
+                      <select id="roomTypeFilter" class="form-select">
+                        <option value="">All Room Types</option>
+                        {% for room_type in room_types %}
+                        <option value="{{ room_type.id }}">{{ room_type.name }}</option>
+                        {% endfor %}
+                      </select>
+                    </div>
+
+                    <table class="table table-border datatable">
+                      <thead>
+                        <tr>
+                          <th class="border-top-0">Block</th>
+                          <th class="border-top-0" style="max-width: 300px">Room type</th>
+                          <th class="border-top-0">Floor</th>
+                          <th class="border-top-0">Gender</th>
+                          <th class="border-top-0">Room #</th>
+                          <th class="border-top-0">Available Beds</th>
+                          <th class="border-top-0">Amount</th>
+                          <th class="border-top-0"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {% for room in rooms %}
+                        <tr>
+                          <td class="text-truncate">
+                            <a>{{ room.block_name }}</a>
+                          </td>
+                          <td class="" style="max-width: 300px">
+                            {{ room.room_type_name }}
+                          </td>
+                          <td class="text-truncate">{{ room.floor }}</td>
+                          <td class="text-truncate">{{ room.gender }}</td>
+                          <td>
+                            <div class="product-color">
+                              <strong>Room # :</strong> {{ room.room_name }}
+                            </div>
+                          </td>
+                          <td class="">
+                            <button type="button" class="btn btn-sm btn-outline-info round">
+                              {{ room.no_of_beds }}
+                            </button>
+                          </td>
+                          <td class="text-truncate">GHC <span>{{ room.price }}</span></td>
+                          <td>
+                            <div>
+                              <a href="#0" class="btn btn-info btn-glow round px-2 bkrm studbook"
+                                data-room-id="{{ room.id }}" data-user-id="{{ session['user_id'] }}">Book Now</a>
+                            </div>
+                          </td>
+                        </tr>
+                        {% endfor %}
+                      </tbody>
+                    </table>
+
+                  </div>
+                </div>
+              </div>
+              <!-- /.row -->
+            </section>
+          </div>
+          {% endblock %}
+        </div>
+
+
+      </div>
+    </main>
+    <div class="footer">
+      <div class="copyright">
+        <p>
+          © Academy Haven
+          <a href="#" target="_blank"></a>
+        </p>
+      </div>
+    </div>
+  </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='assets/js/global.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='js/custom.min.js')}}"></script>
+  <script src="{{ url_for('static', filename='assets/js/quixnav-init.js')}}"></script>
+
+  <script type="module"  src="{{ url_for('static', filename='js/bookings.js') }}"></script>
+  <script type="module"  src="{{ url_for('static', filename='js/bookings.js') }}"></script>
+  <script type="module"  src="{{ url_for('static', filename='js/student_profile.js') }}"></script>
+  <script type="module"  src="{{ url_for('static', filename='js/mybooking.js') }}"></script>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+</body>
+
+</html>

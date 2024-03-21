@@ -1,0 +1,105 @@
+{% extends 'base.html' %} {% block content %}
+
+<div class="pagetitle">
+  <h1>Allotment</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item"><a href="{{ url_for('staff_view.dashboard')}}">Home</a></li>
+      <li class="breadcrumb-item active">Allotment</li>
+    </ol>
+  </nav>
+</div>
+<section class="content">
+  <div class="col-12">
+    <div class="card recent-sales overflow-auto">
+      <div class="card-body">
+        <h5 class="card-title"><span>Allotment List</span></h5>
+
+        <table class="table table-border datatable">
+          <thead>
+            <tr>
+              <th scope="col" class="sorting_asc" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                aria-sort="ascending" aria-label="#: activate to sort column descending" style="width: 19.5938px">
+                #
+              </th>
+              <th scope="col" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                aria-label="Stud ID: activate to sort column ascending" style="width: 139.641px">
+                student ID
+              </th>
+              <th scope="col" class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                aria-label="Stud Name: activate to sort column ascending" style="width: 185.828px">
+                Student Name
+              </th>
+              <th scope="col" class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                aria-label="Phone Number: activate to sort column ascending" style="width: 108.578px">
+                Phone Number
+              </th>
+              <th scope="col" class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                aria-label="Block: activate to sort column ascending" style="width: 85.375px">
+                Block
+              </th>
+
+
+              <th scope="col" class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                aria-label="Room-type: activate to sort column ascending" style="width: 65.8281px">
+                Room Type
+              </th>
+
+              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                aria-label="Room: activate to sort column ascending" style="width: 65.8281px">
+                Room Number
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                aria-label="Bill: activate to sort column ascending" style="width: 65.8281px">
+                Bill
+              </th>
+
+              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                aria-label="Room: activate to sort column ascending" style="width: 65.8281px">
+                Paid
+              </th>
+
+              <th class="sorting" tabindex="0" aria-controls="example1" rowspan="1" colspan="1"
+                aria-label="Room: activate to sort column ascending" style="width: 65.8281px">
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {% if allotment %} {% for allot in allotment %}
+            <!-- Display table rows here -->
+            <tr class="">
+              <th scope="row"></th>
+              <td>{{ allot.student_number }}</td>
+              <td><a href="#" class="text-primary">{{ allot.student_name }}</a></td>
+              <td>{{ allot.phone }}</td>
+              <td>{{ allot.block_name }}</td>
+
+              <td>{{ allot.room_type }}</td>
+              <td>{{ allot.room_no }}</td>
+              <td>{{ allot.price }}</td>
+              <td>{{ allot.paid }}</td>
+              {% if allot.status == "Paid" %}
+              <td><span class="badge bg-success">{{ allot.status }}</span></td>
+              {% else %}
+              <td><span class="badge bg-danger">{{ allot.status }}</span></td>
+              {% endif %}
+            </tr>
+            {% endfor %} {% else %}
+            <tr>
+              <td valign="top" colspan="11" class="dataTables_empty">
+                No matching records found
+              </td>
+            </tr>
+            {% endif %}
+
+
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+  </div>
+  <!-- /.row -->
+</section>
+{% endblock %}

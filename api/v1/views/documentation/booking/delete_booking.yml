@@ -1,0 +1,67 @@
+swagger: '2.0'
+info:
+  title: Booking API - Cancel a Booking
+  description: Endpoint to cancel a booking
+  version: '1.0'
+paths:
+  /bookings/{id}:
+    delete:
+      summary: Cancel a booking
+      parameters:
+        - name: id
+          in: path
+          description: ID of booking to cancel
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response with a booking
+          schema:
+            $ref: '#/definitions/Booking'
+        '404':
+          description: Booking not found
+          schema:
+            $ref: '#/definitions/NotFound'
+definitions:
+  Booking:
+    type: object
+    properties:
+      __class__:
+        type: string
+        example: Booking
+      id:
+        type: string
+        example: 0000000000000000000a2c7c2b6b8a8d7e1b1b3b2b1b1b1b1b1b1b1b1b1b1
+      created_at:
+        type: string
+        example: 2020-04-20T20:21:00.000000Z
+      updated_at:
+        type: string
+        example: 2020-04-20T20:21:00.000000Z
+      name:
+        type: string
+        example: Booking A
+      description:
+        type: string
+        example: Booking A description
+      campus:
+        type: string
+        example: North Campus
+      block:
+        type: string
+        example: Block A
+      paid:
+        type: integer
+        example: 120
+  NotFound:
+    type: object
+    properties:
+      __class__:
+        type: string
+        example: Booking
+      message:
+        type: string
+        example: Booking not found
+      code:
+        type: integer
+        example: 404

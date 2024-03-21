@@ -1,0 +1,64 @@
+swagger: '2.0'
+info:
+  title: Block API - Retrieve a Block
+  description: Endpoint to retrieve a block
+  version: '1.0'
+paths:
+  /blocks/{id}:
+    get:
+      summary: Retrieve a block
+      parameters:
+        - name: id
+          in: path
+          description: ID of block to retrieve
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful response with a block
+          schema:
+            $ref: '#/definitions/Block'
+        '404':
+          description: Block not found
+          schema:
+            $ref: '#/definitions/NotFound'
+definitions:
+  Block:
+    type: object
+    properties:
+      __class__:
+        type: string
+        example: Block
+      id:
+        type: string
+        example: 0000000000000000000a2c7c2b6b8a8d7e1b1b3b2b1b1b1b1b1b1b1b1b1b1b1
+      created_at:
+        type: string
+        example: 2020-04-20T20:21:00.000000Z
+      updated_at:
+        type: string
+        example: 2020-04-20T20:21:00.000000Z
+      name:
+        type: string
+        example: Block A
+      description:
+        type: string
+        example: Block A description
+      campus:
+        type: string
+        example: North Campus
+  NotFound:
+    type: object
+    properties:
+      __class__:
+        type: string
+        example: Block
+      message:
+        type: string
+        example: Block not found
+      code:
+        type: integer
+        example: 404
+      status:
+        type: string
+        example: NOT_FOUND

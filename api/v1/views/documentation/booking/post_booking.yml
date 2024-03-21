@@ -1,0 +1,80 @@
+swagger: '2.0'
+info:
+  title: Booking API - Create a Booking
+  description: Endpoint to create a booking
+  version: '1.0'
+paths:
+  /bookings:
+    post:
+      summary: Create a booking
+      parameters:
+        - name: room_id
+          in: formData
+          description: ID of room to create
+          required: true
+          type: string
+        - name: student_id
+          in: formData
+          description: ID of student to create
+          required: true
+          type: string
+        - name: paid
+          in: formData
+          description: Paid of booking to create
+          required: true
+          type: integer
+        - name: status
+          in: formData
+          description: Status of booking to create
+          required: true
+          type: string
+
+      responses:
+        '201':
+          description: Successful response with a booking
+          schema:
+            $ref: '#/definitions/Booking'
+        '400':
+          description: Bad request
+          schema:
+            $ref: '#/definitions/BadRequest'
+definitions:
+  Booking:
+    type: object
+    properties:
+      __class__:
+        type: string
+        example: Booking
+      id:
+        type: string
+        example: 0000000000000000000a2c7c2b6b8a8d7e1b1b3b2b1b1b1b1b1b1b1b1b1b1
+      created_at:
+        type: string
+        example: 2020-04-20T20:21:00.000000Z
+      updated_at:
+        type: string
+        example: 2020-04-20T20:21:00.000000Z
+      room_id:
+        type: string
+        example: 0000000000000000000a2c7c2b6b8a8d7e1b1b3b2b1b1b1b1b1b1b1b1b1b1
+      student_id:
+        type: string
+        example: 0000000000000000000a2c7c2b6b8a8d7e1b1b3b2b1b1b1b1b1b1b1b1b1b1
+    paid:
+        type: integer
+        example: 120
+    status:
+        type: string
+        example: pending
+  BadRequest:
+    type: object
+    properties:
+      __class__:
+        type: string
+        example: Booking
+      message:
+        type: string
+        example: Bad request
+      code:
+        type: integer
+        example: 400

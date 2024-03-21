@@ -1,0 +1,135 @@
+{% extends 'base.html' %}
+{% block content %}
+<H1>Configure Duration</H1>
+<section class="content">
+  <div class="col-12">
+    <div class="card recent-sales overflow-auto">
+      <div class="card-body">
+        <h5 class="card-title"><span>Configuration History</span></h5>
+
+        <table class="table table-border datatable">
+          <thead>
+            <tr role="row">
+              <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 30.5833px" aria-sort="ascending" aria-label="#: activate to sort column descending">
+                #
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 284.2px" aria-label="
+                                       Campus
+                                    : activate to sort column ascending">
+                created By
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 369.1px" aria-label="
+                                        Name
+                                    : activate to sort column ascending">
+                Date Created
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 199.217px" aria-label="
+                                        Description
+                                    : activate to sort column ascending">
+                Expiry Date
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 96.3px" aria-label="
+                                        Action
+                                    : activate to sort column ascending">
+                Status
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for con in configure %}
+            <tr>
+              <td></td>
+              <td>{{ con.staff_name }}</td>
+              <td>{{ con.start_date }}</td>
+              <td>{{ con.end_date }}</td>
+              <td>
+                {% if con.status == 'active' %}
+                <span class="badge bg-success">{{ con.status }}</span>
+                {% else %}
+                <span class="badge bg-danger">{{ con.status }}</span>
+                {% endif %}
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#configure">
+          Create New
+        </button>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="modal fade md-col2" id="configure" tabindex="-1" aria-labelledby="roomHead" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="roomHead">Create New Configuration</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close">
+        </button>
+      </div>
+      <!-- Modal Body -->
+      <div class="modal-body ">
+        <div role="form">
+          {% if error %}
+          <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>{{ error }}</strong>
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+          {% endif %}
+          <form action="" class="agnet-contact-form" id="RoomForm" method="post">
+            {{ form.hidden_tag() }}
+            <div class="card-body">
+              <div class="form-group">
+                <label>Start Date<b class="red">*</b></label>
+                <div>
+                  {{ form.start_date(class="form-control", id="startDate",
+                  placeholder="Start Date") }}
+                  {% for error in form.start_date.errors %}
+                  <span class="field-validation-valid text-danger" data-valmsg-for="roomNo"
+                    data-valmsg-replace="true">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>End Date<b class="red">*</b></label>
+                <div>
+                  {{ form.end_date(class="form-control", id="endDate", placeholder="End Date") }}
+                  {% for error in form.end_date.errors %}
+                  <span class="field-validation-valid text-danger" data-valmsg-for="roomType"
+                    data-valmsg-replace="true">{{ error }}</span>
+                  {% endfor %}
+                </div>
+              </div>
+              <br>
+            <div class="card-footer">
+             {{ form.submit(class="btn btn-primary float-left", id="setConfig", **{"data-user-id": session['user_id']}) }}
+
+
+            </div>
+            </div>
+          </form>
+
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

@@ -1,0 +1,43 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Delete Staff Information
+  description: API to delete staff information by ID
+paths:
+  /staff/{id}:
+    delete:
+      tags:
+        - Staff
+      summary: Delete Staff Information
+      description: Delete a specific Staff's information by its ID
+      operationId: deleteStaffById
+      produces:
+        - application/json
+      parameters:
+        - name: id
+          in: path
+          description: ID of the Staff to delete
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '204':
+          description: Staff deleted successfully
+        '404':
+          description: Staff not found
+          schema:
+            $ref: '#/definitions/NotFoundError'
+
+definitions:
+  NotFoundError:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Error message for 'Not Found'
+        example: Staff not found
+      code:
+        type: integer
+        format: int64
+        description: Error code
+        example: 404

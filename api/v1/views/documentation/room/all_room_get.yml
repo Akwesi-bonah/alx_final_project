@@ -1,0 +1,100 @@
+swagger: '2.0'
+info:
+  version: '1.0.0'
+  title: All Rooms API
+  description: Retrieve all Rooms
+paths:
+  /rooms:
+    get:
+      summary: Retrieve all rooms
+      tags:
+        - Rooms
+      operationId: getAllRooms
+      responses:
+        '200':
+          description: Successful response with a list of all rooms
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Room'
+        '404':
+          description: Room not found
+          schema:
+            $ref: '#/definitions/NotFound'
+
+definitions:
+  Room:
+    type: object
+    properties:
+      __class__:
+        type: string
+        example: Block
+        description: Class of the room
+      id:
+        type: string
+        example: '0000000000000000000a2c7c2b6b8a8d7e1b1b3b2b1b1b1b1b1b1b1b1b1b1'
+        description: Unique ID of the room
+      created_at:
+        type: string
+        example: '2020-04-20T20:21:00.000000Z'
+        description: Date and time of room creation
+      updated_at:
+        type: string
+        example: '2020-04-20T20:21:00.000000Z'
+        description: Date and time of last room update
+      block_id:
+        type: string
+        example: '0000000000000000000a2c7c2b6b8a8d7e1b1b3b2b1b1b1b1b1b1b1b1b1b1'
+        description: ID of the block associated with the room
+      room_type_id:
+        type: string
+        example: '0000000000000000000a2c7c2b6b8a8d7e1b1b3b2b1b1b1b1b1b1b1b1b1b1'
+        description: ID of the room type
+      room_name:
+        type: string
+        example: A105
+        description: Name of the room
+      gender:
+        type: string
+        example: Male
+        description: Gender associated with the room
+      floor:
+        type: string
+        example: 1 floor
+        description: Floor where the room is located
+      no_of_beds:
+        type: string
+        example: '2'
+        description: Total number of beds in the room
+      booked_beds:
+        type: string
+        example: '1'
+        description: Number of beds booked in the room
+      reserved_beds:
+        type: string
+        example: '1'
+        description: Number of beds reserved in the room
+      status:
+        type: string
+        example: Active
+        description: Current status of the room
+
+  NotFound:
+    type: object
+    properties:
+      __class__:
+        type: string
+        example: Block
+        description: Class of the not found object
+      message:
+        type: string
+        example: Block not found
+        description: Error message for the not found scenario
+      code:
+        type: integer
+        example: 404
+        description: HTTP status code for 'Not Found'
+      status:
+        type: string
+        example: NOT_FOUND
+        description: Status description for 'Not Found'

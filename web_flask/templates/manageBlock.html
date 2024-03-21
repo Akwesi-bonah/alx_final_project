@@ -1,0 +1,153 @@
+{% extends 'base.html' %} {% block content %}
+<div class="pagetitle">
+  <h1>Block Management</h1>
+  <nav>
+    <ol class="breadcrumb">
+      <li class="breadcrumb-item">
+        <a href="{{ url_for('staff_view.dashboard')}}">Home</a>
+      </li>
+      <li class="breadcrumb-item active">Block List</li>
+    </ol>
+  </nav>
+</div>
+<section class="content">
+  <div class="col-12">
+    <div class="card recent-sales overflow-auto">
+      <div class="card-body">
+        <h5 class="card-title"><span>Block List</span></h5>
+
+        <table class="table table-border datatable">
+          <thead>
+            <tr role="row">
+              <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 30.5833px" aria-sort="ascending" aria-label="#: activate to sort column descending">
+                #
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 284.2px" aria-label="
+                                       Campus
+                                    : activate to sort column ascending">
+                Campus
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 369.1px" aria-label="
+                                        Name
+                                    : activate to sort column ascending">
+                Name
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 199.217px" aria-label="
+                                        Description
+                                    : activate to sort column ascending">
+                Description
+              </th>
+              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
+                style="width: 96.3px" aria-label="
+                                        Action
+                                    : activate to sort column ascending">
+                Action
+              </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {% for block in blocks %}
+            <tr>
+              <td></td>
+              <td>{{ block.campus }}</td>
+              <td>{{ block.name }}</td>
+              <td>{{ block.description }}</td>
+              <td>
+                <a href="#" class="btn btn-sm btn-info showloader blockEditBtn" data-block-id="{{ block.id }}">Edit
+                </a>
+                <a href="#" class="btn btn-sm btn-danger showloader blockDeleteBtn" data-block-id="{{ block.id }}">
+                  Delete
+                </a>
+              </td>
+            </tr>
+            {% endfor %}
+          </tbody>
+
+        </table>
+      </div>
+      <div class="card-footer">
+        <button type="button" class="btn btn-primary createNewButton" data-bs-toggle="modal" data-bs-target="#createUpdate">
+          Create New
+        </button>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Modal -->
+
+<div class="modal fade md-col2" id="createUpdate" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+
+      <!-- Modal Header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add/Update Block</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <!-- Modal Body -->
+      <div class="modal-body ">
+        <!-- Your form content goes here -->
+        <form action="" class="agnet-contact-form" id="FormPost" method="post">
+          {{ form.hidden_tag() }}
+          <div class="card-body">
+            <div class="mb-3">
+              <label class="form-label">Campus <b class="red">*</b></label>
+              <div>
+                {{ form.campus(class="form-control", id="campus") }}
+                {% for error in form.campus.errors %}
+                <span class="field-validation-valid text-danger">{{ error }}</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Name <b class="red">*</b></label>
+              <div>
+                {{ form.name(class="form-control", id="name", placeholder="Enter Name") }}
+                {% for error in form.name.errors %}
+                <span class="field-validation-valid text-danger">{{ error }}</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Description <b class="red">*</b></label>
+              <div>
+                {{ form.description(class="form-control", id="description", placeholder="Description", rows="8") }}
+                {% for error in form.description.errors %}
+                <span class="field-validation-valid text-danger">{{ error }}</span>
+                {% endfor %}
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Status</label>
+              <div>
+                {{ form.status(class="form-control", id="status") }}
+                {% for error in form.status.errors %}
+                <span class="field-validation-valid text-danger">{{ error }}</span>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+          <!-- /.card-body -->
+
+          <div class="card-footer">
+            {{ form.submit(class="btn btn-primary showloader float-left", id="AddBlock") }}
+             {{ form.submit(class="btn btn-primary showloader float-left", id="updateBlock") }}
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+{% endblock %}

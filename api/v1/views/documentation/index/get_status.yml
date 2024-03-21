@@ -1,0 +1,29 @@
+swagger: '2.0'
+info:
+  version: '1.0'
+  title: Academy Haven Hostel API
+  description: API endpoints for Academy Haven Hostel
+
+paths:
+  /status:
+    get:
+      tags:
+        - System
+      summary: Get system status
+      description: Returns status of the system
+      operationId: getStatus
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: Successful response with system status
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+                description: Status of the system
+                example: OK
+        'default':
+          description: Error handling
+

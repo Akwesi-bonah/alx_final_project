@@ -1,0 +1,56 @@
+swagger: '2.0'
+info:
+  title: Booking API - Retrieve All Bookings
+  description: Endpoint to retrieve all bookings
+  version: '1.0'
+paths:
+  /bookings:
+    get:
+      summary: Retrieve all bookings
+      responses:
+        '200':
+          description: Successful response with a list of all bookings
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/Booking'
+definitions:
+  Booking:
+    type: object
+    properties:
+      __class__:
+        type: string
+        example: Booking
+      id:
+        type: string
+        example: 0000000000000000000a2c7c2b6b8a8d7e1b1b3b2b1b1b1b1b1b1b1b1b1b1
+      created_at:
+        type: string
+        example: 2020-04-20T20:21:00.000000Z
+      updated_at:
+        type: string
+        example: 2020-04-20T20:21:00.000000Z
+      room_id:
+        type: string
+        example: 0000000000000000000a2c7c2b6b8a8d7e1b1b3b2b1b1b1b1b1b1b1b1b1b1
+      student_id:
+        type: string
+        example: 0000000000000000000a2c7c2b6b8a8d7e1b1b3b2b1b1b1b1b1b1b1b1b1b1
+      paid:
+        type: boolean
+        example: true
+      status:
+        type: string
+        example: pending
+  BadRequest:
+    type: object
+    properties:
+      __class__:
+        type: string
+        example: Booking
+      message:
+        type: string
+        example: Bad request
+      code:
+        type: integer
+        example: 400
