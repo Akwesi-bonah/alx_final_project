@@ -6,9 +6,9 @@ import pep8 as pycodestyle
 import time
 import unittest
 from unittest import mock
-import models.base_model
+import models.base
 BaseModel = models.base_model.BaseModel
-module_doc = models.base_model.__doc__
+module_doc = models.base.__doc__
 
 
 class TestBaseModelDocs(unittest.TestCase):
@@ -20,8 +20,8 @@ class TestBaseModelDocs(unittest.TestCase):
         cls.base_funcs = inspect.getmembers(BaseModel, inspect.isfunction)
 
     def test_pep8_conformance(self):
-        """Test that models/base_model.py conforms to PEP8."""
-        for path in ['models/base_model.py',
+        """Test that models/base.py conforms to PEP8."""
+        for path in ['models/base.py',
                      'tests/test_models/test_base_model.py']:
             with self.subTest(path=path):
                 errors = pycodestyle.Checker(path).check_all()

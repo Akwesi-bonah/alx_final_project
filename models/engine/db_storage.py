@@ -2,13 +2,18 @@
 """
 Contains the class DBStorage
 """
+from typing import Any
 
 import models
-from models.base_model import BaseModel, Base
+from models.base import Base
 from os import getenv
 import sqlalchemy
+from sqlalchemy.orm.session import Session
+
 from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
+from sqlalchemy.orm import scoped_session, sessionmaker, Session
+from sqlalchemy.orm.exc import NoResultFound
+from sqlalchemy.exc import InvalidRequestError, MultipleResultsFound
 
 from models.booking import Booking
 from models.configuration import Configuration
@@ -49,52 +54,16 @@ class DBStorage:
                                       format(HMS_MYSQL_USER,
                                              HMS_MYSQL_PWD,
                                              HMS_MYSQL_HOST,
-                                             HMS_MYSQL_DB))
+                                             HMS_MYSQL_DB, pool_pre_ping=True, pool_size=10, max_overflow=20) )
+        # self._engine = create_engine("sqlite:///site.db", echo=False)
+
         #if HMS_ENV == "test":
         #Base.metadata.drop_all(self.__engine)
 
     @property
-    def session(self):
+    def session(self) -> scoped_session[Session | Any]:
         """Return sessions object"""
         return self.__session
-
-    def get_user_id(self, email=None):
-        """ get user id using email """
-        if email is None:
-            return None
-        all_users = self.all(Staff)
-        for user in all_users.values():
-            if user.email == email:
-                return user.id
-        return None
-
-    def get_user_email(self, email=None):
-        """ check if email exist """
-        if email is None:
-            return None
-        all_users = self.all(Staff)
-        for user in all_users.values():
-            if user.email == email:
-                return True
-        return False
-
-    def get_user_pwd(self, email=None):
-        """ get user id using email """
-        if email is None:
-            return None
-        all_users = self.all(Staff)
-        for user in all_users.values():
-            if user.email == email:
-                return user.password
-        return False
-
-    def get_user_phone(self, phone=None):
-        """Get user phone using email"""
-        phone = (self.__session.query(Staff).
-                 filter_by(phone=phone).first())
-        if phone:
-            return True
-        return False
 
     def all(self, cls=None):
         """query on the current database session"""
@@ -141,22 +110,45 @@ class DBStorage:
 
         all_cls = models.storage.all(cls)
         for value in all_cls.values():
-            if (value.id == id):
+            if value.id == id:
                 return value
 
         return None
 
-    def count(self, cls=None):
-        """
-        count the number of objects in storage
-        """
-        all_class = classes.values()
+    def find_by(self, cls=None, **kwargs):
+        try:
+            if cls is not None:
+                if cls in classes:
+                    obj = self.__session.query(classes[cls]).filter_by(**kwargs).one()
+                    key = f"{obj.__class__.__name__}.{obj.id}"
+                    return {key: obj}
+            else:
+                for clss in classes.values():
+                    obj = self.__session.query(clss).filter_by(**kwargs).one()
+                    return obj
+        except NoResultFound:
+            raise NoResultFound()
+        except MultipleResultsFound:
+            raise MultipleResultsFound("Multiple objects found for the query")
+        except InvalidRequestError:
+            raise InvalidRequestError()
 
-        if not cls:
-            count = 0
-            for clas in all_class:
-                count += len(models.storage.all(clas).values())
-        else:
-            count = len(models.storage.all(cls).values())
+    def update_by(self, cls=None, id=None, **kwargs) -> None:
+        try:
+            if cls is not None:
+                if cls in classes.values():
+                    obj = self.__session.query(classes[cls]).filter_by(id=id).one()
+                    for key, value in kwargs.items():
+                        setattr(obj, key, value)
+            else:
+                for clss in classes.values():
+                    obj = self.__session.query(clss).filter_by(id=id).one()
+                    for key, value in kwargs.items():
+                        setattr(obj, key, value)
+            self.__session.commit()
+        except NoResultFound:
+            raise NoResultFound()
+        except InvalidRequestError:
+            raise InvalidRequestError()
 
-        return count
+

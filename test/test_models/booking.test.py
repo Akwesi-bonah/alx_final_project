@@ -13,7 +13,7 @@ class TestBookingDocs(unittest.TestCase):
         cls.base_funcs = inspect.getmembers(Booking, inspect.isfunction)
 
     def test_pep8_conformance(self):
-        """Test that models/base_model.py conforms to PEP8."""
+        """Test that models/base.py conforms to PEP8."""
         for path in ['models/booking.py',
                      'tests/test_models/booking_test.py']:
             with self.subTest(path=path):

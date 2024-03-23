@@ -8,7 +8,6 @@ from flask import Flask, render_template
 from web_flask.componet.views import staff_view
 from web_flask.student_model import student_views
 from flask_session import Session
-from web_flask.componet.mail import mail
 
 
 def create_app():
@@ -28,7 +27,6 @@ def create_app():
 
     app.config['PAYSTACK_SECRET_'] = 'sk_test_7530309aeb43b700e14cf312de735ad407747903'
     app.config['PAYSTACK_PUBLIC_KEY'] = 'pk_test_4ccdf50310beaaefdde4febbcef5fee8fbbd7011'
-    Session(app)
 
     @app.errorhandler(404)
     def page_not_found(error):
