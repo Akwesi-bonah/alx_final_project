@@ -117,17 +117,12 @@ class DBStorage:
 
     def find_by(self, cls=None, **kwargs):
         try:
-            if cls is not None:
-                if cls in classes:
-                    obj = self.__session.query(classes[cls]).filter_by(**kwargs).one()
-                    key = f"{obj.__class__.__name__}.{obj.id}"
-                    return {key: obj}
-            else:
-                for clss in classes.values():
-                    obj = self.__session.query(clss).filter_by(**kwargs).one()
+            for clss in classes:
+                if cls is None or cls is classes[clss] or cls is clss:
+                    obj = self.__session.query(classes[clss]).filter_by(**kwargs).one_or_none()
                     return obj
         except NoResultFound:
-            raise NoResultFound()
+            raise NoResultFound("No result found")
         except MultipleResultsFound:
             raise MultipleResultsFound("Multiple objects found for the query")
         except InvalidRequestError:
@@ -135,14 +130,9 @@ class DBStorage:
 
     def update_by(self, cls=None, id=None, **kwargs) -> None:
         try:
-            if cls is not None:
-                if cls in classes.values():
-                    obj = self.__session.query(classes[cls]).filter_by(id=id).one()
-                    for key, value in kwargs.items():
-                        setattr(obj, key, value)
-            else:
-                for clss in classes.values():
-                    obj = self.__session.query(clss).filter_by(id=id).one()
+            for clss in classes:
+                if cls is None or cls in classes[clss] or cls is clss:
+                    obj = self.__session.query(classes[clss]).filter_by(**kwargs).one_or_none()
                     for key, value in kwargs.items():
                         setattr(obj, key, value)
             self.__session.commit()

@@ -10,7 +10,7 @@ from flask import jsonify, abort, request, make_response
 
 def validate_staff_data(data):
     """validate required fields"""
-    required_fields = ['name', 'email', 'password', 'role', 'status', 'phone']
+    required_fields = ['first_name','last_name', 'email', 'password', 'role', 'status', 'phone']
 
     for field in required_fields:
         if field not in data:
@@ -36,7 +36,6 @@ def get_staff(staff_id):
     staff = storage.get(Staff, staff_id)
     if not Staff:
         return jsonify({"error ": "Staff Not Found"})
-
     return jsonify(staff.to_dict())
 
 
@@ -67,13 +66,13 @@ def add_staff():
         return jsonify({'error': error_message}), 400
 
     email = request.get_json()['email']
-    staff = storage.get_user_email(email)
+    staff = storage.find_by(Staff, email=email)
     if staff:
         return jsonify({'error': 'Email already exists'}), 400
 
-    Dphone = request.get_json()['phone']
-    phone = storage.get_user_phone(Dphone)
-    if phone:
+    phone = request.get_json()['phone']
+    exit_phone = storage.find_by(Staff, phone=phone)
+    if exit_phone:
         return jsonify({'error': 'Phone already exists'}), 400
 
     try:
@@ -82,7 +81,7 @@ def add_staff():
         instance.save()
         return make_response(jsonify(instance.to_dict()), 201)
     except Exception as e:
-        abort(400, description=" Error Occurred  email or phone already exist")
+        return jsonify({"error": str(e)}), 500
 
 
 @views.route('/staff/<staff_id>', methods=['PUT'], strict_slashes=False)

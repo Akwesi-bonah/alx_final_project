@@ -1,3 +1,4 @@
+import bcrypt
 from sqlalchemy import func, and_
 from werkzeug.security import check_password_hash
 
@@ -7,44 +8,40 @@ from web_flask.forms.login import Login
 from web_flask.forms.password import ChangePasswordForm
 from web_flask.forms.student import StudentForm
 from web_flask.student_model import student_views
-from flask import render_template, session, redirect, url_for, flash
+from flask import render_template, session, redirect, url_for, flash, request
 from models import storage
-from models.room import  Room
+from models.room import Room
 from models.block import Block
 from models.room_type import RoomType
 
-
+# JIBRIL@1234
 @student_views.route('/', methods=['GET', 'POST'])
 def default():
     form = StudentForm()
-    login = Login()
     error_message = None
 
-    if login.validate_on_submit():
-        session.pop('user_id', None)
-        user = login.email.data
-        pwd = login.password.data
+    try:
+        if request.method == 'POST':
+            session.clear()  # Clear session data
 
-        user_data = storage.session.query(
-            Student.id, Student.password
-        ).filter(Student.email == user).first()
+            email = request.form['email']
+            password = request.form['password']
 
-        if user_data is not None:
-            user_id = user_data[0]
-            hashed_pwd = user_data[1]
+            user_data = storage.find_by(Student, email=email)
 
-            if not check_password_hash(hashed_pwd, pwd):
-                error_message = "Invalid credentials"
-            else:
-                session['user_id'] = user_id
-                session['user'] = user
+            if user_data is not None and bcrypt.checkpw(password.encode(), user_data.password.encode()):
+                session['user_id'] = user_data.id
+                session['user'] = email
                 return redirect(url_for('student_views.dashboard'))
-        else:
-            error_message = "Invalid credentials"
+            else:
+                error_message = "Invalid email or password"
+    except Exception as e:
+        print(e)
+        error_message = "An error occurred, please try again"
 
     # Pass the error_message to the template
     return render_template('Sdefault.html',
-                           form=form, login=login,
+                           form=form,
                            error_message=error_message)
 
 

@@ -26,7 +26,7 @@ class Student(BaseModel, Base):
     guardian_name = Column(String(128))
     guardian_phone = Column(String(128))
     disability = Column(String(128))
-    hashed_password = Column(String(250), nullable=False)
+    password = Column(String(250), nullable=False)
     session_id = Column(String(250), nullable=True)
     reset_token = Column(String(250), nullable=True)
 
@@ -38,7 +38,7 @@ class Student(BaseModel, Base):
         """sets a password with md5 encryption"""
         if name == "password":
             salt = bcrypt.gensalt()
-            hashed = bcrypt.hashpw(value.encode(), salt)
+            value = bcrypt.hashpw(value.encode(), salt)
         super().__setattr__(name, value)
 
     def __str__(self):

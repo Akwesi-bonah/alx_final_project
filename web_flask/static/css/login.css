@@ -1,68 +1,341 @@
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding-top: 56px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 
+* {
+  margin: 0px;
+  padding: 0px;
+  list-style: none; }
+
+img {
+  max-width: 100%; }
+
+strong {
+  font-family: "Open Sans", sans-serif; }
+
+  body {
+    position: relative;
+    font-family: "Open Sans", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    color: #6A6A6A;
+    overflow-x: hidden;
+  }
+
+  body::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-image: linear-gradient(to bottom right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5));
+
+  }
+
+  body::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+  }
+
+
+
+
+/* ===================================== Login Page Design CSS ==================================== */
+
+/* Adjustments for responsive design */
+.form-login-body {
+    /*background-image: url(../images/bg.jpg);*/
+    background-size: cover;
+  }
+
+  @media screen and (max-width: 991px) {
+    .form-login-body {
+      padding-left: 30px;
+      padding-right: 30px;
+    }
+  }
+
+  @media screen and (max-width: 480px) {
+    .form-login-body {
+      padding-left: 15px;
+      padding-right: 15px;
+    }
+  }
+
+  /* Styling for the login desk */
+  .form-login-body .login-desk {
+    filter: drop-shadow(0 0 13.5px rgba(0, 0, 0, 0.09));
+    margin-top: 5%;
+    margin-bottom: 5%;
+  }
+
+  /* Styling for the detail box */
+  .form-login-body .login-desk .detail-box {
+    background-color: #FFF;
+    padding: 20px;
+  }
+
+  .form-login-body .login-desk .detail-box .detailsh {
+    text-align: center;
+  }
+
+  .form-login-body .login-desk .detail-box .detailsh h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+  }
+
+  .form-login-body .login-desk .detail-box .detailsh p {
+    font-size: .8rem;
+  }
+
+  /* Styling for the login form */
+  .form-login-body .login-desk .loginform {
+    background-color: #4c56c0;
+    text-align: center;
+    color: #FFF;
+    padding: 50px;
+  }
+
+  .form-login-body .login-desk .loginform a {
+    color: #FFF;
+  }
+
+  .form-login-body .login-desk .loginform h4 {
+    color: #FFF;
+    font-size: 1.3rem;
+  }
+
+  .form-login-body .login-desk .loginform p {
+    font-size: .8rem;
+    margin-bottom: 30px;
+  }
+
+  .form-login-body .login-desk .loginform .login-det .form-row label {
+    font-size: .85rem;
+  }
+
+  /* Styling for input fields */
+  .form-login-body .login-desk .loginform .login-det .input-group-text {
+    background-color: #3d46a7;
+    color: #ffffffcf;
+    border-right: 0px;
+  }
+
+  .form-login-body .login-desk .loginform .login-det .form-control {
+    background-color: #3d46a7;
+    color: #FFF;
+    border-left: 0px;
+  }
+
+  .form-login-body .login-desk .loginform .login-det .form-control:focus {
+    border: 0px;
+  }
+
+  /* Styling for buttons */
+  .form-login-body .login-desk .loginform .login-det .btn-danger {
+    width: 100%;
+    border-radius: 0px;
+    background-color: #fa607e;
+  }
+
+  .form-login-body .login-desk .loginform .forget {
+    text-align: right;
+  }
+
+  /* Styling for social link */
+  .form-login-body .login-desk .loginform .social-link ul {
+    float: right;
+    margin-top: 30px;
+  }
+
+  .form-login-body .login-desk .loginform .social-link ul li {
+    float: left;
+    padding: 15px;
+    font-size: .9rem;
+  }
+  .form-login-body .login-desk .loginform .social-link {
+    margin-top: 20px;
+  }
+
+  .form-login-body .login-desk .loginform .social-link p {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+
+  .form-login-body .login-desk .loginform .social-link .newuser {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .form-login-body .login-desk .loginform .social-link .newuser button {
+    border-radius: 5px;
+  }
+
+  .form-login-body .login-desk .loginform .social-link .newuser button:first-child {
+    margin-right: 5px;
+  }
+  form-login-body .login-desk .loginform .social-link .signup {
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+  }
+
+  .form-login-body .login-desk .loginform .social-link .signup .register-option {
+    font-weight: bold;
+    color: #fa607e;
+  }
+
+  /* Style for additional information */
+.form-login-body .login-desk .detailsh .additional-info {
+    margin-top: 20px;
+    padding-top: 10px;
+    border-top: 1px solid #ccc; /* Optional: adding a border above the new information */
 }
 
-.navbar {
-  background: linear-gradient(135deg, #343a40 0%, #000000 100%);
-  border-radius: 0 0 10px 10px;
+.form-login-body .login-desk .detailsh .additional-info p {
+    font-size: 0.9rem;
+    line-height: 1.5;
+    margin-bottom: 10px;
 }
 
-.navbar-brand,
-.navbar-nav .nav-link {
-  color: #ffffff;
-  font-size: 1.2em;
+.form-login-body .login-desk .detailsh .additional-info a {
+    color: #fa607e; /* Change link color as desired */
+    text-decoration: underline; /* Optional: adding underline to links */
+}
+
+
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #FFF !important; }
+
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #FFF !important; }
+
+:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #FFF !important; }
+
+:-moz-placeholder {
+  /* Firefox 18- */
+  color: #FFF !important; }
+
+/* ===================================== Responsive Style CSS ==================================== */
+@media screen and (max-width: 991px) {
+  .we-are-making .text-part {
+    text-align: center; }
+
+  .we-are-making .text-part .count .count-sing {
+    margin-bottom: 20px; }
+
+  .headwe-nav .container {
+    padding: 10px; }
+
+  header .headwe-nav .nav-div .navbar-nav .nav-item .nav-link {
+    padding: 10px;
+    border-right: 0px; } }
+
+p.signup {
+    margin: 20px 0 5px 0;
+}
+
+a#newaccount {
+    color: #fff;
+    background: #2a4169;
+}
+    a#newaccount:hover {
+
+        background: #2a4169 !important;
+    }
+a#vacaccount {
+    background: #113f8f !important;
+}
+    a#vacaccount:hover {
+        background: #2a4169 !important;
+    }
+a#newaccount:hover {
+    color: #fff;
+}
+input.btn.btn-sm.btn-info {
+    width: 100%;
+}
+
+#studid::placeholder {
+    color: #4444 !important;
+    font-size: 13px;
+    opacity: .5 !important;
+}
+
+p.signup a {
+    color: #93cdc1 !important;
+    font-weight: bold;
+}
+p.signup a:hover {
+    color: #ccc ;
+}
+#vac-register .form-group input, #vac-register .form-group {
+    margin-bottom: 2px !important;
+}
+#vac-register label {
+    font-size: 13px;
+}
+
+/* Adjust form layout */
+.form-label {
   font-weight: bold;
-  text-transform: uppercase;
 }
 
-.navbar-toggler {
-  border-color: #ffffff;
+.form-control {
+  margin-bottom: 10px;
 }
 
-.navbar-toggler-icon {
-  background-color: #ffffff;
+.invalid-feedback {
+  color: red;
 }
 
-.login-card {
-  background-color: #ffffff;
-  border-radius: 10px;
+/* Add padding and border to form */
+#registerForm {
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.login-card h2 {
-  color: #333333;
-}
-
-.login-card form input[type="email"],
-.login-card form input[type="password"] {
+  border: 1px solid #ccc;
   border-radius: 5px;
+}
+
+/* Adjust spacing between columns */
+.row.g-3 > .col-md-4 {
   margin-bottom: 15px;
-  padding: 10px;
 }
 
-.login-card form input[type="submit"] {
-  border-radius: 5px;
-  padding: 10px;
-  background-color: #343a40;
-  color: #ffffff;
-  border: none;
-  cursor: pointer;
+/* Style submit button */
+#registerStudent {
+  background-color: #007bff;
+  border-color: #007bff;
 }
 
-.login-card form input[type="submit"]:hover {
-  background-color: #555b62;
+#registerStudent:hover {
+  background-color: #0056b3;
+  border-color: #0056b3;
+}
+/* Reduce space between rows */
+.row.g-3 > .col-md-4 {
+  margin-bottom: 10px;
 }
 
-.login-card a {
-  color: #343a40;
+/* Adjust modal body padding */
+.modal-body {
+  padding: 20px;
 }
 
-.login-card a:hover {
-  text-decoration: none;
-  color: #555b62;
+/* Center modal content */
+.modal-dialog {
+  margin: 50px auto;
+}
+
+/* Style submit button */
+#registerStudent {
+  width: 100%; /* Make button full width */
 }
