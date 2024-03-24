@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """Flask mail"""
-from flask_mail import Message
 import smtplib
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText

@@ -17,7 +17,6 @@ def create_app():
     app.config['SESSION_COOKIE_NAME'] = 'staff_session'
     app.config['STUDENT_SESSION_COOKIE_NAME'] = 'student_session'
     # Session configurations
-    app.config['SESSION_COOKIE_NAME'] = 'staff_session'
     app.config['SESSION_COOKIE_SECURE'] = True
     app.config['SESSION_TYPE'] = 'filesystem'
     app.config['SESSION_FILE_DIR'] = './.flask_session/'
@@ -27,6 +26,8 @@ def create_app():
 
     app.config['PAYSTACK_SECRET_'] = 'sk_test_7530309aeb43b700e14cf312de735ad407747903'
     app.config['PAYSTACK_PUBLIC_KEY'] = 'pk_test_4ccdf50310beaaefdde4febbcef5fee8fbbd7011'
+    app.register_blueprint(staff_view, url_prefix='/staff/')
+    app.register_blueprint(student_views, url_prefix='/')
 
     @app.errorhandler(404)
     def page_not_found(error):
@@ -44,7 +45,5 @@ def create_app():
     if __name__ == '__main__':
         app.run(debug=True)
 
-    app.register_blueprint(staff_view, url_prefix='/staff/')
-    app.register_blueprint(student_views, url_prefix='/')
 
     return app

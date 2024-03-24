@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 """ API Blueprint  """
 from flasgger import swag_from
-from flask import request
+from flask import request, abort
 from sqlalchemy import and_
 
 from api.v1.views import views
@@ -17,6 +17,17 @@ from flask import jsonify
 def status():
     """ Returns status """
     return {"status": "OK"}, 200
+
+
+@views.route('/unauthorized/', strict_slashes=False)
+def unauthorized() -> None:
+    """ GET unauthorized access error """
+    abort(401)
+
+@views.route('/forbidden/', strict_slashes=False)
+def forbidden() -> None:
+    """ GET forbidden access error """
+    abort(403)
 
 
 @views.route('/mail', methods=['POST'], strict_slashes=False)

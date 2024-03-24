@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Auth
+auth
 """
 import bcrypt
 import uuid
@@ -38,11 +38,8 @@ def _generate_uuid() -> str:
     return str(new_uuid)
 
 
-
-
-
 class Auth:
-    """Auth class to interact with the authentication database.
+    """auth class to interact with the authentication database.
     """
     def __init__(self):
         """ initialize """

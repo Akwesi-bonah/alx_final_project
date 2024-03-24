@@ -1,160 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <title>Hostel Management System</title>
+    <link
+      href="{{  url_for('static', filename='bootstrap-4.6.2-dist/css/bootstrap.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{  url_for('static', filename='bootstrap-4.6.2-dist/css/bootstrap-grid.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{  url_for('static', filename='bootstrap-4.6.2-dist/css/bootstrap-reboot.css') }}"
+      rel="stylesheet"
+    />
 
-<head>
-  <title>Hostel Management System</title>
-  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  <link href="{{ url_for('static', filename='assets/img/hostel.png') }}" rel="icon">
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
-    integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+    <link
+      href="{{ url_for('static', filename='assets/img/hostel.png') }}"
+      rel="icon"
+    />
 
-
-</head>
-
-<body>
-
-  <!-- Navigation bar -->
-  <nav class="navbar navbar-expand-lg navbar-dark">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.6.1/css/all.css"
+      integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='css/login.css') }}"
+    />
+  </head>
+  <body class="form-login-body">
     <div class="container">
-      <a class="navbar-brand" href="#">Academy Haven</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-<div class="collapse navbar-collapse" id="navbarNav">
-      <ul class="navbar-nav ml-auto">
-        <li class="nav-item">
-          <a class="nav-link" href="#" data-toggle="modal" data-target="#aboutModal">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="#" data-toggle="modal" data-target="#contactModal">Team</a>
-        </li>
-      </ul>
-    </div>    </div>
-  </nav>
+      <div class="row">
+        <div class="col-lg-10 mx-auto login-desk">
+          <div class="row">
+            <div class="col-md-7 detail-box">
+              <h3><b>ALX</b> Software Engineering Final project (cohort 13)</h3>
+              <div class="detailsh">
+                <h3>Hostel Management System</h3>
+                <p>
+                  This is the final portfolio pitch of alx software engineering
+                  cohort 13. The project is a hostel management system that
+                  allows students to book for hostel rooms and also book for
+                  vacation stay. The project is built with python flask and
+                  mysql database. The project is digital ocean droplet and the
+                  source code is available on github.
+                </p>
 
-  <div class="modal fade" id="aboutModal">
-    <div class="modal-dialog modal-lg">
-      <!-- Modal content -->
-      <!-- ... -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">About</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <p>This application is a test version of a Hostel Management System designed specifically for students.
-            It aims to provide a user-friendly interface for students to manage various aspects of hostel life,
-            including room booking, payment of hostel fees  and more.</p>
-          <p>Feel free to explore the functionalities and features available in this test version.</p>
-        </div>
-      </div>
-    </div>
-  </div>
+                <div class="modal-body">
+                  <div class="card">
+                    <div class="card-body">
+                      <h5 class="card-title">Team Members</h5>
+                      <div class="row">
+                        <div class="col-md-6">
+                          <p><strong>Name:</strong> George Arhin-Bonnah</p>
+                          <p class="">
+                            Undergraduate Student of University of Education,
+                            Winneba
+                          </p>
+                          <p>
+                            <a
+                              href="https://www.linkedin.com/in/george-arhin-bonnah-5330b925a"
+                              target="_blank"
+                            >
+                              <i class="fab fa-linkedin"></i> LinkedIn
+                            </a>
+                            <a
+                              href="https://github.com/akwesi-bonah"
+                              target="_blank"
+                            >
+                              <i class="fab fa-github"></i> GitHub
+                            </a>
+                          </p>
+                        </div>
+                        <div class="col-md-6">
+                          <p><strong>Name:</strong>Godwin Dogbey</p>
 
-  <!-- Contact Modal -->
-  <div class="modal fade" id="contactModal">
-    <div class="modal-dialog modal-lg">
-      <!-- Modal content -->
-      <!-- ... -->
-      <div class="modal-content">
-        <div class="modal-header">
-          <h4 class="modal-title">Team</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        <div class="modal-body">
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Team Members</h5>
-              <div class="row">
-                <div class="col-md-6">
-                  <p><strong>Name:</strong> George Arhin-Bonnah</p>
-                   <p class="">Undergraduate Student of University of Education, Winneba</p>
-                  <p>
-                   <a href="https://www.linkedin.com/in/george-arhin-bonnah-5330b925a" target="_blank">
-                            <i class="fab fa-linkedin"></i> LinkedIn
-                        </a>
-                        <a href="https://github.com/akwesi-bonah" target="_blank">
-                            <i class="fab fa-github"></i> GitHub
-                        </a>
-                  </p>
-
-                </div>
-                <div class="col-md-6">
-                  <p><strong>Name:</strong>Godwin Dogbey</p>
-
-                    <p>Content Producer at Despite Media Group | Digital Marketing | Talent Manager | Events & PR</p>
-                  <p>
-                    <a href="https://www.linkedin.com/in/godwin-dogbey-52462b122" target="_blank">
-                            <i class="fab fa-linkedin"></i> LinkedIn
-                        </a>
-                        <a href="https://github.com/GodwinDogbey" target="_blank">
-                            <i class="fab fa-github"></i> GitHub
-                        </a>
+                          <p>
+                            Content Producer at Despite Media Group | Digital
+                            Marketing | Talent Manager | Events & PR
+                          </p>
+                          <p>
+                            <a
+                              href="https://www.linkedin.com/in/godwin-dogbey-52462b122"
+                              target="_blank"
+                            >
+                              <i class="fab fa-linkedin"></i> LinkedIn
+                            </a>
+                            <a
+                              href="https://github.com/GodwinDogbey"
+                              target="_blank"
+                            >
+                              <i class="fab fa-github"></i> GitHub
+                            </a>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-
-
-  <div class="container mt-4">
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="login-card">
-          <h2 class="text-center mb-4">Academy Haven Hostel</h2>
-           <form id="login" method="POST" action="{{ url_for('student_views.default')}}">
-            {% if error_message %}
+            <div class="col-md-5 loginform">
+                 {% if error_message %}
             <div class="alert alert-warning alert-dismissible fade show" role="alert">
               <strong>{{ error_message }}</strong> You should check in on some of those fields below.
               <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             {% endif %}
-
-
-            {{ login.hidden_tag() }}
-            <div class="form-group">
-
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+              <form
+                action="{{ url_for('student_views.default')}}"
+                class="agnet-contact-form"
+                id="FormPost"
+                method="post"
+              >
+                <input name="__RequestVerificationToken" type="hidden" />
+                <h4>Login to Your Account</h4>
+                <p>Existing User? Log in below to access your account:</p>
+                <div class="login-det">
+                  <div class="form-row">
+                    <label for="email">Email</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="email-addon">
+                          <i class="far fa-user"></i>
+                        </span>
+                      </div>
+                      <input
+                        autocomplete="off"
+                        class="form-control text-box single-line input_user"
+                        data-val="true"
+                        data-val-required="The email field is required."
+                        id="lEmail"
+                        name="email"
+                        placeholder="Enter Your Email"
+                        type="text"
+                        value=""
+                      />
+                      <p class="mb-0">
+                        <span
+                          class="field-validation-valid text-warning"
+                          data-valmsg-for="email"
+                          data-valmsg-replace="true"
+                        ></span>
+                      </p>
+                    </div>
+                  </div>
+                  <div class="form-row">
+                    <label for="password">Password</label>
+                    <div class="input-group mb-3">
+                      <div class="input-group-prepend">
+                        <span class="input-group-text" id="password-addon">
+                          <i class="fas fa-lock"></i>
+                        </span>
+                      </div>
+                      <input
+                        autocomplete="off"
+                        class="form-control text-box single-line input_pass"
+                        data-val="true"
+                        data-val-length="Must be between 5 and 255 characters"
+                        data-val-length-max="255"
+                        data-val-length-min="8"
+                        data-val-required="The password field is required."
+                        id="lPassword"
+                        name="password"
+                        placeholder="Enter Your Password"
+                        type="password"
+                      />
+                      <p class="mb-0">
+                        <span
+                          class="field-validation-valid text-warning"
+                          data-valmsg-for="password"
+                          data-valmsg-replace="true"
+                        ></span>
+                      </p>
+                    </div>
+                  </div>
+                  <p class="forget">
+                    <a href="#" id="fpass" title="Forgot Password?"
+                      >Forgot Password?</a
+                    >
+                  </p>
+                  <input
+                    type="submit"
+                    value="Login"
+                    class="btn btn-sm btn-info showloader"
+                    id="btnloginstud"
+                  />
                 </div>
-                {{ login.email(class="form-control form-control input_user", id="lEmail", placeholder='Email address')
-                }}
+              </form>
+              <div class="social-link">
+                <p class="signup">
+                  Don't Have an Account?
+                  <span class="register-option">Register as</span>
+                </p>
+                <span class="newuser">
+                  <button
+                    id="newaccount"
+                    data-target="#registerModal"
+                    data-toggle="modal"
+                    class="btn btn-sm btn-info "
+                  >
+                    Reqular Student
+                  </button>
+                </span>
               </div>
             </div>
-            <div class="form-group">
-              <div class="input-group">
-                <div class="input-group-prepend">
-                  <span class="input-group-text"><i class="fas fa-lock"></i></span>
-                </div>
-                {{ form.password(class="form-control input_pass", id="lPassword", placeholder='Password') }}
-              </div>
-            </div>
-            <div class="form-group">
-              {{ login.submit(class="btn btn-primary btn-block") }}
-            </div>
-            <div class="text-center">
-              <a href="#">Forgot Password?</a>
-            </div>
-          </form>
-          <div class="text-center mt-3">
-            Don't have an account? <a href="#" data-toggle="modal" data-target="#registerModal">Register Here</a>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Modal for Register -->
+    <!-- Modal for Register -->
   <div class="modal fade" id="registerModal">
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
@@ -280,6 +340,10 @@
                   {% endfor %}
                 </div>
                 {% endif %}
+                <div class="col-md-4">
+    <label for="confirm-password">Confirm Password:</label>
+    <input type="password" id="confirm-password" class="">
+</div>
 
 
                 <!-- ... -->
@@ -327,12 +391,15 @@
     </div>
   </div>
 
-  <!-- Bootstrap JS -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-  <script  type="module" src="{{ url_for('static', filename='js/login.js') }}"></script>
 
-</body>
-
+    <script src="{{ url_for('static', filename='jQuery/jquery-3.7.1.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='jQuery/jquery.validate.min.js')}}"></script>
+    <script src="{{ url_for('static', filename='jQuery/jquery.validate.min.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script
+      type="module"
+      src="{{ url_for('static', filename='js/login.js') }}"
+    ></script>
+  </body>
 </html>
