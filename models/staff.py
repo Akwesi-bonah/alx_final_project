@@ -38,12 +38,14 @@ class Staff(BaseModel, Base):
 
     def is_valid_password(self, pwd):
         """Checks if the provided password is valid"""
-        if pwd is None or not isinstance(pwd, str):
+        if pwd is None or type(pwd) is not str:
             return False
-        if not self.password:
+        if self.password is None:
             return False
-
-        return bcrypt.checkpw(pwd.encode(), self.password.encode())
+            # Encode both the provided password and the stored hashed password
+        stored_password = self.password.encode()
+        pwd_encoded = pwd.encode()
+        return bcrypt.checkpw(pwd_encoded, stored_password)
 
 
 

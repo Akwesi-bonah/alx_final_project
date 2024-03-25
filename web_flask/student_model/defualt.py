@@ -22,7 +22,7 @@ def default():
 
     try:
         if request.method == 'POST':
-            session.clear()  # Clear session data
+            session.clear()
 
             email = request.form['email']
             password = request.form['password']

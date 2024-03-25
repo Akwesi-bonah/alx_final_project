@@ -88,8 +88,6 @@ class BasicAuth(Auth):
                 return None
 
             try:
-                # Assuming User.search() returns a list of User objects
-
                 get_users = storage.find_by(Student, email=user_email)
                 user = get_users.is_valid_password(user_pwd)
                 if user:
@@ -98,7 +96,6 @@ class BasicAuth(Auth):
             except Exception as e:
                 print(f"An error occurred during user search: {e}")
                 return None
-
 
     def current_user(self, request=None):
         '''overloads Auth and retrieves the User instance'''
