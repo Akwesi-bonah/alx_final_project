@@ -16,6 +16,8 @@
     <orderEntry type="library" name="inline" level="application" />
     <orderEntry type="library" name="all" level="application" />
     <orderEntry type="library" name="sweetalert2" level="application" />
+    <orderEntry type="library" name="popper.js" level="application" />
+    <orderEntry type="library" name="bootstrap" level="application" />
   </component>
   <component name="PyDocumentationSettings">
     <option name="format" value="PLAIN" />

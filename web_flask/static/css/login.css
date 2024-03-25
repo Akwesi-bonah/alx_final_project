@@ -247,6 +247,7 @@ p.signup {
 a#newaccount {
     color: #fff;
     background: #2a4169;
+    width: 100%;
 }
     a#newaccount:hover {
 

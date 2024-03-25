@@ -1,11 +1,11 @@
 import API_ENDPOINTS from './apiEndpoint.js';
 $(document).ready(function () {
-  var HOST = API_ENDPOINTS;
-  var userId = null;
+  let HOST = API_ENDPOINTS;
+  let userId = null;
 
   function showValidationErrors(errors) {
-    var errorMessage = "Please check the following fields:\n\n";
-    for (var i = 0; i < errors.length; i++) {
+    let errorMessage = "Please check the following fields:\n\n";
+    for (let i = 0; i < errors.length; i++) {
       errorMessage += "- " + errors[i] + "\n";
     }
     Swal.fire({
@@ -17,6 +17,8 @@ $(document).ready(function () {
     });
   }
 
+  showValidationErrors()
+
   // Show the 'Addstaff' button and hide the 'updateStaff' button
   $('.createStaff').on('click', function(){
     $('#Addstaff').show();
@@ -26,12 +28,12 @@ $(document).ready(function () {
   // Add a new staff member
   $("#Addstaff").on("click", function (event) {
     event.preventDefault();
-    var form = $("#staffFrom")[0];
+    let form = $("#staffFrom")[0];
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
-    var formData = {
+    let formData = {
       campus: $("#campus").val(),
       name: $("#staffName").val(),
       email: $("#staffEmail").val(),
@@ -56,7 +58,7 @@ $(document).ready(function () {
           data: JSON.stringify(formData),
           contentType: "application/json",
           success: function (response) {
-//            console.log("Success:", response);
+        console.log("Success:", response);
             Swal.fire({
               title: "Form Submitted!",
               text: "Your form has been submitted successfully.",
@@ -93,13 +95,13 @@ $(document).ready(function () {
   $(".edit-user").on("click", function (event) {
     event.preventDefault();
     userId = $(this).data("user-id");
-    var row = $(this).closest("tr");
-    var campus = row.find("td:eq(1)").text();
-    var name = row.find("td:eq(2)").text();
-    var email = row.find("td:eq(3)").text();
-    var phone = row.find("td:eq(4)").text();
-    var role = row.find("td:eq(5)").text();
-    var status = row.find("td:eq(6)").text();
+    let row = $(this).closest("tr");
+    let campus = row.find("td:eq(1)").text();
+    let name = row.find("td:eq(2)").text();
+    let email = row.find("td:eq(3)").text();
+    let phone = row.find("td:eq(4)").text();
+    let role = row.find("td:eq(5)").text();
+    let status = row.find("td:eq(6)").text();
 
     $("#campus").val(campus);
 
@@ -128,12 +130,12 @@ $(document).ready(function () {
   // Update a user's details
   $("#updateStaff").on("click", function (event) {
     event.preventDefault();
-    var form = $("#staffFrom")[0];
+    let form = $("#staffFrom")[0];
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
-    var formData = {
+    let formData = {
       campus: $("#campus").val(),
       name: $("#name").val(),
       email: $("#email").val(),
@@ -186,7 +188,7 @@ $(document).ready(function () {
   // Delete a user
   $(".delete-user").on("click", function (event) {
     event.preventDefault();
-    var userId = $(this).data("user-id");
+    let userId = $(this).data("user-id");
     Swal.fire({
       title: "Are you sure?",
       text: "You are about to delete this user. This action cannot be undone.",
@@ -229,19 +231,19 @@ $(document).ready(function () {
   // Update a user's details without password change
   $("#uStaff").on("click", function (event) {
     event.preventDefault();
-    var form = $("#staffFrom")[0];
+    let form = $("#staffFrom")[0];
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
-    var formData = {
+    let formData = {
       campus: $("#campus").val(),
       name: $("#name").val(),
       email: $("#email").val(),
       phone: $("#phone").val(),
       password: $("#password").val(),
     };
-    var userId = $(this).data("staff-id");
+    let userId = $(this).data("staff-id");
     Swal.fire({
       title: "Are you sure?",
       text: "You are about to update the user. Confirm?",

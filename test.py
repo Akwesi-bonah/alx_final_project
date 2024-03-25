@@ -5,6 +5,8 @@
 # from models import storage
 # from models.staff import Staff
 #
+import base64
+
 import bcrypt
 from sqlalchemy import Date
 
@@ -35,6 +37,10 @@ staff = Staff()
 student = Student()
 user_email = "user@gmail.com"
 clear_user_pwd = "pwd"
+
+credentials = f"{user_email}:{clear_user_pwd}"
+encoded_credentials = base64.b64encode(credentials.encode()).decode()
+print(encoded_credentials)
 # staff.first_name = "Arhin"
 # staff.last_name = "Kweku"
 # staff.email = user_email
@@ -72,9 +78,9 @@ clear_user_pwd = "pwd"
 # else:
 #     print("Valid credentials")
 
-from api.v1.auth.basic_auth import BasicAuth
-
-auth = BasicAuth()
-
-print(auth.staff_object_from_credentials(user_email, clear_user_pwd))
-print(auth.student_object_from_credentials(user_email, clear_user_pwd))
+# from api.v1.auth.basic_auth import BasicAuth
+#
+# auth = BasicAuth()
+#
+# print(auth.staff_object_from_credentials(user_email, clear_user_pwd))
+# print(auth.student_object_from_credentials(user_email, clear_user_pwd))
