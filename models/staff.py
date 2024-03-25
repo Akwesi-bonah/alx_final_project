@@ -10,8 +10,7 @@ class Staff(BaseModel, Base):
     """ Represent staff in hostel """
     __tablename__ = "staff"
     campus = Column(String(255), nullable=True)
-    first_name = Column(String(255), nullable=False)
-    last_name = Column(String(255), nullable=False)
+    name = Column(String(255), nullable=False)
     email = Column(String(255), nullable=False, unique=True)
     phone = Column(String(255), nullable=True, unique=True)
     password = Column(String(250), nullable=False)

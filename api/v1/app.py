@@ -74,6 +74,8 @@ def before_request() -> str:
     excluded_paths = ['/api/v1/status/',
                       '/api/v1/unauthorized/',
                       '/api/v1/forbidden/',
+                      '/api/v1/staff/',
+                      '/api/v1/student',
                       ]
     if not auth.require_auth(request.path, excluded_paths):
         return

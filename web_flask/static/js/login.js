@@ -53,7 +53,7 @@ $(document).ready(function () {
       let pass = $("#password").val();
     let confirmpass = $("#confirm-password").val();
 
-    var message = "Invalid Input";
+     let message = "Invalid Input";
     if (pass =="") {
 
         Swal.fire(

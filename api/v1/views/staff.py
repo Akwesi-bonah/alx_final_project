@@ -10,7 +10,7 @@ from flask import jsonify, abort, request, make_response
 
 def validate_staff_data(data):
     """validate required fields"""
-    required_fields = ['first_name','last_name', 'email', 'password', 'role', 'status', 'phone']
+    required_fields = ['name', 'email', 'password', 'role', 'status', 'phone']
 
     for field in required_fields:
         if field not in data:
