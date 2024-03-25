@@ -6,21 +6,22 @@
   <meta charset="utf-8" />
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Academy Haven Hostel Management System</title>
+  <title>Hostel Management System</title>
   <link href="{{ url_for('static', filename='assets/img/hostel.png') }}" rel="icon">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
   <link href="{{url_for ('static', filename='css/student.css')}}" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
-    integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.0-beta3/css/all.min.css">
-  <script src="https://js.paystack.co/v1/inline.js"></script>
-  <!-- Load jQuery -->
-    <script src="{{ url_for('static', filename='jQuery-3.7.1.min.js') }}"></script>
-
-
-  <!-- Other scripts dependent on jQuery -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link
+      href="{{  url_for('static', filename='bootstrap-4.6.2-dist/css/bootstrap.min.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{  url_for('static', filename='bootstrap-4.6.2-dist/css/bootstrap-grid.css') }}"
+      rel="stylesheet"
+    />
+    <link
+      href="{{  url_for('static', filename='bootstrap-4.6.2-dist/css/bootstrap-reboot.css') }}"
+      rel="stylesheet"
+    />
 
 </head>
 
@@ -40,7 +41,7 @@
 
     <div class="nav-header">
       <a href="" class="brand-logo">
-        <p> HMS</p>
+        <p> HMS 1.2 </p>
 
       </a>
 
@@ -51,44 +52,44 @@
       </div>
     </div>
 
-    <div class="header">
-      <div class="header-content">
+   <div class="header">
+    <div class="header-content">
         <nav class="navbar navbar-expand">
-          <div class="collapse navbar-collapse justify-content-between">
-            <div class="header-left">
-              <div class="search_bar dropdown">
-                <span class="search_icon p-3 c-pointer" data-toggle="dropdown">
-                </span>
+            <div class="collapse navbar-collapse justify-content-between">
+                <div class="header-left">
+                    <div class="search_bar dropdown">
 
-              </div>
-            </div>
-
-            <ul class="navbar-nav header-right">
-
-              <li class="nav-item dropdown header-profile">
-                <a class="nav-link" href="#" role="button" data-toggle="dropdown">
-                  <i class="fas fa-user"></i>
-                </a>
-                <div class="dropdown-menu dropdown-menu-right">
-                  <a href="{{ url_for('student_views.student_profile')}}" class="dropdown-item">
-                    <i class="fas fa-user"></i>
-                    <span class="ml-2">Profile </span>
-                  </a>
-                  <a href="" class="dropdown-item">
-                    <i class="icon-key"></i>
-                    <span class="ml-2">Logout </span>
-                  </a>
+                    </div>
                 </div>
-              </li>
-            </ul>
-          </div>
+                <ul class="navbar-nav header-right">
+                    <li class="nav-item dropdown header-profile">
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown">
+                            <i class="fas fa-user"></i>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a href="{{ url_for('student_views.student_profile')}}" class="dropdown-item">
+                                <i class="fas fa-user"></i>
+                                <span class="ml-2">Profile</span>
+                            </a>
+                            <a href="{{ url_for('student_views.Slogout')}}" class="dropdown-item">
+                                <i class="fas fa-key"></i>
+                                <span class="ml-2">Logout</span>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
         </nav>
-      </div>
     </div>
+</div>
 
     <div class="quixnav navigation-main">
       <div class="quixnav-scroll">
         <ul class="metismenu" id="menu">
+             <li>
+            <a class="has-arrow" href="{{ url_for('student_views.student_profile')}}" aria-expanded="false"><i
+                class="fas fa-user"></i><span class="nav-text">Profile</span></a>
+          </li>
 
           <li>
             <a class="has-arrow" href="{{url_for('student_views.dashboard')}}" aria-expanded="false"><i
@@ -101,10 +102,7 @@
                 class="fas fa-book"></i><span class="nav-text">My Bookings</span></a>
 
           </li>
-          <li>
-            <a class="has-arrow" href="{{ url_for('student_views.student_profile')}}" aria-expanded="false"><i
-                class="fas fa-user"></i><span class="nav-text">Profile</span></a>
-          </li>
+
 
           <li>
             <a class="has-arrow" href="{{ url_for('student_views.Slogout')}}" aria-expanded="false"><i
@@ -223,12 +221,16 @@
   <script type="module"  src="{{ url_for('static', filename='js/bookings.js') }}"></script>
   <script type="module"  src="{{ url_for('static', filename='js/student_profile.js') }}"></script>
   <script type="module"  src="{{ url_for('static', filename='js/mybooking.js') }}"></script>
+  <script src="https://js.paystack.co/v1/inline.js"></script>
+  <!-- Load jQuery -->
+    <script src="{{ url_for('static', filename='jQuery/jquery.validate.min.js') }}"></script>
+        <script src="{{ url_for('static', filename='jQuery/jquery-3.7.1.min.js') }}"></script>
 
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <!-- Other scripts dependent on jQuery -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-  <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
+
+
 
 </body>
 

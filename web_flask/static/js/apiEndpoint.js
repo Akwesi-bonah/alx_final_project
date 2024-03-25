@@ -6,6 +6,12 @@ const API_ENDPOINTS = 'http://127.0.0.1:5003/api/v1/';
 let token = "dXNlckBnbWFpbC5jb206cHdk";
 saveToken(token);
 
+ $('.showloader').click(function () {
+    Swal.fire(
+        'Processing...Please wait!'
+    );
+    swal.showLoading();
+});
 // Retrieve the token
 let retrievedToken = getToken();
 
