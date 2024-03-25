@@ -1,21 +1,17 @@
 import API_ENDPOINTS from './apiEndpoint.js';
-$(document).ready(function () {
-  var HOST = API_ENDPOINTS;
-  var userId = null;
 
-  function showValidationErrors(errors) {
-    var errorMessage = "Please check the following fields:\n\n";
-    for (var i = 0; i < errors.length; i++) {
-      errorMessage += "- " + errors[i] + "\n";
-    }
+$(document).ready(function () {
+  let HOST = API_ENDPOINTS;
+  let userId = null;
+const showloader = () => {
     Swal.fire({
-      title: "Validation Error",
-      text: errorMessage,
-      icon: "error",
-      confirmButtonColor: "#d33",
-      confirmButtonText: "OK",
+        title: 'Processing...Please wait!',
+        onBeforeOpen: () => {
+            Swal.showLoading();
+        }
     });
-  }
+}
+
 
   // Show the 'Addstaff' button and hide the 'updateStaff' button
   $('.createStaff').on('click', function(){
@@ -26,12 +22,12 @@ $(document).ready(function () {
   // Add a new staff member
   $("#Addstaff").on("click", function (event) {
     event.preventDefault();
-    var form = $("#staffFrom")[0];
+    let form = $("#staffFrom")[0];
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
-    var formData = {
+    let formData = {
       campus: $("#campus").val(),
       name: $("#staffName").val(),
       email: $("#staffEmail").val(),
@@ -50,11 +46,15 @@ $(document).ready(function () {
       confirmButtonText: "Yes, submit it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        showloader()
         $.ajax({
           url: HOST + "staff",
           type: "POST",
           data: JSON.stringify(formData),
           contentType: "application/json",
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", "Basic " + localStorage.getItem("token"));
+          },
           success: function (response) {
 //            console.log("Success:", response);
             Swal.fire({
@@ -93,13 +93,13 @@ $(document).ready(function () {
   $(".edit-user").on("click", function (event) {
     event.preventDefault();
     userId = $(this).data("user-id");
-    var row = $(this).closest("tr");
-    var campus = row.find("td:eq(1)").text();
-    var name = row.find("td:eq(2)").text();
-    var email = row.find("td:eq(3)").text();
-    var phone = row.find("td:eq(4)").text();
-    var role = row.find("td:eq(5)").text();
-    var status = row.find("td:eq(6)").text();
+    let row = $(this).closest("tr");
+    // let campus = row.find("td:eq(1)").text();
+    let name = row.find("td:eq(1)").text();
+    let email = row.find("td:eq(2)").text();
+    let phone = row.find("td:eq(3)").text();
+    let role = row.find("td:eq(4)").text();
+    let status = row.find("td:eq(5)").text();
 
     $("#campus").val(campus);
 
@@ -128,12 +128,12 @@ $(document).ready(function () {
   // Update a user's details
   $("#updateStaff").on("click", function (event) {
     event.preventDefault();
-    var form = $("#staffFrom")[0];
+    let form = $("#staffFrom")[0];
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
-    var formData = {
+    let formData = {
       campus: $("#campus").val(),
       name: $("#name").val(),
       email: $("#email").val(),
@@ -142,6 +142,9 @@ $(document).ready(function () {
       role: $("#role").val(),
       status: $("#status").val(),
     };
+    let password = $("#password").val();
+
+
     Swal.fire({
       title: "Are you sure?",
       text: "You are about to update this user. Confirm?",
@@ -152,11 +155,15 @@ $(document).ready(function () {
       confirmButtonText: "Yes, update it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        showloader()
         $.ajax({
           url: HOST + "staff/" + userId,
           type: "PUT",
           data: JSON.stringify(formData),
           contentType: "application/json",
+          beforeSend: function (xhr) {
+            xhr.setRequestHeader("Authorization", "Basic " + localStorage.getItem("token"));
+          },
           success: function (response) {
             console.log("User updated:", response);
             Swal.fire({
@@ -166,6 +173,7 @@ $(document).ready(function () {
               confirmButtonColor: "#3085d6",
               confirmButtonText: "OK",
             }).then(() => {
+              location.reload()
               $("#staffCreateUpdate").modal("hide");
             });
           },
@@ -182,11 +190,11 @@ $(document).ready(function () {
       }
     });
   });
-  
+
   // Delete a user
   $(".delete-user").on("click", function (event) {
     event.preventDefault();
-    var userId = $(this).data("user-id");
+    let userId = $(this).data("user-id");
     Swal.fire({
       title: "Are you sure?",
       text: "You are about to delete this user. This action cannot be undone.",
@@ -197,6 +205,7 @@ $(document).ready(function () {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        showloader()
         $.ajax({
           url: HOST + "staff/" + userId,
           method: "DELETE",
@@ -229,19 +238,19 @@ $(document).ready(function () {
   // Update a user's details without password change
   $("#uStaff").on("click", function (event) {
     event.preventDefault();
-    var form = $("#staffFrom")[0];
+    let form = $("#staffFrom")[0];
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
-    var formData = {
+    let formData = {
       campus: $("#campus").val(),
       name: $("#name").val(),
       email: $("#email").val(),
       phone: $("#phone").val(),
       password: $("#password").val(),
     };
-    var userId = $(this).data("staff-id");
+    let userId = $(this).data("staff-id");
     Swal.fire({
       title: "Are you sure?",
       text: "You are about to update the user. Confirm?",
@@ -252,6 +261,7 @@ $(document).ready(function () {
       confirmButtonText: "Yes, update it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        showloader()
         $.ajax({
           url: HOST + "staff/" + userId,
           type: "PUT",
@@ -285,4 +295,6 @@ $(document).ready(function () {
   });
   
   userId = null;
+
 });
+

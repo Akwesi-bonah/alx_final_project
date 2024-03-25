@@ -5,6 +5,8 @@
 # from models import storage
 # from models.staff import Staff
 #
+import base64
+
 import bcrypt
 from sqlalchemy import Date
 
@@ -35,6 +37,10 @@ staff = Staff()
 student = Student()
 user_email = "user@gmail.com"
 clear_user_pwd = "pwd"
+
+credentials = f"{user_email}:{clear_user_pwd}"
+encoded_credentials = base64.b64encode(credentials.encode()).decode()
+print(encoded_credentials)
 # staff.first_name = "Arhin"
 # staff.last_name = "Kweku"
 # staff.email = user_email
@@ -43,12 +49,12 @@ clear_user_pwd = "pwd"
 # staff.role = "admin"
 # staff.status = "active"
 # staff.save()
-# #
+# # #
 # student.first_name = "Arhin"
 # student.last_name = "Kweku"
-# student.email = "testing@gmail.com"
+# student.email = user_email
 # student.phone = "02431234567"
-# student.password = "pwd"
+# student.password = clear_user_pwd
 # student.date_of_birth = "1990-01-01"
 # student.gender = "male"
 # student.save()
@@ -66,8 +72,15 @@ clear_user_pwd = "pwd"
 # print(u.display_name() if u is not None else "None")
 
 
-user_data = storage.find_by(Staff, email=user_email)
-if not bcrypt.checkpw(clear_user_pwd.encode(), user_data.password.encode()):
-    print("Invalid credentials")
-else:
-    print("Valid credentials")
+# user_data = storage.find_by(Staff, email=user_email)
+# if not bcrypt.checkpw(clear_user_pwd.encode(), user_data.password.encode()):
+#     print("Invalid credentials")
+# else:
+#     print("Valid credentials")
+
+# from api.v1.auth.basic_auth import BasicAuth
+#
+# auth = BasicAuth()
+#
+# print(auth.staff_object_from_credentials(user_email, clear_user_pwd))
+# print(auth.student_object_from_credentials(user_email, clear_user_pwd))

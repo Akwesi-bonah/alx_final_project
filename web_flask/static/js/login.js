@@ -1,12 +1,7 @@
 import API_ENDPOINTS from "./apiEndpoint.js";
 $(document).ready(function () {
   let HOST = API_ENDPOINTS;
-  $('.showloader').click(function () {
-    Swal.fire(
-        'Processing...Please wait!'
-    );
-    swal.showLoading();
-});
+
     function validateDOB(dateString) {
       let dob = new Date(dateString);
       if (isNaN(dob)) {
@@ -58,7 +53,7 @@ $(document).ready(function () {
       let pass = $("#password").val();
     let confirmpass = $("#confirm-password").val();
 
-    var message = "Invalid Input";
+     let message = "Invalid Input";
     if (pass =="") {
 
         Swal.fire(

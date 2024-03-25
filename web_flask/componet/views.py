@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 """ Default staff view"""
+import bcrypt
 from sqlalchemy import func,  or_
 from werkzeug.security import check_password_hash
 
@@ -23,23 +24,24 @@ def base():
     error_message = None
     user = None
 
-    if 'user_id' not in session:
-        render_template('default.html', form=form, error=error_message)
+    # if 'user_id' not in session:
+    #     render_template('default.html', form=form, error=error_message)
+    try:
+        if form.validate_on_submit():
+            session.clear()
+            email = form.email.data
+            password = form.password.data
+            user_data = models.storage.find_by(Staff, email=email)
 
-    if form.validate_on_submit():
-        session.pop('user_id', None)
-        user = form.email.data
-        pwd = form.password.data
-        hash_pwd = models.storage.get_user_pwd(user)
-        user_id = models.storage.get_user_id(user)
-
-        if not user_id or not hash_pwd or not check_password_hash(hash_pwd, pwd):
-            error_message = "Invalid credentials"
-        else:
-            session['user_id'] = user_id
-            session['user'] = user
-            return redirect(url_for('staff_view.dashboard', user=session['user']))
-
+            if user_data is None or bcrypt.checkpw(password.encode(), user_data.password.encode()):
+                session['user_id'] = user_data.id
+                session['user'] = email
+                return redirect(url_for('staff_view.dashboard', user=session['user']))
+            else:
+                error_message = "Invalid email or password"
+    except Exception as e:
+        print(e)
+        error_message = "An error occurred, please try again"
     return render_template('default.html', form=form, error=error_message)
 
 

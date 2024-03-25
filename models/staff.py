@@ -10,8 +10,7 @@ class Staff(BaseModel, Base):
     """ Represent staff in hostel """
     __tablename__ = "staff"
     campus = Column(String(255), nullable=True)
-    first_name = Column(String(255), nullable=False)
-    last_name = Column(String(255), nullable=False)
+    name = Column(String(255), nullable=False)
     email = Column(String(255), nullable=False, unique=True)
     phone = Column(String(255), nullable=True, unique=True)
     password = Column(String(250), nullable=False)
@@ -38,12 +37,14 @@ class Staff(BaseModel, Base):
 
     def is_valid_password(self, pwd):
         """Checks if the provided password is valid"""
-        if pwd is None or not isinstance(pwd, str):
+        if pwd is None or type(pwd) is not str:
             return False
-        if not self.password:
+        if self.password is None:
             return False
-
-        return bcrypt.checkpw(pwd.encode(), self.password.encode())
+            # Encode both the provided password and the stored hashed password
+        stored_password = self.password.encode()
+        pwd_encoded = pwd.encode()
+        return bcrypt.checkpw(pwd_encoded, stored_password)
 
 
 
