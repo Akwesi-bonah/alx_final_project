@@ -1,10 +1,18 @@
 import API_ENDPOINTS from './apiEndpoint.js';
-var roomTypeID = null;
+let roomTypeID = null;
 $(document).ready(function() {
-    var HOST = API_ENDPOINTS;
+  const showloader = () => {
+    Swal.fire({
+        title: 'Processing...Please wait!',
+        onBeforeOpen: () => {
+            Swal.showLoading();
+        }
+    });
+}
+    let HOST = API_ENDPOINTS;
     function showValidationErrors(errors) {
-      var errorMessage = 'Please check the following fields:\n\n';
-      for (var i = 0; i < errors.length; i++) {
+      let errorMessage = 'Please check the following fields:\n\n';
+      for (let i = 0; i < errors.length; i++) {
         errorMessage += '- ' + errors[i] + '\n';
       }
       Swal.fire({
@@ -18,7 +26,7 @@ $(document).ready(function() {
 
     // Show the 'AddRoomType' button and hide the 'updateRoomType' button
     $('.createRoomType').on('click', function(){
-      $('#edit-type').show();
+      $('#addRoomType').show();
       $('#updateRoomType').hide();
     })
 
@@ -27,14 +35,14 @@ $(document).ready(function() {
       event.preventDefault();
     
       // Check form validation
-      var form = $('#roomTypeForm')[0];
+      let form = $('#roomTypeForm')[0];
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
     
 
-      var formData = {
+      let formData = {
         name: $('#name').val(),
         price: $('#amount').val(),
         description: $('#description').val(),
@@ -90,9 +98,9 @@ $(document).ready(function() {
     
     $('.edit-type').on('click', function(event) {
       event.preventDefault();
-    
+        showloader()
+
       roomTypeID = $(this).data('type-id');
-    
       $.get({
         url: HOST + "room_type/" + roomTypeID,
         success: function(block) {
@@ -101,8 +109,8 @@ $(document).ready(function() {
           $('#description').val(block.name);
           $('#status').val(block.status)
 
-            $('#addRoomType').hide();
-            $('#editRoomType').show();
+          $('#addRoomType').hide();
+      $('#updateRoomType').show();
           $('#RoomTypeCU').modal('show');
         },
         error: function(xhr, status, error) {
@@ -121,14 +129,14 @@ $(document).ready(function() {
       event.preventDefault();
 
       // Check form validation
-      var form = $('#roomTypeForm')[0];
+      let form = $('#roomTypeForm')[0];
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
 
 
-      var formData = {
+      let formData = {
         name: $('#name').val(),
         price: $('#amount').val(),
         description: $('#description').val(),
@@ -145,6 +153,7 @@ $(document).ready(function() {
         confirmButtonText: 'Yes, submit it!'
       }).then((result) => {
         if (result.isConfirmed) {
+          showloader()
           $.ajax({
             url: HOST + "room_type/" + roomTypeID,
             type: 'PUT',
@@ -184,7 +193,7 @@ $(document).ready(function() {
     // Delete button click event
     $('.delete-type').on('click', function(event) {
      event.preventDefault();
-        var blockId = $(this).data("type-id");
+        let blockId = $(this).data("type-id");
         Swal.fire({
           title: "Are you sure?",
           text: "You are about to delete this room Type. This action cannot be undone.",
@@ -195,6 +204,7 @@ $(document).ready(function() {
           confirmButtonText: "Yes, delete it!",
         }).then((result) => {
           if (result.isConfirmed) {
+            showloader()
             $.ajax({
               url: HOST + "room_type/" + blockId,
               method: "DELETE",

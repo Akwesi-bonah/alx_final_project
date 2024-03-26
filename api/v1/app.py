@@ -29,6 +29,7 @@ elif AUTH_TYPE == "basic_auth":
     from api.v1.auth.basic_auth import BasicAuth
     auth = BasicAuth()
 
+
 @app.teardown_appcontext
 def close_db(error):
     """ Close Storage """
@@ -64,28 +65,27 @@ def not_found(error) -> Response:
 def handle_smtp_authentication_error(error):
     return jsonify({'error': str(error)}), 500
 
-
-@app.before_request
-def before_request() -> str:
-    """ before_request handler
-    """
-    if auth is None:
-        return
-    excluded_paths = ['/api/v1/status/',
-                      '/api/v1/unauthorized/',
-                      '/api/v1/forbidden/',
-                      '/api/v1/staff/',
-                      '/api/v1/student',
-                      ]
-    if not auth.require_auth(request.path, excluded_paths):
-        return
-    if auth.authorization_header(request) is None \
-            and auth.session_cookie(request) is None:
-        abort(401)
-    current_user = auth.current_user(request)
-    if current_user is None:
-        abort(403)
-    request.current_user = current_user
+#
+# @app.before_request
+# def before_request() -> str:
+#     """ before_request handler
+#     """
+#     if auth is None:
+#         return
+#     excluded_paths = ['/api/v1/status/',
+#                       '/api/v1/unauthorized/',
+#                       '/api/v1/forbidden/',
+#                       '/api/v1/student',
+#                       ]
+#     if not auth.require_auth(request.path, excluded_paths):
+#         return
+#     if auth.authorization_header(request) is None \
+#             and auth.session_cookie(request) is None:
+#         abort(401)
+#     current_user = auth.current_user(request)
+#     if current_user is None:
+#         abort(403)
+#     request.current_user = current_user
 
 if __name__ == "__main__":
     """ Main function"""

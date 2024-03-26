@@ -2,7 +2,7 @@
 """ Define Rooms class """
 import models
 from models.base import BaseModel, Base
-from sqlalchemy import Column, String, ForeignKey, Integer
+from sqlalchemy import Column, String, ForeignKey, Integer, func
 
 
 class Room(BaseModel, Base):
@@ -16,7 +16,7 @@ class Room(BaseModel, Base):
     gender = Column(String(128), nullable=False)
     floor = Column(String(128))
     no_of_beds = Column(Integer, nullable=False)
-    booked_beds = Column(Integer)
+    booked_beds = Column(Integer, default=0)
     reserved_beds = Column(Integer, default=0)
     status = Column(String(128),  default="Available")
 

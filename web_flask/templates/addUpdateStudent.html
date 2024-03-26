@@ -35,6 +35,7 @@
                 aria-labelledby="personalInfoHeading" data-bs-parent="#personalInfoAccordion">
                 <div class="accordion-body">
                   <div class="row g-3">
+
                     <!-- Other personal info fields -->
                     <div class="col-md-4">
                       {{ form.first_name.label(class="form-label") }}
@@ -210,7 +211,7 @@
             </div>
           </div>
           <!-- Profile Picture Upload -->
-          <!-- <div class="mt-3">
+           <div class="mt-3">
 
             {{ form.profile_picture.label(class="form-label") }}
             {{ form.profile_picture(class="form-control", id="profile_picture") }}
@@ -223,9 +224,9 @@
               {% endfor %}
             </div>
             {% endif %}
-          </div> -->
+          </div>
 
-          <!-- <script>
+          < <script>
             document.getElementById('profile_picture').addEventListener('change', function (event) {
               var input = event.target;
               var preview = document.getElementById('preview');
@@ -241,7 +242,7 @@
                 reader.readAsDataURL(input.files[0]);
               }
             });
-          </script> -->
+          </script>
 
           <div class="mt-3">
             {{ form.submit(id="AddStudent", class="btn btn-primary") }}

@@ -44,13 +44,13 @@ def cancel_booking(booking_id):
     room_id = booking.room_id
     room = storage.get(Room, room_id)
     booking.status = 'cancelled'
-    room.booked_beds = int(room.booked_beds) + 1
+    room.booked_beds = int(room.booked_beds) - 1
     storage.session.commit()
     return jsonify({"cancelled": "success"})
 
 
 @views.route('/booking', methods=['POST'], strict_slashes=False)
-#@swag_from('documentation/booking/post_booking.yml')
+@swag_from('documentation/booking/post_booking.yml')
 def create_booking():
     """Create a booking"""
     if not request.is_json:
@@ -76,7 +76,7 @@ def create_booking():
 
     room = storage.get(Room, room_id)
     if room:
-        if room.booked_beds == 0:
+        if (room.no_of_beds - room.booked_beds - room.reserved_beds) == 0:
             return jsonify({'error': 'No available beds'}), 400
 
     new_booking = {
@@ -86,20 +86,24 @@ def create_booking():
     }
     booking = Booking(**new_booking)
     booking.save()
-    room.booked_beds -= 1
+    room.booked_beds += 1
     storage.session.commit()
 
     student = storage.get(Student, student_id)
     student_email = str(student.email)
 
-    try:
-        subject = 'Booking Successfully'
-        body = (f'Dear {student.first_name} {student.last_name},\n\n'
-                f'Congratulations! You have successfully booked {room.room_name} at Academy Haven Hostel.\n\n'
-                f'Your booking is currently pending, and you have 24 hours to complete the payment.\n\n'
-                f'Thank you for choosing Academy Haven Hostel for your stay.')
-        send_email(student_email, subject, body)
-    except Exception as e:
-        return jsonify({'error': 'Email not sent'}), 500
+    subject = 'Booking Successfully'
+    body = (
+        f'Dear {student.first_name} {student.last_name},\n\n'
+        f'Congratulations! You have successfully booked {room.room_name} at Academy Haven Hostel.\n\n'
+        f'Your booking is currently pending, and you have 24 hours to complete the payment.\n\n'
+        f'Thank you for choosing Academy Haven Hostel for your stay.'
+    )
 
-    return jsonify(booking.to_dict()), 201
+    try:
+        send_email(student_email, subject, body)
+        return jsonify({'message': 'Booking created successfully'}), 201
+    except Exception as e:
+        print(f'Error sending email: {e}')
+        return jsonify({'message': 'Booking created successfully'}), 201
+

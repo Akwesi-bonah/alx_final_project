@@ -1,5 +1,7 @@
 #!/usr/bin/python3
 """ Default staff view"""
+import base64
+
 import bcrypt
 from sqlalchemy import func,  or_
 from werkzeug.security import check_password_hash
@@ -23,16 +25,16 @@ def base():
     form = Login()
     error_message = None
     user = None
-
-    # if 'user_id' not in session:
-    #     render_template('default.html', form=form, error=error_message)
+    script = None
     try:
         if form.validate_on_submit():
             session.clear()
             email = form.email.data
             password = form.password.data
             user_data = models.storage.find_by(Staff, email=email)
-
+            data = f'{email}:{password}'
+            token = base64.b64encode(data.encode()).decode()  # Encode the data to base64
+            script = f"<script>localStorage.setItem('token', '{token}')</script>"  # Correct syntax for setting localStorage
             if user_data is None or bcrypt.checkpw(password.encode(), user_data.password.encode()):
                 session['user_id'] = user_data.id
                 session['user'] = email
@@ -42,8 +44,7 @@ def base():
     except Exception as e:
         print(e)
         error_message = "An error occurred, please try again"
-    return render_template('default.html', form=form, error=error_message)
-
+    return render_template('default.html', form=form, error=error_message, script=script)
 
 @staff_view.route('/logout')
 def logout():

@@ -1,3 +1,5 @@
+import os.path
+
 import bcrypt
 from sqlalchemy import func, and_
 from werkzeug.security import check_password_hash
@@ -13,6 +15,7 @@ from models import storage
 from models.room import Room
 from models.block import Block
 from models.room_type import RoomType
+from flask import send_from_directory
 
 # JIBRIL@1234
 @student_views.route('/', methods=['GET', 'POST'])
@@ -66,24 +69,27 @@ def dashboard():
         user = storage.get(Student, user_id)
         gender = user.gender
 
-        room = (storage.session.query(Room.id, Room.room_name, Room.booked_beds, Room.floor, Room.gender,
-                                      RoomType.name.label('room_type_name'), RoomType.price,
-                                      Block.name.label('block_name'))
+        room = (storage.session.query(
+            Room.id, Room.room_name,
+            (Room.no_of_beds - Room.booked_beds - Room.reserved_beds).label('available_beds'),
+            Room.floor, Room.gender,
+            RoomType.name.label('room_type_name'), RoomType.price,
+            Block.name.label('block_name'))
                 .join(Block, Room.block_id == Block.id)
                 .join(RoomType, Room.room_type_id == RoomType.id)
-                .filter(and_(Room.booked_beds > 0,
+                .filter(and_(Room.status == "Available",
                  Room.gender == gender)).all())
 
         rooms = []
         for result_tuple in room:
-            (id, room_name, no_of_beds, floor,
+            (id, room_name, available_beds, floor,
              gender, room_type_name, price,
              block_name) = result_tuple
 
             result_dict = {
                 'id': id,
                 'room_name': room_name,
-                'no_of_beds': no_of_beds,
+                'available_beds': available_beds,  # Use the calculated available_beds
                 'floor': floor,
                 'gender': gender,
                 'room_type_name': room_type_name,
@@ -92,6 +98,8 @@ def dashboard():
             }
 
             rooms.append(result_dict)
+
+        print(rooms)
 
     return render_template('Sbase.html',
                            blocks=block,
@@ -113,21 +121,21 @@ def student_profile():
             id = session['user_id']
             user = storage.get(Student, id)
             user = user.to_dict()
-            print(user)
-            form.first_name.data = user['first_name']
-            form.last_name.data = user['last_name']
-            form.other_name.data = user['other_name']
-            form.email.data = user['email']
-            form.phone.data = user['phone']
-            form.student_number.data = user['student_number']
-            form.program.data = user['program']
-            form.level.data = user['level']
-            form.guardian_name.data = user['guardian_name']
-            form.guardian_phone.data = user['guardian_phone']
-            form.disability.data = user['disability']
-            form.gender.data = user['gender']
-            form.address.data = user['address']
-            form.date_of_birth.data = user['date_of_birth']
+            # print(user)
+            form.first_name.data = user['first_name'] if user.get('first_name') is not None else ""
+            form.last_name.data = user['last_name'] if 'last_name' in user else ""
+            form.other_name.data = user['other_name'] if 'other_name' in user else ""
+            form.email.data = user['email'] if 'email' in user else ""
+            form.phone.data = user['phone'] if 'phone' in user else ""
+            form.student_number.data = user['student_number'] if 'student_number' in user else ""
+            form.program.data = user['program'] if 'program' in user else ""
+            form.level.data = user['level'] if 'level' in user else ""
+            form.guardian_name.data = user['guardian_name'] if 'guardian_name' in user else ""
+            form.guardian_phone.data = user['guardian_phone'] if 'guardian_phone' in user else ""
+            form.disability.data = user['disability'] if 'disability' in user else ""
+            form.gender.data = user['gender'] if 'gender' in user else ""
+            form.address.data = user['address'] if 'address' in user else ""
+            form.date_of_birth.data = user['date_of_birth'] if 'date_of_birth' in user else ""
         except Exception as e :
             pass
 

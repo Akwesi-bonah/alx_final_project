@@ -26,6 +26,7 @@ class Student(BaseModel, Base):
     guardian_name = Column(String(128))
     guardian_phone = Column(String(128))
     disability = Column(String(128))
+    profile_picture = Column(String(128))
     password = Column(String(250), nullable=False)
     session_id = Column(String(250), nullable=True)
     reset_token = Column(String(250), nullable=True)

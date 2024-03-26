@@ -1,11 +1,21 @@
 import API_ENDPOINTS from './apiEndpoint.js';
 
 $(document).ready(function() {
-    var HOST = API_ENDPOINTS;
-    var roomID = null;
+    let HOST = API_ENDPOINTS;
+    let roomID = null;
+
+      const showloader = () => {
+    Swal.fire({
+        title: 'Processing...Please wait!',
+        onBeforeOpen: () => {
+            Swal.showLoading();
+        }
+    });
+}
+
     function showValidationErrors(errors) {
-      var errorMessage = 'Please check the following fields:\n\n';
-      for (var i = 0; i < errors.length; i++) {
+      let errorMessage = 'Please check the following fields:\n\n';
+      for (let i = 0; i < errors.length; i++) {
         errorMessage += '- ' + errors[i] + '\n';
       }
       Swal.fire({
@@ -20,7 +30,7 @@ $(document).ready(function() {
 
     $('.createNewRoom').on('click', function(event) {
     $('#AddRoomData').show();
-    $('#UpdateRoomData').hide();
+    $('#updateRoomData').hide();
     })
 
     // Event listener for form submission
@@ -28,22 +38,21 @@ $(document).ready(function() {
       event.preventDefault();
 
 
-      var form = $('#RoomForm')[0];
+      let form = $('#RoomForm')[0];
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
 
-      var formData = {
+      let formData = {
       room_name: $("#roomNo").val(),
       room_type_id: $("#roomType").val(),
       block_id: $("#blockId").val(),
       gender: $("#gender").val(),
       floor: $("#floor").val(),
       no_of_beds: $("#noOfBeds").val(),
-      booked_beds: $("#noOfBeds").val()
       };
-
+    console.log(formData)
 
       Swal.fire({
         title: 'Are you sure?',
@@ -56,6 +65,7 @@ $(document).ready(function() {
       }).then((result) => {
         if (result.isConfirmed) {
           console.log('Form data:', formData);
+showloader()
 
           $.ajax({
             url: HOST + "room",
@@ -78,16 +88,21 @@ $(document).ready(function() {
                 }
               });
             },
-            error: function(xhr, status, error) {
-              Swal.fire({
-                title: 'Error!',
-                text: "Room name already exists",
-                icon: 'error',
-                showCancelButton: false,
-                confirmButtonColor: '#d33',
-                confirmButtonText: 'OK'
-              });
+            error: function (xhr, status, error) {
+            let errorMessage = "An error occurred.";
+            if (xhr.responseJSON && xhr.responseJSON.error) {
+              errorMessage = xhr.responseJSON.error;
             }
+
+            Swal.fire({
+              title: "Error!",
+              text: errorMessage,
+              icon: "error",
+              showCancelButton: false,
+              confirmButtonColor: "#d33",
+              confirmButtonText: "OK",
+            });
+          }
           });
         }
       });
@@ -97,7 +112,7 @@ $(document).ready(function() {
       event.preventDefault();
 
       roomID = $(this).data('room-id');
-
+  showloader()
       $.get({
         url:  HOST + "room/" + roomID,
         success: function(room) {
@@ -127,13 +142,13 @@ $(document).ready(function() {
       event.preventDefault();
 
 
-      var form = $('#RoomForm')[0];
+      let form = $('#RoomForm')[0];
       if (!form.checkValidity()) {
         form.reportValidity();
         return;
       }
 
-      var formData = {
+      let formData = {
       room_name: $("#roomNo").val(),
       room_type_id: $("#roomType").val(),
       block_id: $("#blockId").val(),
@@ -155,7 +170,7 @@ $(document).ready(function() {
       }).then((result) => {
         if (result.isConfirmed) {
           console.log('Form data:', formData);
-
+          showloader()
           $.ajax({
             url: HOST + "room/" + roomID,
             type: 'PUT',
@@ -194,12 +209,12 @@ $(document).ready(function() {
 
 
     // Delete button click event
-    $('.delete-type').on('click', function(event) {
+    $('.delete-room').on('click', function(event) {
      event.preventDefault();
-        var blockId = $(this).data("type-id");
+        let blockId = $(this).data("room-id");
         Swal.fire({
           title: "Are you sure?",
-          text: "You are about to delete this room Type. This action cannot be undone.",
+          text: "You are about to delete this room . This action cannot be undone.",
           icon: "warning",
           showCancelButton: true,
           confirmButtonColor: "#d33",
@@ -207,8 +222,9 @@ $(document).ready(function() {
           confirmButtonText: "Yes, delete it!",
         }).then((result) => {
           if (result.isConfirmed) {
+            showloader()
             $.ajax({
-              url: HOST + "room_type/" + blockId,
+              url: HOST + "room/" + blockId,
               method: "DELETE",
               success: function (response) {
                 Swal.fire({

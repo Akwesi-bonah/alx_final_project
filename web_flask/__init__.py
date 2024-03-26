@@ -15,6 +15,7 @@ def create_app():
     # database connection
     app.config['SECRET_KEY'] = os.urandom(24)
     app.config['SESSION_COOKIE_NAME'] = 'staff_session'
+    app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
     app.config['STUDENT_SESSION_COOKIE_NAME'] = 'student_session'
     # Session configurations
     app.config['SESSION_COOKIE_SECURE'] = True
@@ -22,10 +23,8 @@ def create_app():
     app.config['SESSION_FILE_DIR'] = './.flask_session/'
     app.config['SESSION_KEY_PREFIX'] = 'session:'
     app.config['PERMANENT_SESSION_LIFETIME'] = 3600
-    app.config['SESSION_REFRESH_EACH_REQUEST'] = True
+    app.config['SESSION_REFRESH_EACH_REQUEST'] = False
 
-    app.config['PAYSTACK_SECRET_'] = 'sk_test_7530309aeb43b700e14cf312de735ad407747903'
-    app.config['PAYSTACK_PUBLIC_KEY'] = 'pk_test_4ccdf50310beaaefdde4febbcef5fee8fbbd7011'
     app.register_blueprint(staff_view, url_prefix='/staff/')
     app.register_blueprint(student_views, url_prefix='/')
 
@@ -37,10 +36,10 @@ def create_app():
     def internal_error(error):
         return render_template('500.html'), 500
 
-    # @app.errorhandler(Exception)
-    # def unhandled_exception(e):
-    #     return render_template('error.html',
-    #                            error=str(e)), 500
+    @app.errorhandler(Exception)
+    def unhandled_exception(e):
+        return render_template('error.html',
+                               error=str(e)), 500
 
     if __name__ == '__main__':
         app.run(debug=True)

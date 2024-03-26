@@ -4,82 +4,39 @@
 <section class="content">
   <div class="col-12">
     <div class="card recent-sales overflow-auto">
-
-
       <div class="card-body">
         <h5 class="card-title"><span>Rooms List</span></h5>
-
         <table class="table table-border datatable">
           <thead>
-            <tr role="row">
-              <th class="sorting_asc" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                style="width: 18.7px;" aria-sort="ascending" aria-label="#: activate to sort column descending">#</th>
-              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                style="width: 120.867px;" aria-label="
-                                        Room Type
-                                    : activate to sort column ascending">
-                Block
-              </th>
-
-              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                style="width: 80.8833px;" aria-label="
-                                        Room Name
-                                    : activate to sort column ascending">
-                Room Type
-              </th>
-              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                style="width: 96.0167px;" aria-label="
-                                        Gender
-                                    : activate to sort column ascending">
-                Room Name
-              </th>
-              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                style="width: 39.9833px;" aria-label="
-                                        Floor
-                                    : activate to sort column ascending">
-                Gender
-              </th>
-              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                style="width: 39.1167px;" aria-label="
-                                        Beds Avl.
-                                    : activate to sort column ascending">
-                Reserved Beds.
-
-              </th>
-              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                style="width: 55px;" aria-label="
-                                        Action
-                                    : activate to sort column ascending">
-                Amount
-              </th>
-
-              <th class="sorting" tabindex="0" aria-controls="DataTables_Table_0" rowspan="1" colspan="1"
-                style="width: 55px;" aria-label="
-                                        Action
-                                    : activate to sort column ascending">
-                Action
-              </th>
+            <tr>
+              <th>#</th>
+              <th>Block</th>
+              <th>Room Type</th>
+              <th>Room Name</th>
+              <th>Gender</th>
+              <th>Reserved Beds</th>
+              <th>Amount</th>
+              <th>Action</th>
             </tr>
           </thead>
-          {% for room in rooms %}
-          <tr>
-            <td></td>
-            <td>{{ room.block_name }}</td>
-            <td>{{ room.room_type_name }}</td>
-            <td>{{ room.room_name }}</td>
-            <td>{{ room.gender }}</td>
-            <td>{{ room.reserved_beds }}</td>
-            <td>{{ room.price }}</td>
-            <td>
-              <a href="#" class="btn btn-sm btn-info showloader assign-room" data-room-id="{{ room.id }}"
-                data-toggle="modal" data-target="#assignModal">Assign</a>
-              <a href="#" class="btn btn-sm btn-danger showloader drop-room" data-room-id="{{ room.id }}"
-                data-toggle="modal" data-target="#deleteModal">Delete</a>
-
-            </td>
-          </tr>
-          {% endfor %}
-
+          <tbody>
+            {% for room in rooms %}
+            <tr>
+              <td>{{ loop.index }}</td>
+              <td>{{ room.block_name }}</td>
+              <td>{{ room.room_type_name }}</td>
+              <td>{{ room.room_name }}</td>
+              <td>{{ room.gender }}</td>
+              <td>{{ room.reserved_beds }}</td>
+              <td>{{ room.price }}</td>
+              <td>
+                <button class="btn btn-sm btn-info assign-room" data-room-id="{{ room.id }}" data-toggle="modal"
+                  data-target="#assignModal">Assign</button>
+                <button class="btn btn-sm btn-danger drop-room" data-room-id="{{ room.id }}" data-toggle="modal"
+                  data-target="#deleteModal">Delete</button>
+              </td>
+            </tr>
+            {% endfor %}
           </tbody>
         </table>
       </div>
@@ -90,8 +47,9 @@
       </div>
     </div>
   </div>
-  <!-- /.row -->
 </section>
+
+<!-- Assign Modal -->
 <div class="modal fade" id="assignModal" tabindex="-1" role="dialog" aria-labelledby="assignModalLabel"
   aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -103,33 +61,17 @@
         </button>
       </div>
       <div class="modal-body">
-        <!-- Form for assigning a student to a room -->
         <form id="assignForm" method="POST" action="">
-          <!-- Input fields for student information -->
           <div class="form-group">
             <label for="studentName">Select Student</label>
             <select class="form-control" id="studentName" name="studentName" required>
-              <!-- Option 1 (Replace with actual student names from your database) -->
-              <option value="">
-                << Please select>>
-              </option>
+              <option value="">Please select</option>
               {% for student in students %}
-              <option value="{{ student.id }}">
-                {{ student.first_name }}
-                {% if student.other_name %}
-                {{ student.other_name }}
-                {% endif %}
-                {{ student.last_name }} -
-                {{ student.number }}
-              </option>
+              <option value="{{ student.id }}">{{ student.first_name }} {{ student.other_name }} {{ student.last_name }} -
+                {{ student.number }}</option>
               {% endfor %}
-
-
             </select>
           </div>
-          <br>
-
-          <!-- Submit button -->
           <button type="submit" class="btn btn-primary proceed">Proceed</button>
         </form>
       </div>
@@ -149,19 +91,12 @@
         </button>
       </div>
       <div class="modal-body">
-        <!-- Confirmation content for deleting a room -->
         <p>Are you sure you want to delete this room?</p>
         <label for="cancel">Number of Beds to Drop</label>
         <input type="number" class="form-control" id="no_of_beds">
-        <!-- Add other necessary content -->
-
-        <!-- Delete button -->
-        <br>
         <button type="button" class="btn btn-danger confirmDelete">Delete</button>
       </div>
     </div>
   </div>
 </div>
-
-
 {% endblock %}

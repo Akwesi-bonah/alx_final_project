@@ -123,7 +123,7 @@
               <div class="col-12">
                 <div class="card recent-sales overflow-auto">
 
-
+<input type="hidden" id="student-id" value="{{ session['user_id'] }}">
                   <div class="card-body">
                     <h5 class="card-title"><span>Available Rooms</span></h5>
                     <div class="filter-section mb-3">
@@ -175,7 +175,7 @@
                           </td>
                           <td class="">
                             <button type="button" class="btn btn-sm btn-outline-info round">
-                              {{ room.no_of_beds }}
+                              {{ room.available_beds }}
                             </button>
                           </td>
                           <td class="text-truncate">GHC <span>{{ room.price }}</span></td>
@@ -198,6 +198,7 @@
           </div>
           {% endblock %}
         </div>
+
 
 
       </div>
@@ -225,6 +226,8 @@
   <!-- Load jQuery -->
     <script src="{{ url_for('static', filename='jQuery/jquery.validate.min.js') }}"></script>
         <script src="{{ url_for('static', filename='jQuery/jquery-3.7.1.min.js') }}"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="{{ url_for('static', filename='assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
 
   <!-- Other scripts dependent on jQuery -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

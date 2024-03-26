@@ -76,17 +76,17 @@ def reserve_room():
     if not room:
         return jsonify({'error': 'Room not found'}), 404
 
-    if room.booked_beds != 0:
-        if int(room.booked_beds) - int(beds) < 0:
-            return jsonify({'error': 'Cannot reserve more beds than available'}), 400
-        else:
-            room.booked_beds = int(room.booked_beds) - int(beds)
-            room.reserved_beds = int(room.reserved_beds) + int(beds)
-            storage.session.commit()
-            return jsonify({'message': 'Room successfully reserved'}), 200
-
+    current_beds = int(room.no_of_beds) - int(room.reserved_beds) - int(room.booked_beds) - int(beds)
+    status = "Available"
+    if current_beds <= 0:
+        return jsonify({'error': 'Cannot reserve more beds than available'}), 400
     else:
-        return jsonify({'error': 'Cannot reserve the room with zero booked beds'}), 400
+        if current_beds == 0:
+            status = "Full"
+        room.reserved_beds += int(beds)
+        room.status = status
+        storage.session.commit()
+        return jsonify({'message': 'Room successfully reserved'}), 200
 
 
 @views.route('/cancel', methods=['POST'], strict_slashes=False)

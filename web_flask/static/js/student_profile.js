@@ -1,10 +1,11 @@
 import API_ENDPOINTS from './apiEndpoint.js';
 $(document).ready(function () {
-  var HOST = API_ENDPOINTS;
-
+  let HOST = API_ENDPOINTS;
+   let studentId = $("#student-id").val();
+   console.log(studentId)
   function showValidationErrors(errors) {
-    var errorMessage = "Please check the following fields:\n\n";
-    for (var i = 0; i < errors.length; i++) {
+    let errorMessage = "Please check the following fields:\n\n";
+    for (let i = 0; i < errors.length; i++) {
       errorMessage += "- " + errors[i] + "\n";
     }
     Swal.fire({
@@ -19,15 +20,14 @@ $(document).ready(function () {
   $("#updateSelf").on("click", function (event) {
     event.preventDefault();
 
-    var isValid = validateForm();
-
+    let isValid = validateForm();
     if (!isValid) {
       return false;
     }
 
-    var studentId = $(this).data("student-id");
+    let studentId = $(this).data("student-id");
 
-    var formData = {
+    let formData = {
       first_name: $("#first_name").val(),
       last_name: $("#last_name").val(),
       other_name: $("#other_name").val(),
@@ -90,7 +90,7 @@ $(document).ready(function () {
   });
 
   function validateForm() {
-  var isValid = true;
+  let isValid = true;
 
   // Validation for first_name
   if ($("#first_name").val().trim() === "") {
@@ -105,14 +105,14 @@ $(document).ready(function () {
   }
 
   // Validation for email
-  var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   if ($("#email").val().trim() === "" || !emailPattern.test($("#email").val().trim())) {
     showValidationErrors(["Email is invalid"]);
     isValid = false;
   }
 
   // Validation for phone
-  var phonePattern = /^\d{10}$/;
+  let phonePattern = /^\d{10}$/;
   if ($("#phone").val().trim() === "" || !phonePattern.test($("#phone").val().trim())) {
     showValidationErrors(["Phone number is invalid"]);
     isValid = false;
@@ -155,7 +155,7 @@ $(document).ready(function () {
   }
 
   // Validation for guardian_phone
-  var guardianPhonePattern = /^\d{10}$/;
+  let guardianPhonePattern = /^\d{10}$/;
   if ($("#guardian_phone").val().trim() === "" || !guardianPhonePattern.test($("#guardian_phone").val().trim())) {
     showValidationErrors(["Guardian Phone number is invalid"]);
     isValid = false;

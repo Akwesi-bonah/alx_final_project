@@ -49,12 +49,9 @@ const showloader = () => {
         showloader()
         $.ajax({
           url: HOST + "staff",
-          type: "POST",
-          data: JSON.stringify(formData),
-          contentType: "application/json",
-          beforeSend: function (xhr) {
-            xhr.setRequestHeader("Authorization", "Basic " + localStorage.getItem("token"));
-          },
+            type: "POST",
+            data: JSON.stringify(formData),
+            contentType: "application/json",
           success: function (response) {
 //            console.log("Success:", response);
             Swal.fire({
@@ -94,7 +91,7 @@ const showloader = () => {
     event.preventDefault();
     userId = $(this).data("user-id");
     let row = $(this).closest("tr");
-    // let campus = row.find("td:eq(1)").text();
+    let campus = row.find("td:eq(0)").text();
     let name = row.find("td:eq(1)").text();
     let email = row.find("td:eq(2)").text();
     let phone = row.find("td:eq(3)").text();
@@ -102,7 +99,6 @@ const showloader = () => {
     let status = row.find("td:eq(5)").text();
 
     $("#campus").val(campus);
-
     $("#staffRole option")
       .filter(function () {
         return $(this).text() === role;
@@ -114,7 +110,6 @@ const showloader = () => {
         return $(this).text() === status;
       })
       .prop("selected", true);
-
     $("#staffName").val(name);
     $("#staffEmail").val(email);
     $("#staffPhone").val(phone);

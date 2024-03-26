@@ -32,7 +32,7 @@
               >
                 #
               </th>
-              <th
+                <th
                 class="sorting"
                 tabindex="0"
                 aria-controls="DataTables_Table_0"
@@ -41,6 +41,19 @@
                 style="width: 284.2px"
                 aria-label="
                                        Campus
+                                    : activate to sort column ascending"
+              >
+                Campus
+              </th>
+              <th
+                class="sorting"
+                tabindex="0"
+                aria-controls="DataTables_Table_0"
+                rowspan="1"
+                colspan="1"
+                style="width: 284.2px"
+                aria-label="
+                                       Name
                                     : activate to sort column ascending"
               >
                 Name
@@ -116,6 +129,7 @@
             {% for user in users %}
             <tr>
               <td></td>
+            <td>{{ user.campus }}</td>
               <td>{{ user.name }}</td>
               <td>{{ user.email }}</td>
               <td>{{ user.phone }}</td>
@@ -263,6 +277,7 @@
             </div>
           </div>
 
+        <br>
           <div class="card-footer">
             {{ form.submit(class="btn btn-primary  float-left",
             id="Addstaff") }}

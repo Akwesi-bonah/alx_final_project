@@ -1,13 +1,13 @@
 import API_ENDPOINTS from './apiEndpoint.js';
 $(document).ready(function() {
-    var HOST = API_ENDPOINTS;
+    let HOST = API_ENDPOINTS;
   $("#setConfig").on("click", function(event) {
     event.preventDefault();
 
-    var startDate = new Date($("#startDate").val());
-    var expiryDate = new Date($("#endDate").val());
-    var currentDate = new Date();
-    var sixMonthsLater = new Date(startDate);
+    let startDate = new Date($("#startDate").val());
+    let expiryDate = new Date($("#endDate").val());
+    let currentDate = new Date();
+    let sixMonthsLater = new Date(startDate);
     sixMonthsLater.setMonth(sixMonthsLater.getMonth() + 6);
 
     if (!startDate || !expiryDate) {
@@ -36,7 +36,7 @@ $(document).ready(function() {
       return;
     }
 
-    var formData = {
+    let formData = {
       "start_date": $("#startDate").val(),
       "expiry_date": $("#endDate").val(),
       "created_by": $("#setConfig").data("user-id")
@@ -68,7 +68,7 @@ $(document).ready(function() {
             });
           },
           error: function(xhr, status, error) {
-            var errorMessage = "An error occurred.";
+            let errorMessage = "An error occurred.";
             if (xhr.responseJSON && xhr.responseJSON.error) {
               errorMessage = xhr.responseJSON.error;
             }

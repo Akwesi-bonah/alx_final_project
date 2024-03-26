@@ -1,10 +1,18 @@
 import API_ENDPOINTS from './apiEndpoint.js';
 $(document).ready(function () {
-var host = API_ENDPOINTS;
+let host = API_ENDPOINTS;
+const showloader = () => {
+    Swal.fire({
+        title: 'Processing...Please wait!',
+        onBeforeOpen: () => {
+            Swal.showLoading();
+        }
+    });
+}
   // Function to show validation errors using SweetAlert
   function showValidationErrors(errors) {
-    var errorMessage = "Please check the following fields:\n\n";
-    for (var i = 0; i < errors.length; i++) {
+    let errorMessage = "Please check the following fields:\n\n";
+    for (let i = 0; i < errors.length; i++) {
       errorMessage += "- " + errors[i] + "\n";
     }
     Swal.fire({
@@ -20,18 +28,18 @@ var host = API_ENDPOINTS;
     $("#updateBlock").hide();
     $("#AddBlock").show();
   });
-  var blockId = null;
+  let blockId = null;
 
   // Event listener for form submission
   $("#AddBlock").on("click", function (event) {
     event.preventDefault();
-    var form = $("#FormPost")[0];
+    let form = $("#FormPost")[0];
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
 
-    var formData = {
+    let formData = {
       campus: $("#campus").val(),
       name: $("#name").val(),
       description: $("#description").val(),
@@ -48,6 +56,7 @@ var host = API_ENDPOINTS;
       confirmButtonText: "Yes, submit it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        showloader()
         $.ajax({
           url: host + "block",
           type: "POST",
@@ -68,7 +77,7 @@ var host = API_ENDPOINTS;
             });
           },
           error: function (xhr, status, error) {
-            var errorMessage = "An error occurred.";
+            let errorMessage = "An error occurred.";
             if (xhr.responseJSON && xhr.responseJSON.error) {
               errorMessage = xhr.responseJSON.error;
             }
@@ -113,7 +122,7 @@ var host = API_ENDPOINTS;
   // Delete button click event
   $(".blockDeleteBtn").on("click", function (event) {
     event.preventDefault();
-    var blockId = $(this).data("block-id");
+    let blockId = $(this).data("block-id");
     Swal.fire({
       title: "Are you sure?",
       text: "You are about to delete this block. This action cannot be undone.",
@@ -124,6 +133,7 @@ var host = API_ENDPOINTS;
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        showloader()
         $.ajax({
           url:  host + "block/" + blockId,
           method: "DELETE",
@@ -139,7 +149,7 @@ var host = API_ENDPOINTS;
             });
           },
           error: function (xhr, status, error) {
-            var errorMessage = "An error occurred.";
+            let errorMessage = "An error occurred.";
             if (xhr.responseJSON && xhr.responseJSON.error) {
               errorMessage = xhr.responseJSON.error;
             }
@@ -161,13 +171,13 @@ var host = API_ENDPOINTS;
   // update records button click event
   $("#updateBlock").on("click", function (event) {
     event.preventDefault();
-    var form = $("#FormPost")[0];
+    let form = $("#FormPost")[0];
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
     
-    var formData = {
+    let formData = {
       campus: $("#campus").val(),
       name: $("#name").val(),
       description: $("#description").val(),
@@ -184,6 +194,7 @@ var host = API_ENDPOINTS;
       confirmButtonText: "Yes, submit it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        showloader()
         $.ajax({
           url: host + "block/" + blockId,
           type: "PUT",
@@ -204,7 +215,7 @@ var host = API_ENDPOINTS;
             });
           },
           error: function (xhr, status, error) {
-            var errorMessage = "An error occurred.";
+            let errorMessage = "An error occurred.";
             if (xhr.responseJSON && xhr.responseJSON.error) {
               errorMessage = xhr.responseJSON.error;
             }
