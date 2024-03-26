@@ -1,11 +1,8 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ Default staff view"""
 import base64
-
 import bcrypt
 from sqlalchemy import func,  or_
-from werkzeug.security import check_password_hash
-
 from models.block import Block
 from models.booking import Booking
 from models.payment import Payment
@@ -45,6 +42,7 @@ def base():
         print(e)
         error_message = "An error occurred, please try again"
     return render_template('default.html', form=form, error=error_message, script=script)
+
 
 @staff_view.route('/logout')
 def logout():

@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 from flask import Blueprint, render_template, session, redirect, url_for
 
@@ -24,7 +24,6 @@ def reserve():
                            form=form, user=user)
 
 
-@staff_view.route('/assignBed')
 @staff_view.route('/assignBed')
 def assign_bed():
     """This function renders the assign bed page"""
@@ -74,5 +73,3 @@ def assign_bed():
 
     return render_template('assignBed.html', rooms=rooms_list,
                            students=students_list, user=user)
-
-

@@ -1,16 +1,13 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """  room management"""
 
 from models.room import Room
 from models.block import Block
 from models.room_type import RoomType
 from sqlalchemy.orm import aliased
-
 from web_flask.componet import staff_view
-
 from flask import Blueprint, render_template, request, redirect, url_for
 from web_flask.forms.rooms import RoomForm
-
 from models import storage
 
 

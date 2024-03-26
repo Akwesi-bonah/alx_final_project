@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ mail setup """
 
 from flask import render_template, request, session, redirect, url_for

@@ -1,25 +1,34 @@
-import os.path
-
+#!/usr/bin/env python3
 import bcrypt
 from sqlalchemy import func, and_
-from werkzeug.security import check_password_hash
-
 from models.booking import Booking
 from models.student import Student
-from web_flask.forms.login import Login
 from web_flask.forms.password import ChangePasswordForm
 from web_flask.forms.student import StudentForm
 from web_flask.student_model import student_views
-from flask import render_template, session, redirect, url_for, flash, request
+from flask import render_template, session, redirect, url_for, request
 from models import storage
 from models.room import Room
 from models.block import Block
 from models.room_type import RoomType
-from flask import send_from_directory
 
-# JIBRIL@1234
+
 @student_views.route('/', methods=['GET', 'POST'])
 def default():
+    """
+    This function handles the default route for the student views.
+
+    It renders the 'Sdefault.html' template and handles the form submission.
+    If the request method is POST, it checks the submitted email and password
+    against the stored user data. If the credentials are valid, it sets the
+    user_id and user session variables and redirects to the dashboard. If the
+    credentials are invalid, it sets an error message. If an exception occurs,
+    it sets a generic error message.
+
+    Returns:
+        The rendered template 'Sdefault.html' with the form and error_message
+        variables passed to it.
+    """
     form = StudentForm()
     error_message = None
 
@@ -50,15 +59,31 @@ def default():
 
 @student_views.route('/logout', methods=['GET'])
 def Slogout():
+    """
+    Logs out the student by clearing the session and redirecting to the default page.
+
+    Returns:
+        A redirect response to the default page.
+    """
     if 'user_id' in session:
         session.clear()
-        return redirect(url_for('student_views.default'))
+    return redirect(url_for('student_views.default'))
 
 
 @student_views.route('/default/student', methods=['GET'])
 def dashboard():
-    """Student dashboard"""
-    if 'user' not in session:
+    """Render the student dashboard page.
+
+    This function checks if the user is logged in and redirects to the default page if not.
+    It retrieves information about available rooms and displays them on the dashboard.
+
+    Returns:
+        A rendered template of the student dashboard page with the following variables:
+        - blocks: A list of all blocks.
+        - room_types: A list of all room types.
+        - rooms: A list of dictionaries containing information about available rooms.
+    """
+    if 'user_id' not in session:
         return redirect(url_for('student_views.default'))
     else:
         block = storage.all(Block).values()
@@ -71,14 +96,16 @@ def dashboard():
 
         room = (storage.session.query(
             Room.id, Room.room_name,
-            (Room.no_of_beds - Room.booked_beds - Room.reserved_beds).label('available_beds'),
+            (Room.no_of_beds - Room.booked_beds -
+             Room.reserved_beds).label('available_beds') ,
             Room.floor, Room.gender,
             RoomType.name.label('room_type_name'), RoomType.price,
             Block.name.label('block_name'))
-                .join(Block, Room.block_id == Block.id)
-                .join(RoomType, Room.room_type_id == RoomType.id)
-                .filter(and_(Room.status == "Available",
-                 Room.gender == gender)).all())
+            .join(Block, Room.block_id == Block.id)
+            .join(RoomType, Room.room_type_id == RoomType.id)
+            .filter(and_((Room.no_of_beds - Room.booked_beds -
+             Room.reserved_beds) > 0,
+                         Room.gender == gender)).all())
 
         rooms = []
         for result_tuple in room:
@@ -109,20 +136,26 @@ def dashboard():
 
 @student_views.route('/default/student/profile', methods=['GET'])
 def student_profile():
-    """Student profile"""
+    """Renders the student profile page.
+
+    This function retrieves the user's information from the session and populates the student profile form with the data.
+    If the user is not logged in, they will be redirected to the default page.
+
+    Returns:
+        A rendered template of the student profile page with the populated form and user information.
+    """
     form = StudentForm()
     reset = ChangePasswordForm()
     user = None
     if 'user_id' not in session:
         return redirect(url_for('student_views.default'))
     else:
-
         try:
             id = session['user_id']
             user = storage.get(Student, id)
             user = user.to_dict()
-            # print(user)
-            form.first_name.data = user['first_name'] if user.get('first_name') is not None else ""
+            form.first_name.data = user['first_name'] if user.get(
+                'first_name') is not None else ""
             form.last_name.data = user['last_name'] if 'last_name' in user else ""
             form.other_name.data = user['other_name'] if 'other_name' in user else ""
             form.email.data = user['email'] if 'email' in user else ""
@@ -136,7 +169,7 @@ def student_profile():
             form.gender.data = user['gender'] if 'gender' in user else ""
             form.address.data = user['address'] if 'address' in user else ""
             form.date_of_birth.data = user['date_of_birth'] if 'date_of_birth' in user else ""
-        except Exception as e :
+        except Exception as e:
             pass
 
     return render_template('Sprofile.html',
@@ -145,7 +178,20 @@ def student_profile():
 
 @student_views.route('/default/student/mybooking', methods=['GET'])
 def my_bookings():
-    """ Display student booking information """
+    """Display student booking information.
+
+    This function retrieves the booking information for a student and renders it on the 'mybooking.html' template.
+    It first checks if the 'user_id' is present in the session. If not, it redirects to the 'default' view.
+    Then, it retrieves the user object from the database based on the 'user_id'.
+    If the user object does not exist, it redirects to the 'default' view.
+    It then performs a query to fetch the booking information for the student, including the room details, block details,
+    and student details.
+    The query results are processed and stored in a list of dictionaries, where each dictionary represents a booking.
+    Finally, it renders the 'mybooking.html' template with the bookings and user objects as context variables.
+
+    Returns:
+        The rendered 'mybooking.html' template with the bookings and user objects as context variables.
+    """
     if 'user_id' not in session:
         return redirect(url_for('student_views.default'))
 
@@ -164,7 +210,8 @@ def my_bookings():
         Block.name.label('block_name'),
         Booking.status,
         Booking.paid,
-        func.concat(Student.first_name, ' ', Student.other_name, ' ', Student.last_name).label('full_name'),
+        func.concat(Student.first_name, ' ', Student.other_name,
+                    ' ', Student.last_name).label('full_name'),
         Student.student_number,
         RoomType.price,
     ).join(Room, Booking.room_id == Room.id) \
@@ -173,7 +220,6 @@ def my_bookings():
         .join(Student, Booking.student_id == Student.id) \
         .filter(Student.id == user_id) \
         .all()
-
 
     bookings = []
     for result_tuple in my_booking:

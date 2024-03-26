@@ -1,5 +1,5 @@
 #!/usr/bin/pyhthon3
-""" view Blue Print for staff"""
+""" view Blueprint for staff"""
 from flask import Blueprint
 
 staff_view = Blueprint('staff_view', __name__)

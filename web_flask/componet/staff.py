@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ staff management"""
 
 from web_flask.componet import staff_view
@@ -27,5 +27,3 @@ def users():
     return render_template('manageStaff.html',
                            users=staff, form=form,
                            user=user, role=role)
-
-

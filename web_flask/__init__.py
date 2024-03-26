@@ -1,10 +1,10 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """
 flask setup
 """
 import os
 
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from web_flask.componet.views import staff_view
 from web_flask.student_model import student_views
 from flask_session import Session
@@ -16,7 +16,6 @@ def create_app():
     app.config['SECRET_KEY'] = os.urandom(24)
     app.config['SESSION_COOKIE_NAME'] = 'staff_session'
     app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
-    app.config['STUDENT_SESSION_COOKIE_NAME'] = 'student_session'
     # Session configurations
     app.config['SESSION_COOKIE_SECURE'] = True
     app.config['SESSION_TYPE'] = 'filesystem'
@@ -40,9 +39,5 @@ def create_app():
     def unhandled_exception(e):
         return render_template('error.html',
                                error=str(e)), 500
-
-    if __name__ == '__main__':
-        app.run(debug=True)
-
 
     return app

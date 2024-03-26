@@ -1,7 +1,6 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 
 from flask import render_template, request, session, redirect, url_for
-
 from models.student import Student
 from web_flask.componet import staff_view
 from models import storage
