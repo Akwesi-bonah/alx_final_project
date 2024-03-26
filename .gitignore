@@ -1,1 +1,14 @@
 web_flask/forms/__pycache__/*
+Content
+console.py
+file.json
+env.sh
+setup_db.sql
+test.py
+students_profile
+api/v1/__pycache__
+api/v1/auth/__pycache__
+api/v1/views/__pycache__
+models/__pycache__
+models/auth/__pycache__
+models/engine/___pycache__
