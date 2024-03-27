@@ -126,7 +126,7 @@ def dashboard():
 
             rooms.append(result_dict)
 
-        print(rooms)
+       # print(rooms)
 
     return render_template('Sbase.html',
                            blocks=block,

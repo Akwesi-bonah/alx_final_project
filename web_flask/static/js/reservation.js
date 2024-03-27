@@ -1,16 +1,27 @@
-import API_ENDPOINTS from './apiEndpoint.js';
+import API_ENDPOINTS from "./apiEndpoint.js";
+
+
+ const showloader = () => {
+    Swal.fire({
+      title: "Processing...Please wait!",
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
+    });
+  };
+
 
 $(document).ready(function () {
-  var HOST = API_ENDPOINTS;
+  let HOST = API_ENDPOINTS;
 
-  var selectedRoomID;
-  var selectedStudentID;
-  var numberOfBeds;
+  let selectedRoomID;
+  let selectedStudentID;
+  let numberOfBeds;
 
   $("#reserve").on("click", function (event) {
     event.preventDefault();
 
-    var jsonData = {
+    let jsonData = {
       room_id: $("#room_name").val(),
       no_of_beds: $("#no_of_beds").val(),
     };
@@ -25,6 +36,7 @@ $(document).ready(function () {
       confirmButtonText: "Yes, reserve it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        showloader()
         $.ajax({
           type: "POST",
           url: HOST + "reserve",
@@ -37,25 +49,22 @@ $(document).ready(function () {
               text: "Room successfully reserved!",
               confirmButtonColor: "#3085d6",
             });
-
-
           },
-            error: function(xhr, status, error) {
-           var errorMessage = "An error occurred.";
-    if (xhr.responseJSON && xhr.responseJSON.error) {
-      errorMessage = xhr.responseJSON.error;
-    }
+          error: function (xhr, status, error) {
+            let errorMessage = "An error occurred.";
+            if (xhr.responseJSON && xhr.responseJSON.error) {
+              errorMessage = xhr.responseJSON.error;
+            }
 
-    Swal.fire({
-      title: 'Error!',
-      text: errorMessage,
-      icon: 'error',
-      showCancelButton: false,
-      confirmButtonColor: '#d33',
-      confirmButtonText: 'OK'
-    });
-          }
-,
+            Swal.fire({
+              title: "Error!",
+              text: errorMessage,
+              icon: "error",
+              showCancelButton: false,
+              confirmButtonColor: "#d33",
+              confirmButtonText: "OK",
+            });
+          },
         });
       }
     });
@@ -63,6 +72,7 @@ $(document).ready(function () {
 
   $(".assign-room").on("click", function () {
     selectedRoomID = $(this).data("room-id");
+    $("#assignModal").modal("show");
   });
 
   $("#studentName").on("change", function () {
@@ -75,12 +85,12 @@ $(document).ready(function () {
 
   $(".drop-room").on("click", function () {
     selectedRoomID = $(this).data("room-id");
+    $("#deleteModal").modal("show");
   });
 
   $(".proceed").on("click", function (event) {
     event.preventDefault();
     if (!selectedStudentID) {
-
       Swal.fire({
         title: "Select a Student",
         text: "Please select a student before proceeding.",
@@ -91,7 +101,7 @@ $(document).ready(function () {
       return;
     }
 
-    var bookingData = {
+    let bookingData = {
       room_id: selectedRoomID,
       student_id: selectedStudentID,
     };
@@ -106,6 +116,7 @@ $(document).ready(function () {
       confirmButtonText: "Yes, Book it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        showloader()
         $.ajax({
           type: "POST",
           url: HOST + "booking",
@@ -121,7 +132,8 @@ $(document).ready(function () {
               confirmButtonColor: "#3085d6",
               confirmButtonText: "OK",
             }).then(() => {
-               form.reset();
+              form.reset();
+              $("#assignModal").modal("hide");
 
               location.reload();
             });
@@ -160,7 +172,7 @@ $(document).ready(function () {
       return;
     }
 
-    var bookingData = {
+    let bookingData = {
       room_id: selectedRoomID,
       no_of_beds: numberOfBeds,
     };
@@ -175,6 +187,7 @@ $(document).ready(function () {
       confirmButtonText: "Yes, Book it!",
     }).then((result) => {
       if (result.isConfirmed) {
+        showloader()
         $.ajax({
           type: "POST",
           url: HOST + "cancel",
@@ -190,26 +203,27 @@ $(document).ready(function () {
               confirmButtonColor: "#3085d6",
               confirmButtonText: "OK",
             }).then(() => {
-            form.reset();
+              form.reset();
               location.reload();
+              $("#deleteModal").modal("hide");
+
             });
           },
-                   error: function(xhr, status, error) {
-           var errorMessage = "An error occurred.";
-    if (xhr.responseJSON && xhr.responseJSON.error) {
-      errorMessage = xhr.responseJSON.error;
-    }
+          error: function (xhr, status, error) {
+            let errorMessage = "An error occurred.";
+            if (xhr.responseJSON && xhr.responseJSON.error) {
+              errorMessage = xhr.responseJSON.error;
+            }
 
-    Swal.fire({
-      title: 'Error!',
-      text: errorMessage,
-      icon: 'error',
-      showCancelButton: false,
-      confirmButtonColor: '#d33',
-      confirmButtonText: 'OK'
-    });
-          }
-,
+            Swal.fire({
+              title: "Error!",
+              text: errorMessage,
+              icon: "error",
+              showCancelButton: false,
+              confirmButtonColor: "#d33",
+              confirmButtonText: "OK",
+            });
+          },
         });
       }
     });
@@ -217,5 +231,5 @@ $(document).ready(function () {
 
   selectedRoomID = null;
   selectedStudentID = null;
-    numberOfBeds = null;
+  numberOfBeds = null;
 });

@@ -1,12 +1,12 @@
 import API_ENDPOINTS from './apiEndpoint.js';
 $(document).ready(function() {
-var HOST = API_ENDPOINTS;
+let HOST = API_ENDPOINTS;
     $('#sendMessage').on('click', function(event) {
         event.preventDefault();
 
-        var level = $('#level').val();
-        var notPaid = $('#not_paid').val();
-        var message = $('#message').val();
+        let level = $('#level').val();
+        let notPaid = $('#not_paid').val();
+        let message = $('#message').val();
 
         // Validate if any field is empty
         if (!level || !notPaid || !message) {
@@ -31,7 +31,7 @@ var HOST = API_ENDPOINTS;
             confirmButtonText: "Yes, submit it!"
         }).then((willSend) => {
             if (willSend.isConfirmed) {
-                var formData = {
+                let formData = {
                     level: level,
                     not_paid: notPaid,
                     message: message
@@ -50,9 +50,10 @@ var HOST = API_ENDPOINTS;
                             confirmButtonColor: "#3085d6",
                             confirmButtonText: "OK"
                         });
+                        form.reset();
                     },
                     error: function(xhr, status, error) {
-                        var errorMessage = "An error occurred.";
+                        let errorMessage = "An error occurred.";
                         if (xhr.responseJSON && xhr.responseJSON.error) {
                             errorMessage = xhr.responseJSON.error;
                         }

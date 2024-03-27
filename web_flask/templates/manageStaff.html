@@ -135,7 +135,7 @@
               <td>{{ user.phone }}</td>
               <td>{{ user.role }}</td>
               <td>{{ user.status }}</td>
-              {% if role is not none and role not in ['JCR', 'Porter'] %}
+
               <td>
                 <a
                   href="#"
@@ -150,11 +150,11 @@
                   >Delete</a
                 >
               </td>
-              {% else %}
-              <td>
-                <a href="#" class="btn btn-sm btn-danger">Not Allowed</a>
-              </td>
-              {% endif %}
+{#              {% else %}#}
+{#              <td>#}
+{#                <a href="#" class="btn btn-sm btn-danger">Not Allowed</a>#}
+{#              </td>#}
+
             </tr>
             {% endfor %}
           </tbody>

@@ -3,15 +3,15 @@ import API_ENDPOINTS from './apiEndpoint.js';
 $(document).ready(function () {
   let HOST = API_ENDPOINTS;
   let userId = null;
+
 const showloader = () => {
     Swal.fire({
-        title: 'Processing...Please wait!',
-        onBeforeOpen: () => {
-            Swal.showLoading();
-        }
+      title: "Processing...Please wait!",
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
     });
-}
-
+  };
 
   // Show the 'Addstaff' button and hide the 'updateStaff' button
   $('.createStaff').on('click', function(){
@@ -168,6 +168,7 @@ const showloader = () => {
               confirmButtonColor: "#3085d6",
               confirmButtonText: "OK",
             }).then(() => {
+              form.reset();
               location.reload()
               $("#staffCreateUpdate").modal("hide");
             });

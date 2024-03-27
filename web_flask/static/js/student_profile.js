@@ -1,8 +1,8 @@
-import API_ENDPOINTS from './apiEndpoint.js';
+import API_ENDPOINTS from "./apiEndpoint.js";
 $(document).ready(function () {
   let HOST = API_ENDPOINTS;
-   let studentId = $("#student-id").val();
-   console.log(studentId)
+  let studentId = $("#student-id").val();
+  console.log(studentId);
   function showValidationErrors(errors) {
     let errorMessage = "Please check the following fields:\n\n";
     for (let i = 0; i < errors.length; i++) {
@@ -57,7 +57,7 @@ $(document).ready(function () {
     }).then((result) => {
       if (result.isConfirmed) {
         $.ajax({
-          url: HOST + 'student/' + studentId,
+          url: HOST + "student/" + studentId,
           type: "PUT",
           contentType: "application/json",
           data: JSON.stringify(formData),
@@ -70,7 +70,7 @@ $(document).ready(function () {
               confirmButtonText: "OK",
             }).then((result) => {
               if (result.isConfirmed) {
-               form.reset();
+                form.reset();
                 location.reload();
               }
             });
@@ -90,96 +90,104 @@ $(document).ready(function () {
   });
 
   function validateForm() {
-  let isValid = true;
+    let isValid = true;
 
-  // Validation for first_name
-  if ($("#first_name").val().trim() === "") {
-    showValidationErrors(["First Name is required"]);
-    isValid = false;
+    // Validation for first_name
+    if ($("#first_name").val().trim() === "") {
+      showValidationErrors(["First Name is required"]);
+      isValid = false;
+    }
+
+    // Validation for last_name
+    if ($("#last_name").val().trim() === "") {
+      showValidationErrors(["Last Name is required"]);
+      isValid = false;
+    }
+
+    // Validation for email
+    let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (
+      $("#email").val().trim() === "" ||
+      !emailPattern.test($("#email").val().trim())
+    ) {
+      showValidationErrors(["Email is invalid"]);
+      isValid = false;
+    }
+
+    // Validation for phone
+    let phonePattern = /^\d{10}$/;
+    if (
+      $("#phone").val().trim() === "" ||
+      !phonePattern.test($("#phone").val().trim())
+    ) {
+      showValidationErrors(["Phone number is invalid"]);
+      isValid = false;
+    }
+
+    // Validation for date_of_birth (You may need a different validation pattern)
+    if ($("#date_of_birth").val().trim() === "") {
+      showValidationErrors(["Date of Birth is required"]);
+      isValid = false;
+    }
+
+    // Validation for gender (If gender is a select input, ensure it's selected)
+    if ($("#gender").val() === "") {
+      showValidationErrors(["Gender is required"]);
+      isValid = false;
+    }
+
+    // Validation for address
+    if ($("#address").val().trim() === "") {
+      showValidationErrors(["Address is required"]);
+      isValid = false;
+    }
+
+    // Validation for disability
+    if ($("#disability").val().trim() === "") {
+      showValidationErrors(["Disability is required"]);
+      isValid = false;
+    }
+
+    // Validation for password (You may need a different validation pattern)
+    if ($("#password").val().trim() === "") {
+      showValidationErrors(["Password is required"]);
+      isValid = false;
+    }
+
+    // Validation for guardian_name
+    if ($("#guardian_name").val().trim() === "") {
+      showValidationErrors(["Guardian Name is required"]);
+      isValid = false;
+    }
+
+    // Validation for guardian_phone
+    let guardianPhonePattern = /^\d{10}$/;
+    if (
+      $("#guardian_phone").val().trim() === "" ||
+      !guardianPhonePattern.test($("#guardian_phone").val().trim())
+    ) {
+      showValidationErrors(["Guardian Phone number is invalid"]);
+      isValid = false;
+    }
+
+    // Validation for student_number
+    if ($("#student_number").val().trim() === "") {
+      showValidationErrors(["Student Number is required"]);
+      isValid = false;
+    }
+
+    // Validation for program
+    if ($("#program").val().trim() === "") {
+      showValidationErrors(["Program is required"]);
+      isValid = false;
+    }
+
+    // Validation for level
+    if ($("#level").val().trim() === "") {
+      showValidationErrors(["Level is required"]);
+      isValid = false;
+    }
+
+    return isValid;
   }
-
-  // Validation for last_name
-  if ($("#last_name").val().trim() === "") {
-    showValidationErrors(["Last Name is required"]);
-    isValid = false;
-  }
-
-  // Validation for email
-  let emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  if ($("#email").val().trim() === "" || !emailPattern.test($("#email").val().trim())) {
-    showValidationErrors(["Email is invalid"]);
-    isValid = false;
-  }
-
-  // Validation for phone
-  let phonePattern = /^\d{10}$/;
-  if ($("#phone").val().trim() === "" || !phonePattern.test($("#phone").val().trim())) {
-    showValidationErrors(["Phone number is invalid"]);
-    isValid = false;
-  }
-
-  // Validation for date_of_birth (You may need a different validation pattern)
-  if ($("#date_of_birth").val().trim() === "") {
-    showValidationErrors(["Date of Birth is required"]);
-    isValid = false;
-  }
-
-  // Validation for gender (If gender is a select input, ensure it's selected)
-  if ($("#gender").val() === "") {
-    showValidationErrors(["Gender is required"]);
-    isValid = false;
-  }
-
-  // Validation for address
-  if ($("#address").val().trim() === "") {
-    showValidationErrors(["Address is required"]);
-    isValid = false;
-  }
-
-  // Validation for disability
-  if ($("#disability").val().trim() === "") {
-    showValidationErrors(["Disability is required"]);
-    isValid = false;
-  }
-
-  // Validation for password (You may need a different validation pattern)
-  if ($("#password").val().trim() === "") {
-    showValidationErrors(["Password is required"]);
-    isValid = false;
-  }
-
-  // Validation for guardian_name
-  if ($("#guardian_name").val().trim() === "") {
-    showValidationErrors(["Guardian Name is required"]);
-    isValid = false;
-  }
-
-  // Validation for guardian_phone
-  let guardianPhonePattern = /^\d{10}$/;
-  if ($("#guardian_phone").val().trim() === "" || !guardianPhonePattern.test($("#guardian_phone").val().trim())) {
-    showValidationErrors(["Guardian Phone number is invalid"]);
-    isValid = false;
-  }
-
-  // Validation for student_number
-  if ($("#student_number").val().trim() === "") {
-    showValidationErrors(["Student Number is required"]);
-    isValid = false;
-  }
-
-  // Validation for program
-  if ($("#program").val().trim() === "") {
-    showValidationErrors(["Program is required"]);
-    isValid = false;
-  }
-
-  // Validation for level
-  if ($("#level").val().trim() === "") {
-    showValidationErrors(["Level is required"]);
-    isValid = false;
-  }
-
-  return isValid;
-}
-
 });

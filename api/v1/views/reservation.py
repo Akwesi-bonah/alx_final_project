@@ -113,15 +113,16 @@ def cancel_reservation():
     room = storage.get(Room, room_id)
     if not room:
         return jsonify({'error': 'Room not found'}), 404
+    
+    current_beds = int(room.no_of_beds) - int(room.reserved_beds) - int(room.booked_beds) - int(beds)
+    status = "Available"
 
-    if room.reserved_beds != 0:
-        if int(room.reserved_beds) - int(beds) < 0:
-            return jsonify({'error': 'Cannot cancel more beds than reserved'}), 400
-        else:
-            room.booked_beds = int(room.booked_beds) + int(beds)
-            room.reserved_beds = int(room.reserved_beds) - int(beds)
-            storage.session.commit()
-            return jsonify({'message': 'Reservation successfully cancelled'}), 200
-
+    if current_beds <= 0:
+        return jsonify({'error': 'Cannot cancel more beds than reserved'}), 400
     else:
-        return jsonify({'error': 'Cannot cancel the reservation with zero reserved beds'}), 400
+        if current_beds == 0:
+            status = "Full"
+        room.reserved_beds -= int(beds)
+        room.status = status
+        storage.session.commit()
+        return jsonify({'message': 'Room successfully reserved'}), 200

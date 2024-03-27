@@ -1,14 +1,16 @@
-import API_ENDPOINTS from './apiEndpoint.js';
+import API_ENDPOINTS from "./apiEndpoint.js";
 $(document).ready(function () {
-let host = API_ENDPOINTS;
+  let host = API_ENDPOINTS;
 const showloader = () => {
     Swal.fire({
-        title: 'Processing...Please wait!',
-        onBeforeOpen: () => {
-            Swal.showLoading();
-        }
+      title: "Processing...Please wait!",
+      onBeforeOpen: () => {
+        Swal.showLoading();
+      },
     });
-}
+  };
+
+
   // Function to show validation errors using SweetAlert
   function showValidationErrors(errors) {
     let errorMessage = "Please check the following fields:\n\n";
@@ -23,6 +25,7 @@ const showloader = () => {
       confirmButtonText: "OK",
     });
   }
+
   $(".createNewButton").on("click", function () {
     // Hide the "updateBlock" button and show the "AddBlock" button
     $("#updateBlock").hide();
@@ -56,7 +59,7 @@ const showloader = () => {
       confirmButtonText: "Yes, submit it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        showloader()
+        showloader();
         $.ajax({
           url: host + "block",
           type: "POST",
@@ -72,6 +75,7 @@ const showloader = () => {
               confirmButtonText: "OK",
             }).then((result) => {
               if (result.isConfirmed) {
+                form.reset();
                 location.reload();
               }
             });
@@ -96,7 +100,6 @@ const showloader = () => {
     });
   });
 
-
   $(".blockEditBtn").on("click", function (event) {
     event.preventDefault();
 
@@ -114,7 +117,19 @@ const showloader = () => {
         $("#createUpdate").modal("show");
       },
       error: function (xhr, status, error) {
-        console.error("Error fetching block:", error);
+        let errorMessage = "An error occurred.";
+        if (xhr.responseJSON && xhr.responseJSON.error) {
+          errorMessage = xhr.responseJSON.error;
+        }
+
+        Swal.fire({
+          title: "Error!",
+          text: errorMessage,
+          icon: "error",
+          showCancelButton: false,
+          confirmButtonColor: "#d33",
+          confirmButtonText: "OK",
+        });
       },
     });
   });
@@ -133,9 +148,9 @@ const showloader = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        showloader()
+        showloader();
         $.ajax({
-          url:  host + "block/" + blockId,
+          url: host + "block/" + blockId,
           method: "DELETE",
           success: function (response) {
             Swal.fire({
@@ -176,7 +191,7 @@ const showloader = () => {
       form.reportValidity();
       return;
     }
-    
+
     let formData = {
       campus: $("#campus").val(),
       name: $("#name").val(),
@@ -194,7 +209,7 @@ const showloader = () => {
       confirmButtonText: "Yes, submit it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        showloader()
+        showloader();
         $.ajax({
           url: host + "block/" + blockId,
           type: "PUT",
@@ -210,6 +225,7 @@ const showloader = () => {
               confirmButtonText: "OK",
             }).then((result) => {
               if (result.isConfirmed) {
+                form.reset();
                 location.reload();
               }
             });
