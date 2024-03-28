@@ -31,7 +31,6 @@ class TestPayment(unittest.TestCase):
         expected_str = "Payment(student_number='12345', room_name='Room 101', amount=100.00)"
         self.assertEqual(str(payment), expected_str)
 
-    # Add more test methods as needed
-
+    
 if __name__ == '__main__':
     unittest.main()

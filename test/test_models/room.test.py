@@ -1,9 +1,11 @@
+#!/usr/bin/env python3
+"""Test room module for room model  """
 import unittest
 from models.room import Room
 
 class TestRoom(unittest.TestCase):
     def setUp(self):
-        # Create a sample room object for testing
+        """ Create a sample room object for testing """
         self.room = Room(
             block_id="block1",
             room_type_id="type1",
@@ -17,7 +19,7 @@ class TestRoom(unittest.TestCase):
         )
 
     def test_room_attributes(self):
-        # Check if the room object has the correct attributes
+        """ Check if the room object has the correct attributes """
         self.assertEqual(self.room.block_id, "block1")
         self.assertEqual(self.room.room_type_id, "type1")
         self.assertEqual(self.room.room_name, "Room 101")
@@ -29,7 +31,7 @@ class TestRoom(unittest.TestCase):
         self.assertEqual(self.room.status, "Available")
 
     def test_room_initialization(self):
-        # Check if the room object is initialized correctly
+        """ Check if the room object is initialized correctly """
         self.assertIsInstance(self.room, Room)
         self.assertEqual(self.room.block, "")
         self.assertEqual(self.room.room_type, "")

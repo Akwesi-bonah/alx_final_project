@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+""" test staff module for staff model """
 import unittest
 from models.staff import Staff
 
