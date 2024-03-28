@@ -7,7 +7,12 @@ from models.staff import Staff
 
 
 class TestConfiguration(unittest.TestCase):
+    """
+    Test case for the Configuration class.
+    """
+
     def setUp(self):
+        """ """
         self.staff = Staff(id=1, name="John Doe")
         self.configuration = Configuration(created_by=self.staff, expiry_date=datetime(2022, 12, 31))
 

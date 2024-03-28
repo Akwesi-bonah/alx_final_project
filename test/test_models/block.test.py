@@ -32,6 +32,7 @@ class TestBlockDocs(unittest.TestCase):
 
     def test_func_docstrings(self):
         """Test for the presence of docstrings in BaseModel methods"""
+
         for func in self.base_funcs:
             with self.subTest(function=func):
                 self.assertIsNot(
