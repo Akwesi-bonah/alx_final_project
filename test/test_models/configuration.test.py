@@ -1,7 +1,10 @@
+#!/usr/bin/env python3
+""" test configuration module   """
 import unittest
 from datetime import datetime
 from models.configuration import Configuration
 from models.staff import Staff
+
 
 class TestConfiguration(unittest.TestCase):
     def setUp(self):

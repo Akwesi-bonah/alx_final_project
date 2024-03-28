@@ -1,3 +1,7 @@
+#!/usr/bin/python3
+"""Unittest for booking.py
+"""
+
 import unittest
 from datetime import datetime
 import pep8 as pycodestyle
